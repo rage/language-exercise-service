@@ -1,9 +1,9 @@
 /* eslint-disable i18next/no-literal-string */
 import type { NextApiRequest, NextApiResponse } from "next"
 
-import { UserAnswer } from "../../../types/quizTypes/answer"
-import { ItemAnswerFeedback } from "../../../types/quizTypes/grading"
-import { PrivateSpecQuiz } from "../../../types/quizTypes/privateSpec"
+import { UserAnswer } from "../../protocolTypes/answer"
+import { ItemAnswerFeedback } from "../../protocolTypes/grading"
+import { PrivateSpec } from "../../protocolTypes/privateSpec"
 import { assessAnswers } from "../../grading/assessment"
 import { submissionFeedback } from "../../grading/feedback"
 import { gradeAnswers } from "../../grading/grading"
@@ -14,7 +14,7 @@ import { GradingRequest } from "@/shared-module/common/exercise-service-protocol
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
 import { nullIfEmptyString } from "@/shared-module/common/utils/strings"
 
-type QuizzesGradingRequest = GradingRequest<PrivateSpecQuiz, UserAnswer>
+type GradingRequest = GradingRequest<PrivateSpec, UserAnswer>
 
 const handleGradingRequest = (
   req: NextApiRequest,
@@ -24,15 +24,15 @@ const handleGradingRequest = (
   if (!isNonGenericGradingRequest(req.body)) {
     throw new Error("Invalid grading request")
   }
-  const { exercise_spec, submission_data } = req.body as QuizzesGradingRequest
+  const { exercise_spec, submission_data } = req.body as GradingRequest
 
   // Migrate to newer version
-  const privateSpecQuiz = handlePrivateSpecMigration(exercise_spec)
-  const userAnswer = handleUserAnswerMigration(privateSpecQuiz, submission_data)
+  const PrivateSpec = handlePrivateSpecMigration(exercise_spec)
+  const userAnswer = handleUserAnswerMigration(PrivateSpec, submission_data)
 
   // Generate feedbacks
-  const assessedAnswers = assessAnswers(userAnswer, privateSpecQuiz)
-  const score = gradeAnswers(assessedAnswers, privateSpecQuiz)
+  const assessedAnswers = assessAnswers(userAnswer, PrivateSpec)
+  const score = gradeAnswers(assessedAnswers, PrivateSpec)
   const feedbacks: ItemAnswerFeedback[] = submissionFeedback(
     submission_data,
     exercise_spec,

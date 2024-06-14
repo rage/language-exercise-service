@@ -2,8 +2,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import { OldQuiz } from "../../../types/oldQuizTypes"
-import { ModelSolutionQuiz } from "../../../types/quizTypes/modelSolutionSpec"
-import { PrivateSpecQuizItemClosedEndedQuestion } from "../../../types/quizTypes/privateSpec"
+import { ModelSolutionSpec } from "../../protocolTypes/modelSolutionSpec"
+import { PrivateSpecItemClosedEndedQuestion } from "../../protocolTypes/privateSpec"
 import { isOldQuiz } from "../../util/migration/migrationSettings"
 import migrateModelSolutionSpecQuiz from "../../util/migration/modelSolutionSpecQuiz"
 
@@ -28,7 +28,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
 
 function handleModelSolutionGeneration(
   req: NextApiRequest,
-  res: NextApiResponse<ModelSolutionQuiz>,
+  res: NextApiResponse<ModelSolutionSpec>,
 ) {
   if (!isSpecRequest(req.body)) {
     throw new Error("Request was not valid.")
@@ -43,12 +43,12 @@ function handleModelSolutionGeneration(
   return res.status(200).json(modelSolution)
 }
 
-function createModelSolution(quiz: OldQuiz | ModelSolutionQuiz): ModelSolutionQuiz {
-  let modelSolution: ModelSolutionQuiz | null = null
+function createModelSolution(quiz: OldQuiz | ModelSolutionSpec): ModelSolutionSpec {
+  let modelSolution: ModelSolutionSpec | null = null
   if (isOldQuiz(quiz)) {
     modelSolution = migrateModelSolutionSpecQuiz(quiz as OldQuiz)
   } else {
-    modelSolution = quiz as ModelSolutionQuiz
+    modelSolution = quiz as ModelSolutionSpec
   }
   if (modelSolution === null) {
     throw new Error("Model solution was null")
@@ -56,7 +56,7 @@ function createModelSolution(quiz: OldQuiz | ModelSolutionQuiz): ModelSolutionQu
   // Make sure we don't include illegal properties
   for (const quizItem of modelSolution.items) {
     if (quizItem.type === "closed-ended-question") {
-      const asPrivateSpec = quizItem as PrivateSpecQuizItemClosedEndedQuestion
+      const asPrivateSpec = quizItem as PrivateSpecItemClosedEndedQuestion
       if (asPrivateSpec.validityRegex !== undefined) {
         // @ts-expect-error: Deleting a property that should not exist
         delete asPrivateSpec.validityRegex
@@ -64,5 +64,5 @@ function createModelSolution(quiz: OldQuiz | ModelSolutionQuiz): ModelSolutionQu
     }
   }
 
-  return modelSolution as ModelSolutionQuiz
+  return modelSolution as ModelSolutionSpec
 }

@@ -1,18 +1,15 @@
 import React, { useState } from "react"
 
-import { PrivateSpecQuiz } from "../../../../types/quizTypes/privateSpec"
-import QuizzesExerciseServiceContext from "../../../contexts/QuizzesExerciseServiceContext"
-
-import QuizCommonInfo from "./QuizCommonInfo"
-import QuizItemsV2 from "./QuizCreation"
+import { PrivateSpec } from "../../../protocolTypes/privateSpec"
+import QuizzesExerciseServiceContext from "../../../contexts/ExerciseServiceContext"
 
 export interface EditorProps {
   port: MessagePort
-  privateSpec: PrivateSpecQuiz
+  privateSpec: PrivateSpec
 }
 
 const EditorImpl: React.FC<React.PropsWithChildren<EditorProps>> = ({ port, privateSpec }) => {
-  const [outputState, setOutputState] = useState<PrivateSpecQuiz | null>(privateSpec)
+  const [outputState, setOutputState] = useState<PrivateSpec | null>(privateSpec)
   return (
     <QuizzesExerciseServiceContext.Provider
       value={{
@@ -22,8 +19,7 @@ const EditorImpl: React.FC<React.PropsWithChildren<EditorProps>> = ({ port, priv
         validate: () => true,
       }}
     >
-      <QuizItemsV2 />
-      <QuizCommonInfo />
+      {null}
     </QuizzesExerciseServiceContext.Provider>
   )
 }

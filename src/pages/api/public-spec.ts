@@ -2,10 +2,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import { OldQuiz } from "../../../types/oldQuizTypes"
-import { PrivateSpecQuiz } from "../../../types/quizTypes/privateSpec"
+import { PrivateSpec } from "../../protocolTypes/privateSpec"
 import { convertPublicSpecFromPrivateSpec } from "../../util/converter"
 import { isOldQuiz } from "../../util/migration/migrationSettings"
-import { migratePrivateSpecQuiz } from "../../util/migration/privateSpecQuiz"
+import { migratePrivateSpec } from "../../util/migration/PrivateSpec"
 
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
 
@@ -35,16 +35,16 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     throw new Error("Invalid request")
   }
   const specRequest = req.body
-  const quiz = specRequest.private_spec as OldQuiz | PrivateSpecQuiz | null
+  const quiz = specRequest.private_spec as OldQuiz | PrivateSpec | null
   if (quiz === null) {
     throw new Error("Quiz cannot be null")
   }
-  let converted: PrivateSpecQuiz | null = null
+  let converted: PrivateSpec | null = null
   if (isOldQuiz(quiz)) {
-    converted = migratePrivateSpecQuiz(quiz as OldQuiz)
+    converted = migratePrivateSpec(quiz as OldQuiz)
   } else {
-    converted = quiz as PrivateSpecQuiz
+    converted = quiz as PrivateSpec
   }
-  const publicSpecQuiz = convertPublicSpecFromPrivateSpec(converted)
-  return res.status(200).json(publicSpecQuiz)
+  const PublicSpec = convertPublicSpecFromPrivateSpec(converted)
+  return res.status(200).json(PublicSpec)
 }

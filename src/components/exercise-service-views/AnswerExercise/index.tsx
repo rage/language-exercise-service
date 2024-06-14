@@ -1,16 +1,14 @@
 import React, { useCallback, useMemo, useState } from "react"
 
-import { UserAnswer } from "../../../../types/quizTypes/answer"
-import { PublicSpecQuiz } from "../../../../types/quizTypes/publicSpec"
-import QuizzesUserItemAnswerContext from "../../../contexts/QuizzesUserItemAnswerContext"
-
-import AnswerExerciseImpl from "./impl-by-quiz-item-type"
+import { UserAnswer } from "../../../protocolTypes/answer"
+import { PublicSpec } from "../../../protocolTypes/publicSpec"
+import UserItemAnswerContext from "../../../contexts/UserItemAnswerContext"
 
 import { UserInformation } from "@/shared-module/common/exercise-service-protocol-types"
 
 export interface ExerciseProps {
   port: MessagePort
-  publicSpec: PublicSpecQuiz
+  publicSpec: PublicSpec
   previousSubmission: UserAnswer | null
   user_information: UserInformation
 }
@@ -34,17 +32,13 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(
     (newState) => {
-      if (!newState || newState.itemAnswers.length < publicSpec.items.length) {
-        return false
-      }
-      const validities = newState.itemAnswers.map((item) => item.valid)
-      return validities.every(Boolean)
+      return true
     },
-    [publicSpec.items.length],
+    [],
   )
 
   return (
-    <QuizzesUserItemAnswerContext.Provider
+    <UserItemAnswerContext.Provider
       value={{
         outputState: userAnswer,
         port: port,
@@ -52,12 +46,8 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
         validate,
       }}
     >
-      <AnswerExerciseImpl
-        publicSpec={publicSpec}
-        previousSubmission={previousSubmission}
-        user_information={user_information}
-      />
-    </QuizzesUserItemAnswerContext.Provider>
+      {null}
+    </UserItemAnswerContext.Provider>
   )
 }
 
