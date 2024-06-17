@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react"
 
-import { UserAnswer } from "../../../protocolTypes/answer"
+import { UserAnswer, createEmptyUserAnswer } from "../../../protocolTypes/answer"
 import { PublicSpec } from "../../../protocolTypes/publicSpec"
 import UserItemAnswerContext from "../../../contexts/UserItemAnswerContext"
 
@@ -23,10 +23,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
     if (previousSubmission) {
       return previousSubmission
     }
-    return {
-      itemAnswers: [],
-      version: "2",
-    } satisfies UserAnswer
+    return createEmptyUserAnswer()
   }, [previousSubmission])
   const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
