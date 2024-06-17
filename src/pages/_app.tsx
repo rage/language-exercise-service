@@ -14,7 +14,7 @@ html {
 }
 `
 
-const SERVICE_NAME = "quizzes"
+const SERVICE_NAME = "language-exercise"
 
 const i18n = initI18n(SERVICE_NAME)
 

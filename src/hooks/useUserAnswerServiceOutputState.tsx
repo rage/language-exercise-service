@@ -1,12 +1,12 @@
 import { UserAnswer } from "../protocolTypes/answer"
 import UserItemAnswerContext from "../contexts/UserItemAnswerContext"
 
-import useExerciseServiceOutputState from "@/shared-module/common/hooks/exerciseServiceHooks/useExerciseServiceOutputState"
+import useBaseExerciseServiceOutputState from "@/shared-module/common/hooks/exerciseServiceHooks/useExerciseServiceOutputState"
 
-const useQuizzesUserAnswerOutputState = <SelectorReturnType,>(
+const useUserAnswerOutputState = <SelectorReturnType,>(
   selector: (arg: UserAnswer | null) => SelectorReturnType | null,
 ) => {
-  return useExerciseServiceOutputState(UserItemAnswerContext, selector)
+  return useBaseExerciseServiceOutputState(UserItemAnswerContext, selector)
 }
 
-export default useQuizzesUserAnswerOutputState
+export default useUserAnswerOutputState

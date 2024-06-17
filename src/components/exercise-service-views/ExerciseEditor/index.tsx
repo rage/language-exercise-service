@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import { PrivateSpec } from "../../../protocolTypes/privateSpec"
-import QuizzesExerciseServiceContext from "../../../contexts/ExerciseServiceContext"
+import ExerciseServiceContext from "../../../contexts/ExerciseServiceContext"
 
 export interface EditorProps {
   port: MessagePort
@@ -11,7 +11,7 @@ export interface EditorProps {
 const EditorImpl: React.FC<React.PropsWithChildren<EditorProps>> = ({ port, privateSpec }) => {
   const [outputState, setOutputState] = useState<PrivateSpec | null>(privateSpec)
   return (
-    <QuizzesExerciseServiceContext.Provider
+    <ExerciseServiceContext.Provider
       value={{
         outputState,
         port: port,
@@ -20,7 +20,7 @@ const EditorImpl: React.FC<React.PropsWithChildren<EditorProps>> = ({ port, priv
       }}
     >
       {null}
-    </QuizzesExerciseServiceContext.Provider>
+    </ExerciseServiceContext.Provider>
   )
 }
 

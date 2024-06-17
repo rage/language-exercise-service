@@ -15,7 +15,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
 const handleGet = (_req: NextApiRequest, res: NextApiResponse<ExerciseServiceInfoApi>) => {
   const prefix = basePath()
   res.json({
-    service_name: "Quizzes",
+    service_name: "Language exercise",
     user_interface_iframe_path: `${prefix}/iframe`,
     grade_endpoint_path: `${prefix}/api/grade`,
     public_spec_endpoint_path: `${prefix}/api/public-spec`,
