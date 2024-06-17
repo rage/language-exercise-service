@@ -1,4 +1,4 @@
 
 export interface PublicSpec {
-  version: "1"
+  version: 1
 }

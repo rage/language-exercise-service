@@ -15,9 +15,7 @@ export interface ExerciseProps {
 
 const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
   port,
-  publicSpec,
   previousSubmission,
-  user_information,
 }) => {
   const intialAnswer = useMemo(() => {
     if (previousSubmission) {
@@ -28,7 +26,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
   const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(
-    (newState) => {
+    (_newState) => {
       return true
     },
     [],

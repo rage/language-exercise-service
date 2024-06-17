@@ -2,19 +2,13 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 
 import { UserAnswer } from "../../protocolTypes/answer"
-import { ItemAnswerFeedback } from "../../protocolTypes/grading"
 import { PrivateSpec } from "../../protocolTypes/privateSpec"
-import { assessAnswers } from "../../grading/assessment"
-import { submissionFeedback } from "../../grading/feedback"
-import { gradeAnswers } from "../../grading/grading"
-import { handlePrivateSpecMigration, handleUserAnswerMigration } from "../../grading/utils"
 
 import { ExerciseTaskGradingResult } from "@/shared-module/common/bindings"
-import { GradingRequest } from "@/shared-module/common/exercise-service-protocol-types-2"
+import { GradingRequest as GenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types-2"
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
-import { nullIfEmptyString } from "@/shared-module/common/utils/strings"
 
-type GradingRequest = GradingRequest<PrivateSpec, UserAnswer>
+type GradingRequest = GenericGradingRequest<PrivateSpec, UserAnswer>
 
 const handleGradingRequest = (
   req: NextApiRequest,
@@ -24,27 +18,16 @@ const handleGradingRequest = (
   if (!isNonGenericGradingRequest(req.body)) {
     throw new Error("Invalid grading request")
   }
+  // @ts-expect-error: TODO: will use these in the future
   const { exercise_spec, submission_data } = req.body as GradingRequest
 
-  // Migrate to newer version
-  const PrivateSpec = handlePrivateSpecMigration(exercise_spec)
-  const userAnswer = handleUserAnswerMigration(PrivateSpec, submission_data)
-
-  // Generate feedbacks
-  const assessedAnswers = assessAnswers(userAnswer, PrivateSpec)
-  const score = gradeAnswers(assessedAnswers, PrivateSpec)
-  const feedbacks: ItemAnswerFeedback[] = submissionFeedback(
-    submission_data,
-    exercise_spec,
-    assessedAnswers,
-  )
 
   const responseJson: ExerciseTaskGradingResult = {
-    feedback_json: feedbacks,
-    feedback_text: nullIfEmptyString(exercise_spec.submitMessage),
+    feedback_json: null,
+    feedback_text: null,
     grading_progress: "FullyGraded",
-    score_given: score,
-    score_maximum: exercise_spec.items.length,
+    score_given: 1,
+    score_maximum: 1,
   }
 
   return res.status(200).json(responseJson)

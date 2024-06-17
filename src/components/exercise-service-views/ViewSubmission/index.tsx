@@ -1,5 +1,4 @@
 import React from "react"
-import { useTranslation } from "react-i18next"
 import { UserAnswer } from "../../../protocolTypes/answer"
 import { PublicSpec } from "../../../protocolTypes/publicSpec"
 import { ModelSolutionSpec } from "../../../protocolTypes/modelSolutionSpec"
@@ -15,9 +14,6 @@ interface SubmissionProps {
 }
 
 const Submission: React.FC<React.PropsWithChildren<SubmissionProps>> = (_props) => {
-  const { t } = useTranslation()
-
-
   return null
 }
 
