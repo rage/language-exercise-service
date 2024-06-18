@@ -1,6 +1,4 @@
-export type ExerciseType = 'dragging'
-
-export type PrivateSpec = PrivateSpecNoExerciseTypeSelected | PrivateSpecDragging | PrivateSpecTyping 
+export type PrivateSpec = PrivateSpecNoExerciseTypeSelected | PrivateSpecDragging | PrivateSpecTyping | PrivateSpecHighlighting
 
 interface PrivateSpecNoExerciseTypeSelected {
   version: 1
@@ -10,11 +8,40 @@ interface PrivateSpecNoExerciseTypeSelected {
 interface PrivateSpecDragging {
   version: 1
   exerciseType: 'dragging'
+  text: string
+  items: PrivateSpecItem[]
+  options: PrivateSpecOption[]
+  fakeOptions: PrivateSpecOption[]
 }
 
 interface PrivateSpecTyping {
   version: 1
   exerciseType: 'typing'
+  items: PrivateSpecItem[]
+  options: PrivateSpecOption[]
+  fakeOptions: PrivateSpecOption[]
+}
+
+interface PrivateSpecHighlighting {
+  version: 1
+  exerciseType: 'highlighting'
+  text: string
+  correctHighlightedWords: HighlightedWord[]
+}
+
+interface PrivateSpecItem {
+  id: string
+  text: string
+  correctOptionId: string
+}
+
+interface PrivateSpecOption {
+  id: string
+  text: string
+}
+
+interface HighlightedWord {
+  nThWordFromStart: number
 }
 
 
