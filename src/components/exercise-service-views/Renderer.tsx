@@ -28,7 +28,10 @@ interface RendererProps {
   port: MessagePort | null
 }
 
-const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({ state, port }) => {
+const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
+  state,
+  port,
+}) => {
   const { t } = useTranslation()
 
   if (!port) {

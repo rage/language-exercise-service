@@ -8,7 +8,11 @@ const PRIVATE_SPEC = "private_spec"
 const useExerciseServiceOutputState = <SelectorReturnType,>(
   selector: (arg: PrivateSpec | null) => SelectorReturnType | null,
 ) => {
-  return useBaseExerciseServiceOutputState(ExerciseServiceContext, selector, PRIVATE_SPEC)
+  return useBaseExerciseServiceOutputState(
+    ExerciseServiceContext,
+    selector,
+    PRIVATE_SPEC,
+  )
 }
 
 export default useExerciseServiceOutputState

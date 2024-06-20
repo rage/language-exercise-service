@@ -13,7 +13,9 @@ interface SubmissionProps {
   user_information: UserInformation
 }
 
-const Submission: React.FC<React.PropsWithChildren<SubmissionProps>> = (_props) => {
+const Submission: React.FC<React.PropsWithChildren<SubmissionProps>> = (
+  _props,
+) => {
   return null
 }
 

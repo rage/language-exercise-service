@@ -18,7 +18,10 @@ const SERVICE_NAME = "language-exercise"
 
 const i18n = initI18n(SERVICE_NAME)
 
-const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({ Component, pageProps }) => {
+const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({
+  Component,
+  pageProps,
+}) => {
   const language = useLanguage()
   useEffect(() => {
     // Remove the server-side injected CSS.

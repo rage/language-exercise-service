@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next"
 
 import { UserAnswer } from "../protocolTypes/answer"
 import { ModelSolutionSpec } from "../protocolTypes/modelSolutionSpec"
-import { createEmptyPrivateSpec, PrivateSpec } from "../protocolTypes/privateSpec"
+import {
+  createEmptyPrivateSpec,
+  PrivateSpec,
+} from "../protocolTypes/privateSpec"
 import { PublicSpec } from "../protocolTypes/publicSpec"
 import Renderer from "../components/exercise-service-views/Renderer"
 
@@ -23,6 +26,7 @@ import {
 import useExerciseServiceParentConnection from "@/shared-module/common/hooks/useExerciseServiceParentConnection"
 import withErrorBoundary from "@/shared-module/common/utils/withErrorBoundary"
 import { Grading } from "../protocolTypes/grading"
+import { css } from "@emotion/css"
 
 export interface SubmissionData {
   submission_result: StudentExerciseTaskSubmissionResult
@@ -45,7 +49,11 @@ export type State =
       gradingFeedbackJson: Grading | null
       userInformation: UserInformation
     }
-  | { viewType: "exercise-editor"; privateSpec: PrivateSpec; userInformation: UserInformation }
+  | {
+      viewType: "exercise-editor"
+      privateSpec: PrivateSpec
+      userInformation: UserInformation
+    }
 
 const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { i18n } = useTranslation()
@@ -100,7 +108,8 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
             modelSolutions: model_solution_spec as ModelSolutionSpec | null,
             userAnswer: quiz_answer as UserAnswer,
             userInformation: messageData.user_information,
-            gradingFeedbackJson: messageData.data.grading?.feedback_json as Grading | null,
+            gradingFeedbackJson: messageData.data.grading
+              ?.feedback_json as Grading | null,
           })
         } else {
           // eslint-disable-next-line i18next/no-literal-string
@@ -117,7 +126,9 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <HeightTrackingContainer port={port}>
-      <div>
+      <div className={css`
+        padding: 1px;
+        `}>
         <Renderer port={port} setState={setState} state={state} />
       </div>
     </HeightTrackingContainer>

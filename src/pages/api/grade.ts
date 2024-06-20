@@ -21,7 +21,6 @@ const handleGradingRequest = (
   // @ts-expect-error: TODO: will use these in the future
   const { exercise_spec, submission_data } = req.body as GradingRequest
 
-
   const responseJson: ExerciseTaskGradingResult = {
     feedback_json: null,
     feedback_text: null,

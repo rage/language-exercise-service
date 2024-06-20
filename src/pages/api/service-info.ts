@@ -12,7 +12,10 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
   return handleGet(req, res)
 }
 
-const handleGet = (_req: NextApiRequest, res: NextApiResponse<ExerciseServiceInfoApi>) => {
+const handleGet = (
+  _req: NextApiRequest,
+  res: NextApiResponse<ExerciseServiceInfoApi>,
+) => {
   const prefix = basePath()
   res.json({
     service_name: "Language exercise",

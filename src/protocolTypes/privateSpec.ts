@@ -1,4 +1,8 @@
-export type PrivateSpec = PrivateSpecNoExerciseTypeSelected | PrivateSpecDragging | PrivateSpecTyping | PrivateSpecHighlighting
+export type PrivateSpec =
+  | PrivateSpecNoExerciseTypeSelected
+  | PrivateSpecDragging
+  | PrivateSpecTyping
+  | PrivateSpecHighlighting
 
 interface PrivateSpecNoExerciseTypeSelected {
   version: 1
@@ -7,7 +11,7 @@ interface PrivateSpecNoExerciseTypeSelected {
 
 interface PrivateSpecDragging {
   version: 1
-  exerciseType: 'dragging'
+  exerciseType: "dragging"
   text: string
   items: PrivateSpecItem[]
   options: PrivateSpecOption[]
@@ -16,7 +20,7 @@ interface PrivateSpecDragging {
 
 interface PrivateSpecTyping {
   version: 1
-  exerciseType: 'typing'
+  exerciseType: "typing"
   items: PrivateSpecItem[]
   options: PrivateSpecOption[]
   fakeOptions: PrivateSpecOption[]
@@ -24,15 +28,16 @@ interface PrivateSpecTyping {
 
 interface PrivateSpecHighlighting {
   version: 1
-  exerciseType: 'highlighting'
+  exerciseType: "highlighting"
   text: string
   correctHighlightedWords: HighlightedWord[]
 }
 
+export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>
+
 interface PrivateSpecItem {
   id: string
   text: string
-  correctOptionId: string
 }
 
 interface PrivateSpecOption {
@@ -43,7 +48,6 @@ interface PrivateSpecOption {
 interface HighlightedWord {
   nThWordFromStart: number
 }
-
 
 export function createEmptyPrivateSpec(): PrivateSpec {
   return {

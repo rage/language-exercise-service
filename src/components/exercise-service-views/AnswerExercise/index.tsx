@@ -1,6 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react"
 
-import { UserAnswer, createEmptyUserAnswer } from "../../../protocolTypes/answer"
+import {
+  UserAnswer,
+  createEmptyUserAnswer,
+} from "../../../protocolTypes/answer"
 import { PublicSpec } from "../../../protocolTypes/publicSpec"
 import UserItemAnswerContext from "../../../contexts/UserItemAnswerContext"
 
