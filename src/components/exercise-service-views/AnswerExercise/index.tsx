@@ -1,19 +1,19 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react";
 
 import {
   UserAnswer,
   createEmptyUserAnswer,
-} from "../../../protocolTypes/answer"
-import { PublicSpec } from "../../../protocolTypes/publicSpec"
-import UserItemAnswerContext from "../../../contexts/UserItemAnswerContext"
+} from "../../../protocolTypes/answer";
+import { PublicSpec } from "../../../protocolTypes/publicSpec";
+import UserItemAnswerContext from "../../../contexts/UserItemAnswerContext";
 
-import { UserInformation } from "@/shared-module/common/exercise-service-protocol-types"
+import { UserInformation } from "@/shared-module/common/exercise-service-protocol-types";
 
 export interface ExerciseProps {
-  port: MessagePort
-  publicSpec: PublicSpec
-  previousSubmission: UserAnswer | null
-  user_information: UserInformation
+  port: MessagePort;
+  publicSpec: PublicSpec;
+  previousSubmission: UserAnswer | null;
+  user_information: UserInformation;
 }
 
 const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
@@ -22,18 +22,18 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
 }) => {
   const intialAnswer = useMemo(() => {
     if (previousSubmission) {
-      return previousSubmission
+      return previousSubmission;
     }
-    return createEmptyUserAnswer()
-  }, [previousSubmission])
-  const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
+    return createEmptyUserAnswer();
+  }, [previousSubmission]);
+  const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer);
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(
     (_newState) => {
-      return true
+      return true;
     },
     [],
-  )
+  );
 
   return (
     <UserItemAnswerContext.Provider
@@ -46,7 +46,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = ({
     >
       {null}
     </UserItemAnswerContext.Provider>
-  )
-}
+  );
+};
 
-export default Exercise
+export default Exercise;

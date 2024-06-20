@@ -1,18 +1,18 @@
-import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
-import { ExerciseType, PrivateSpec } from "@/protocolTypes/privateSpec"
-import { css } from "@emotion/css"
-import { useCallback } from "react"
+import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState";
+import { ExerciseType, PrivateSpec } from "@/protocolTypes/privateSpec";
+import { css } from "@emotion/css";
+import { useCallback } from "react";
 
 const SelectExerciseType: React.FC = () => {
   const { selected: _selected, updateState } = useExerciseServiceOutputState(
     (arg) => arg,
-  )
+  );
 
   const handleExerciseTypeChange = useCallback(
     (exerciseType: ExerciseType) => {
       updateState((draft) => {
         if (!draft) {
-          return draft
+          return draft;
         }
         if (exerciseType === "dragging") {
           return {
@@ -22,7 +22,7 @@ const SelectExerciseType: React.FC = () => {
             options: [],
             fakeOptions: [],
             text: "",
-          } satisfies PrivateSpec
+          } satisfies PrivateSpec;
         }
         if (exerciseType === "highlighting") {
           return {
@@ -30,7 +30,7 @@ const SelectExerciseType: React.FC = () => {
             exerciseType: "highlighting",
             text: "",
             correctHighlightedWords: [],
-          } satisfies PrivateSpec
+          } satisfies PrivateSpec;
         }
         if (exerciseType === "typing") {
           return {
@@ -39,13 +39,13 @@ const SelectExerciseType: React.FC = () => {
             items: [],
             options: [],
             fakeOptions: [],
-          } satisfies PrivateSpec
+          } satisfies PrivateSpec;
         }
-        throw new Error("Invalid exercise type")
-      })
+        throw new Error("Invalid exercise type");
+      });
     },
     [updateState],
-  )
+  );
 
   return (
     <div
@@ -62,7 +62,7 @@ const SelectExerciseType: React.FC = () => {
       </button>
       <button onClick={() => handleExerciseTypeChange("typing")}>Typing</button>
     </div>
-  )
-}
+  );
+};
 
-export default SelectExerciseType
+export default SelectExerciseType;

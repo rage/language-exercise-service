@@ -2,56 +2,48 @@ export type PrivateSpec =
   | PrivateSpecNoExerciseTypeSelected
   | PrivateSpecDragging
   | PrivateSpecTyping
-  | PrivateSpecHighlighting
+  | PrivateSpecHighlighting;
 
 interface PrivateSpecNoExerciseTypeSelected {
-  version: 1
-  exerciseType: null
+  version: 1;
+  exerciseType: null;
 }
 
 interface PrivateSpecDragging {
-  version: 1
-  exerciseType: "dragging"
-  text: string
-  items: PrivateSpecItem[]
-  options: PrivateSpecOption[]
-  fakeOptions: PrivateSpecOption[]
+  version: 1;
+  exerciseType: "dragging";
+  items: PrivateSpecItem[];
+  fakeOptions: string[];
 }
 
 interface PrivateSpecTyping {
-  version: 1
-  exerciseType: "typing"
-  items: PrivateSpecItem[]
-  options: PrivateSpecOption[]
-  fakeOptions: PrivateSpecOption[]
+  version: 1;
+  exerciseType: "typing";
+  items: PrivateSpecItem[];
+  fakeOptions: string[];
 }
 
 interface PrivateSpecHighlighting {
-  version: 1
-  exerciseType: "highlighting"
-  text: string
-  correctHighlightedWords: HighlightedWord[]
+  version: 1;
+  exerciseType: "highlighting";
+  text: string;
+  correctHighlightedWords: HighlightedWord[];
 }
 
-export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>
+export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>;
 
 interface PrivateSpecItem {
-  id: string
-  text: string
-}
-
-interface PrivateSpecOption {
-  id: string
-  text: string
+  id: string;
+  text: string;
 }
 
 interface HighlightedWord {
-  nThWordFromStart: number
+  nThWordFromStart: number;
 }
 
 export function createEmptyPrivateSpec(): PrivateSpec {
   return {
     version: 1,
     exerciseType: null,
-  }
+  };
 }

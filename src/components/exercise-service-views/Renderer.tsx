@@ -1,45 +1,45 @@
-import dynamic from "next/dynamic"
-import React, { Dispatch, SetStateAction } from "react"
-import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic";
+import React, { Dispatch, SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 
-import { State } from "../../pages/iframe"
+import { State } from "../../pages/iframe";
 
-import { EXERCISE_SERVICE_CONTENT_ID } from "@/shared-module/common/utils/constants"
-import withErrorBoundary from "@/shared-module/common/utils/withErrorBoundary"
-import withNoSsr from "@/shared-module/common/utils/withNoSsr"
+import { EXERCISE_SERVICE_CONTENT_ID } from "@/shared-module/common/utils/constants";
+import withErrorBoundary from "@/shared-module/common/utils/withErrorBoundary";
+import withNoSsr from "@/shared-module/common/utils/withNoSsr";
 
 // Dynamic imports for different view types to keep the bundle size down
 const ExerciseEditor = dynamic(() => import("./ExerciseEditor"), {
   ssr: false,
   loading: () => null,
-})
+});
 const AnswerExercise = dynamic(() => import("./AnswerExercise"), {
   ssr: false,
   loading: () => null,
-})
+});
 const ViewSubmission = dynamic(() => import("./ViewSubmission"), {
   ssr: false,
   loading: () => null,
-})
+});
 
 interface RendererProps {
-  state: State | null
-  setState: Dispatch<SetStateAction<State | null>>
-  port: MessagePort | null
+  state: State | null;
+  setState: Dispatch<SetStateAction<State | null>>;
+  port: MessagePort | null;
 }
 
 const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
   state,
   port,
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   if (!port) {
-    return <>{t("waiting-for-port")}</>
+    return <>{t("waiting-for-port")}</>;
   }
 
   if (!state) {
-    return <>{t("waiting-for-content")}</>
+    return <>{t("waiting-for-content")}</>;
   }
 
   if (state.viewType === "answer-exercise") {
@@ -52,7 +52,7 @@ const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
           user_information={state.userInformation}
         />
       </div>
-    )
+    );
   } else if (state.viewType === "view-submission") {
     return (
       <div id={EXERCISE_SERVICE_CONTENT_ID}>
@@ -64,16 +64,16 @@ const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
           user_information={state.userInformation}
         />
       </div>
-    )
+    );
   } else if (state.viewType === "exercise-editor") {
     return (
       <div id={EXERCISE_SERVICE_CONTENT_ID}>
         <ExerciseEditor port={port} privateSpec={state.privateSpec} />
       </div>
-    )
+    );
   } else {
-    return <>{t("waiting-for-content")}</>
+    return <>{t("waiting-for-content")}</>;
   }
-}
+};
 
-export default withErrorBoundary(withNoSsr(Renderer))
+export default withErrorBoundary(withNoSsr(Renderer));

@@ -1,3 +1,3 @@
 export type Grading = {
-  version: 1
-}
+  version: 1;
+};
