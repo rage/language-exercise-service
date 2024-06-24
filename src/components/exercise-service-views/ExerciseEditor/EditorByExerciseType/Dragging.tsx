@@ -1,26 +1,26 @@
-import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState";
-import { css } from "@emotion/css";
-import { useCallback } from "react";
-import { v4 } from "uuid";
+import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
+import { css } from "@emotion/css"
+import { useCallback } from "react"
+import { v4 } from "uuid"
 
 const DraggingEditor: React.FC = () => {
   const { selected: selected, updateState } = useExerciseServiceOutputState(
     (arg) => arg,
-  );
+  )
   const addNewItem = useCallback(() => {
     updateState((draft) => {
       if (!draft || draft.exerciseType !== "dragging") {
-        return draft;
+        return draft
       }
       draft.items.push({
         id: v4(),
         text: "",
-      });
-    });
-  }, [updateState]);
+      })
+    })
+  }, [updateState])
 
   if (!selected || selected.exerciseType !== "dragging") {
-    return null;
+    return null
   }
   return (
     <div>
@@ -37,14 +37,14 @@ const DraggingEditor: React.FC = () => {
               onChange={(e) => {
                 updateState((draft) => {
                   if (!draft || draft.exerciseType !== "dragging") {
-                    return draft;
+                    return draft
                   }
-                  const draftItem = draft.items.find((i) => i.id === item.id);
+                  const draftItem = draft.items.find((i) => i.id === item.id)
                   if (!draftItem) {
-                    return draft;
+                    return draft
                   }
-                  draftItem.text = e.target.value;
-                });
+                  draftItem.text = e.target.value
+                })
               }}
             />
           </div>
@@ -52,7 +52,7 @@ const DraggingEditor: React.FC = () => {
       ))}
       <button onClick={addNewItem}>Add option</button>
     </div>
-  );
-};
+  )
+}
 
-export default DraggingEditor;
+export default DraggingEditor

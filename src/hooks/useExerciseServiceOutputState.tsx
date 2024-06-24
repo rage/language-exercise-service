@@ -1,9 +1,9 @@
-import { PrivateSpec } from "../protocolTypes/privateSpec";
-import ExerciseServiceContext from "../contexts/ExerciseServiceContext";
+import { PrivateSpec } from "../protocolTypes/privateSpec"
+import ExerciseServiceContext from "../contexts/ExerciseServiceContext"
 
-import useBaseExerciseServiceOutputState from "@/shared-module/common/hooks/exerciseServiceHooks/useExerciseServiceOutputState";
+import useBaseExerciseServiceOutputState from "@/shared-module/common/hooks/exerciseServiceHooks/useExerciseServiceOutputState"
 
-const PRIVATE_SPEC = "private_spec";
+const PRIVATE_SPEC = "private_spec"
 
 const useExerciseServiceOutputState = <SelectorReturnType,>(
   selector: (arg: PrivateSpec | null) => SelectorReturnType | null,
@@ -12,7 +12,7 @@ const useExerciseServiceOutputState = <SelectorReturnType,>(
     ExerciseServiceContext,
     selector,
     PRIVATE_SPEC,
-  );
-};
+  )
+}
 
-export default useExerciseServiceOutputState;
+export default useExerciseServiceOutputState

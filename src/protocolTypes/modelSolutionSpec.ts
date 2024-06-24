@@ -1,3 +1,3 @@
 export interface ModelSolutionSpec {
-  version: 1;
+  version: 1
 }
