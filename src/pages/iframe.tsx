@@ -27,6 +27,7 @@ import useExerciseServiceParentConnection from "@/shared-module/common/hooks/use
 import withErrorBoundary from "@/shared-module/common/utils/withErrorBoundary"
 import { Grading } from "../protocolTypes/grading"
 import { css } from "@emotion/css"
+import { set } from "lodash"
 
 export interface SubmissionData {
   submission_result: StudentExerciseTaskSubmissionResult
@@ -91,6 +92,12 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
               userInformation: messageData.user_information,
             })
             return
+          } else {
+            setState({
+              viewType: messageData.view_type,
+              privateSpec: privateSpec as PrivateSpec,
+              userInformation: messageData.user_information,
+            })
           }
         } else if (messageData.view_type === "view-submission") {
           if (!isViewSubmissionIframeState(messageData)) {

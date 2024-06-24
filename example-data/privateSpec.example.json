@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "exerciseType": "dragging",
+  "items": [
+    {
+      "id": "8eca8a92-a5bc-42b3-aa62-51ec7046419a",
+      "text": "I [went] to the store yesterday and [bought] some groceries."
+    },
+    {
+      "id": "6b541b1a-b7f2-49f7-9e04-141bc21eb121",
+      "text": "She [is] very happy today because she [finished] her project."
+    },
+    {
+      "id": "9a110a73-543e-4a88-9daf-290803904d81",
+      "text": "They are [buying] a new house and [are] planning to move next month."
+    }
+  ],
+  "options": [],
+  "fakeOptions": [],
+  "text": ""
+}

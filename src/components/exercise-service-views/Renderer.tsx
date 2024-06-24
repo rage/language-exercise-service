@@ -72,7 +72,7 @@ const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
       </div>
     )
   } else {
-    return <>{t("waiting-for-content")}</>
+    return <>{t("wrong-view-type")}</>
   }
 }
 

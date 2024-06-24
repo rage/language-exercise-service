@@ -101,13 +101,16 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                   const itemAnswer = answer.itemAnswers.find(
                     (ia) => ia.itemId === item.id,
                   )
-                  const selectedOption = itemAnswer?.selectedOptions[
-                    placeHolderCounter
-                  ]
+                  const selectedOption =
+                    itemAnswer?.selectedOptions[placeHolderCounter]
                   let draggable = undefined
                   if (selectedOption) {
                     draggable = (
-                      <Draggable option={selectedOption} n={0} key={selectedOption} />
+                      <Draggable
+                        option={selectedOption}
+                        n={0}
+                        key={selectedOption}
+                      />
                     )
                   }
                   return (

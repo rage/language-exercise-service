@@ -1,4 +1,5 @@
 {
   "waiting-for-port": "Waiting for port",
-  "waiting-for-content": "Waiting for content"
+  "waiting-for-content": "Waiting for content",
+  "wrong-view-type": "Wrong view type"
 }
