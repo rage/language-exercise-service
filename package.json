@@ -22,6 +22,7 @@
     "@fontsource/space-mono": "^5.0.19",
     "@monaco-editor/react": "^4.6.0",
     "@next/bundle-analyzer": "^14.1.2",
+    "@noble/hashes": "^1.4.0",
     "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^5.25.0",
     "@types/commonmark": "^0.27.9",

@@ -1,5 +1,6 @@
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { ExerciseType, PrivateSpec } from "@/protocolTypes/privateSpec"
+import { generateRandomKey, uint8ArrayToHex } from "@/util/keys"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
 
@@ -19,9 +20,8 @@ const SelectExerciseType: React.FC = () => {
             version: 1,
             exerciseType: "dragging",
             items: [],
-            options: [],
             fakeOptions: [],
-            text: "",
+            secretKey: uint8ArrayToHex(generateRandomKey(32)),
           } satisfies PrivateSpec
         }
         if (exerciseType === "highlighting") {
@@ -37,7 +37,6 @@ const SelectExerciseType: React.FC = () => {
             version: 1,
             exerciseType: "typing",
             items: [],
-            options: [],
             fakeOptions: [],
           } satisfies PrivateSpec
         }

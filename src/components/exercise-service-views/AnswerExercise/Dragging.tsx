@@ -20,7 +20,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
   const usedOptions = useMemo(
     () =>
       answer.itemAnswers
-        .map((ia) => ia.selectedOptions as string[])
+        .map((ia) => ia.selectedOptions)
         .filter((o) => !!o)
         .flat(),
     [answer],
@@ -39,7 +39,9 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
           throw new Error("Answer should have been initialized")
         }
         answer.itemAnswers.forEach((ia) => {
-          const index = ia.selectedOptions.indexOf(dragged.option)
+          const index = ia.selectedOptions.findIndex(
+            (o) => o && o.id === dragged.option.id,
+          )
           if (index !== -1) {
             ia.selectedOptions[index] = undefined
           }
@@ -69,6 +71,17 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
         }
         answer.itemAnswers.push(itemAnswer)
       }
+
+      // In case this was a moved answer, remove it from the old slot
+      for (const ia of answer.itemAnswers) {
+        const index = ia.selectedOptions.findIndex(
+          (o) => o && o.id === dragged.option.id,
+        )
+        if (index !== -1) {
+          ia.selectedOptions[index] = undefined
+        }
+      }
+
       // This is smart in this case because js fills the gaps with undefined by default
       itemAnswer.selectedOptions[dropped.nthPlaceholder] = dragged.option
     })
@@ -108,8 +121,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                     draggable = (
                       <Draggable
                         option={selectedOption}
-                        n={0}
-                        key={selectedOption}
+                        key={selectedOption.id}
                       />
                     )
                   }
@@ -127,11 +139,11 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
           })}
         </div>
         <div>
-          {publicSpec.allOptions.map((option, n) => {
+          {publicSpec.allOptions.map((option) => {
             if (usedOptions.includes(option)) {
               return null
             }
-            return <Draggable option={option} n={n} key={option} />
+            return <Draggable option={option} key={option.id} />
           })}
         </div>
       </div>

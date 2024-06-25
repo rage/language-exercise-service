@@ -1,15 +1,15 @@
 import React from "react"
 import { useDraggable } from "@dnd-kit/core"
 import { css } from "@emotion/css"
+import { PublicSpecOption } from "@/protocolTypes/publicSpec"
 
 export interface DraggableProps {
-  option: string
-  n: number
+  option: PublicSpecOption
 }
 
 const Draggable: React.FC<DraggableProps> = (props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `draggable-${props.n}-${props.option}`,
+    id: `draggable-${props.option.id}`,
     data: props,
   })
   const style = transform
@@ -30,7 +30,7 @@ const Draggable: React.FC<DraggableProps> = (props) => {
       {...listeners}
       {...attributes}
     >
-      {props.option}
+      {props.option.text}
     </button>
   )
 }
@@ -39,9 +39,8 @@ const Draggable: React.FC<DraggableProps> = (props) => {
 export function isDraggableProps(arg: any): arg is DraggableProps {
   return (
     arg.option !== undefined &&
-    arg.n !== undefined &&
-    typeof arg.option === "string" &&
-    typeof arg.n === "number"
+    arg.option.id !== undefined &&
+    arg.option.text !== undefined
   )
 }
 

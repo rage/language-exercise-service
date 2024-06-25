@@ -1,4 +1,4 @@
-import { PublicSpec } from "./publicSpec"
+import { PublicSpec, PublicSpecOption } from "./publicSpec"
 
 export type UserAnswer =
   | UserAnswerDragging
@@ -13,7 +13,7 @@ export interface UserAnswerDragging {
 
 export interface ItemAnswer {
   itemId: string
-  selectedOptions: (string | undefined)[]
+  selectedOptions: (PublicSpecOption | undefined)[]
 }
 
 export interface UserAnswerTyping {

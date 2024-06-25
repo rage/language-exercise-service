@@ -2,10 +2,15 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
-import { PublicSpec, TextPart } from "@/protocolTypes/publicSpec"
-import { v4 } from "uuid"
+import {
+  PublicSpec,
+  PublicSpecOption,
+  TextPart,
+} from "@/protocolTypes/publicSpec"
+import { v5 } from "uuid"
 import { PrivateSpec } from "@/protocolTypes/privateSpec"
-import { shuffle } from "lodash"
+import { blake3 } from "@noble/hashes/blake3"
+import { hexToUint8Array } from "@/util/keys"
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === "OPTIONS") {
@@ -49,9 +54,19 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
       if (!options) {
         return []
       }
-      return options.map((option) => option.slice(1, -1))
+      return options.map((option, n) => {
+        // Creating a deterministic id for each option by using a one way cryptographic hash function to prevent leaking the correct answers
+        // It uses the random string privateSpec.secretKey to ensure that the id cannot be brute forced
+        const hash = blake3(`${n}-${item.id}`, {
+          dkLen: 256,
+          key: hexToUint8Array(privateSpec.secretKey),
+        })
+        // Uuid v5 is a convenient way to convert the uint8array to a string that is useable as an id. Actual security is provided by the blake3 hash.
+        const id = v5(hash, item.id)
+        return { id, text: option.slice(1, -1) } satisfies PublicSpecOption
+      })
     })
-    .sort((a, b) => a.localeCompare(b))
+    .sort((a, b) => a.text.localeCompare(b.text))
 
   // export type TextPart = { type: "text"; text: string } | { type: "slot" }
   const sanitizedItems = privateSpec.items.map((item) => {
@@ -68,11 +83,11 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     exerciseType: "dragging",
     items: sanitizedItems,
     allOptions: allOptions,
-  })
+  } satisfies PublicSpec)
 }
 
 function transformText(input: string): TextPart[] {
-  const regex = /\[(.*?)\]|([^\[\]]+)/g
+  const regex = /\[(.*?)\]|([^[\]]+)/g
   const result: TextPart[] = []
   let match
 

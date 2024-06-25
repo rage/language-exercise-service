@@ -3,19 +3,18 @@
   "exerciseType": "dragging",
   "items": [
     {
-      "id": "8eca8a92-a5bc-42b3-aa62-51ec7046419a",
+      "id": "ee7ca9e1-c760-4609-9ec8-d4414759defb",
       "text": "I [went] to the store yesterday and [bought] some groceries."
     },
     {
-      "id": "6b541b1a-b7f2-49f7-9e04-141bc21eb121",
+      "id": "56ed091d-1051-4269-849b-2edcc177a3f2",
       "text": "She [is] very happy today because she [finished] her project."
     },
     {
-      "id": "9a110a73-543e-4a88-9daf-290803904d81",
+      "id": "dfb34029-e75a-40d8-9e84-76b0ad6a335c",
       "text": "They are [buying] a new house and [are] planning to move next month."
     }
   ],
-  "options": [],
   "fakeOptions": [],
-  "text": ""
+  "secretKey": "6b21146743b6a7f039e5c36c27625d8af8522fbfa4c026d8d260da93d79ec09a"
 }

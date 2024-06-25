@@ -14,6 +14,8 @@ interface PrivateSpecDragging {
   exerciseType: "dragging"
   items: PrivateSpecItem[]
   fakeOptions: string[]
+  /** Random, unguessable string that may not be shared to the students. Used to hash PublicSpecOption id:s so that they don't leak the correct answer. */
+  secretKey: string
 }
 
 interface PrivateSpecTyping {
