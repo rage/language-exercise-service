@@ -35,10 +35,36 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
   const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(
-    (_newState) => {
-      return true
+    (newState) => {
+      if (!newState) {
+        return false
+      }
+      if (publicSpec.exerciseType === "dragging") {
+        for (const item of publicSpec.items) {
+          if (newState.exerciseType !== "dragging") {
+            return false
+          }
+          const answer = newState.itemAnswers.find(
+            (ia) => ia.itemId === item.id,
+          )
+          if (!answer) {
+            return false
+          }
+          const numberOfSlots = item.text.filter(
+            (o) => o.type === "slot",
+          ).length
+          if (answer.selectedOptions.length !== numberOfSlots) {
+            return false
+          }
+          if (answer.selectedOptions.some((o) => !o)) {
+            return false
+          }
+        }
+        return true
+      }
+      return false
     },
-    [],
+    [publicSpec],
   )
 
   const Component = exerciseTypeToComponent[publicSpec.exerciseType] ?? null

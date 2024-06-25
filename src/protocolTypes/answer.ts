@@ -13,7 +13,7 @@ export interface UserAnswerDragging {
 
 export interface ItemAnswer {
   itemId: string
-  selectedOptions: (PublicSpecOption | undefined)[]
+  selectedOptions: (PublicSpecOption | null)[]
 }
 
 export interface UserAnswerTyping {

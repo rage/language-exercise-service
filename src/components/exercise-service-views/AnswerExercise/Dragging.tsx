@@ -43,7 +43,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
             (o) => o && o.id === dragged.option.id,
           )
           if (index !== -1) {
-            ia.selectedOptions[index] = undefined
+            ia.selectedOptions[index] = null
           }
         })
       })
@@ -78,7 +78,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
           (o) => o && o.id === dragged.option.id,
         )
         if (index !== -1) {
-          ia.selectedOptions[index] = undefined
+          ia.selectedOptions[index] = null
         }
       }
 
