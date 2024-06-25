@@ -40,16 +40,18 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
   if (privateSpec.exerciseType !== "dragging") {
     throw new Error("Unsupported exercise type")
   }
-  const allOptions = privateSpec.items.flatMap((item) => {
-    const templateText = item.text
-    // Options can be found inside the template text inside square brackets
-    // e.g. if the text is "I [went] to the store yesterday and [bought] some groceries." then the options are "went" and "bought"
-    const options = templateText.match(/\[([^\]]+)\]/g)
-    if (!options) {
-      return []
-    }
-    return options.map((option) => option.slice(1, -1))
-  }).sort((a, b) => a.localeCompare(b))
+  const allOptions = privateSpec.items
+    .flatMap((item) => {
+      const templateText = item.text
+      // Options can be found inside the template text inside square brackets
+      // e.g. if the text is "I [went] to the store yesterday and [bought] some groceries." then the options are "went" and "bought"
+      const options = templateText.match(/\[([^\]]+)\]/g)
+      if (!options) {
+        return []
+      }
+      return options.map((option) => option.slice(1, -1))
+    })
+    .sort((a, b) => a.localeCompare(b))
 
   // export type TextPart = { type: "text"; text: string } | { type: "slot" }
   const sanitizedItems = privateSpec.items.map((item) => {
@@ -70,19 +72,19 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
 }
 
 function transformText(input: string): TextPart[] {
-  const regex = /\[(.*?)\]|([^\[\]]+)/g;
-  const result: TextPart[] = [];
-  let match;
+  const regex = /\[(.*?)\]|([^\[\]]+)/g
+  const result: TextPart[] = []
+  let match
 
   while ((match = regex.exec(input)) !== null) {
     if (match[1]) {
       // Matched content inside brackets
-      result.push({ type: "slot" });
+      result.push({ type: "slot" })
     } else if (match[2]) {
       // Matched content outside brackets
-      result.push({ type: "text", text: match[2].trim() });
+      result.push({ type: "text", text: match[2].trim() })
     }
   }
 
-  return result;
+  return result
 }

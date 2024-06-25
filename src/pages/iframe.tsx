@@ -69,8 +69,8 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
               "Set-state message data is invalid for the specified answer-exercise view type",
             )
           }
-          let publicSpec = messageData.data.public_spec
-          let quiz_answer = messageData.data.previous_submission
+          const publicSpec = messageData.data.public_spec
+          const quiz_answer = messageData.data.previous_submission
 
           setState({
             viewType: messageData.view_type,
@@ -105,9 +105,9 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
               "Set-state message data is invalid for the specified view-submission view type",
             )
           }
-          let public_spec = messageData.data.public_spec
-          let model_solution_spec = messageData.data.model_solution_spec
-          let quiz_answer = messageData.data.user_answer
+          const public_spec = messageData.data.public_spec
+          const model_solution_spec = messageData.data.model_solution_spec
+          const quiz_answer = messageData.data.user_answer
 
           setState({
             viewType: messageData.view_type,

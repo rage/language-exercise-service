@@ -32,11 +32,20 @@ const Droppable: React.FC<React.PropsWithChildren<DroppableProps>> = (
         ${isOver && `background-color: #f0f0f0;`}
       `}
     >
-      {props.children ? props.children : <>&nbsp;</>}
+      <div
+        className={css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `}
+      >
+        {props.children ? props.children : <>&nbsp;</>}
+      </div>
     </span>
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isDroppableProps(arg: any): arg is DroppableProps {
   return (
     arg.itemId !== undefined &&

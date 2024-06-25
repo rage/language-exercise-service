@@ -35,6 +35,7 @@ const Draggable: React.FC<DraggableProps> = (props) => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isDraggableProps(arg: any): arg is DraggableProps {
   return (
     arg.option !== undefined &&
