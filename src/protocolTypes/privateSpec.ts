@@ -4,12 +4,12 @@ export type PrivateSpec =
   | PrivateSpecTyping
   | PrivateSpecHighlighting
 
-interface PrivateSpecNoExerciseTypeSelected {
+export interface PrivateSpecNoExerciseTypeSelected {
   version: 1
   exerciseType: null
 }
 
-interface PrivateSpecDragging {
+export interface PrivateSpecDragging {
   version: 1
   exerciseType: "dragging"
   items: PrivateSpecItem[]
@@ -18,14 +18,14 @@ interface PrivateSpecDragging {
   secretKey: string
 }
 
-interface PrivateSpecTyping {
+export interface PrivateSpecTyping {
   version: 1
   exerciseType: "typing"
   items: PrivateSpecItem[]
   matchingIsCaseInsensitive: boolean
 }
 
-interface PrivateSpecHighlighting {
+export interface PrivateSpecHighlighting {
   version: 1
   exerciseType: "highlighting"
   text: string

@@ -3,7 +3,7 @@ export type PublicSpec =
   | PublicSpecTyping
   | PublicSpecHighlighting
 
-interface PublicSpecDragging {
+export interface PublicSpecDragging {
   version: 1
   exerciseType: "dragging"
   items: PublicSpecItem[]
@@ -11,19 +11,19 @@ interface PublicSpecDragging {
   allOptions: PublicSpecOption[]
 }
 
-interface PublicSpecTyping {
+export interface PublicSpecTyping {
   version: 1
   exerciseType: "typing"
   items: PublicSpecItem[]
 }
 
-interface PublicSpecHighlighting {
+export interface PublicSpecHighlighting {
   version: 1
   exerciseType: "highlighting"
   text: string
 }
 
-interface PublicSpecItem {
+export interface PublicSpecItem {
   id: string
   text: TextPart[]
 }

@@ -4,11 +4,14 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
 import {
   PublicSpec,
+  PublicSpecDragging,
+  PublicSpecHighlighting,
   PublicSpecOption,
+  PublicSpecTyping,
   TextPart,
 } from "@/protocolTypes/publicSpec"
 import { v5 } from "uuid"
-import { PrivateSpec } from "@/protocolTypes/privateSpec"
+import { PrivateSpec, PrivateSpecDragging, PrivateSpecHighlighting, PrivateSpecTyping } from "@/protocolTypes/privateSpec"
 import { blake3 } from "@noble/hashes/blake3"
 import { hexToUint8Array } from "@/util/keys"
 
@@ -42,9 +45,60 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     throw new Error("Invalid request")
   }
   const privateSpec = req.body.private_spec as PrivateSpec
-  if (privateSpec.exerciseType !== "dragging") {
-    throw new Error("Unsupported exercise type")
+  let spec: PublicSpec | null = null
+  switch (privateSpec.exerciseType) {
+    case "dragging":
+      spec = makeDraggingPublicSpec(privateSpec)
+      break
+    case "highlighting":
+      spec = makeHighlightingPublicSpec(privateSpec)
+      break
+    case "typing":
+      spec = makeTypingPublicSpec(privateSpec)
+      break
+    default:
+      throw new Error(`Unsupported exercise type: ${privateSpec.exerciseType}`)
   }
+
+  if (!spec) {
+    throw new Error("Failed to create public spec.")
+  }
+  return res.status(200).json(spec)
+}
+
+function makeHighlightingPublicSpec(
+  privateSpec: PrivateSpecHighlighting,
+): PublicSpecHighlighting {
+
+  const sanitizedText = privateSpec.text.replace(/\[/g, "").replace(/\]/g, "");
+
+  return {
+    version: 1,
+    exerciseType: "highlighting",
+    text: sanitizedText,
+  }
+}
+
+function makeTypingPublicSpec(privateSpec: PrivateSpecTyping): PublicSpecTyping {
+  const sanitizedItems = privateSpec.items.map((item) => {
+    const text = item.text
+    const parts = transformText(text)
+    return {
+      id: item.id,
+      text: parts,
+    }
+  })
+  return {
+    version: 1,
+    exerciseType: "typing",
+    items: sanitizedItems,
+  }
+}
+
+
+function makeDraggingPublicSpec(
+  privateSpec: PrivateSpecDragging,
+): PublicSpecDragging {
   const allOptions = privateSpec.items
     .flatMap((item) => {
       const templateText = item.text
@@ -68,7 +122,6 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     })
     .sort((a, b) => a.text.localeCompare(b.text))
 
-  // export type TextPart = { type: "text"; text: string } | { type: "slot" }
   const sanitizedItems = privateSpec.items.map((item) => {
     const text = item.text
     const parts = transformText(text)
@@ -77,13 +130,12 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
       text: parts,
     }
   })
-
-  return res.status(200).json({
+  return {
     version: 1,
     exerciseType: "dragging",
     items: sanitizedItems,
     allOptions: allOptions,
-  } satisfies PublicSpec)
+  }
 }
 
 function transformText(input: string): TextPart[] {
