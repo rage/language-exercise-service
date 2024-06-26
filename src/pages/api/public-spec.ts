@@ -70,7 +70,7 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).json(spec)
 }
 
-function makeHighlightingPublicSpec(
+export function makeHighlightingPublicSpec(
   privateSpec: PrivateSpecHighlighting,
 ): PublicSpecHighlighting {
   const sanitizedText = privateSpec.text.replace(/\[/g, "").replace(/\]/g, "")
@@ -97,7 +97,7 @@ function makeHighlightingPublicSpec(
   }
 }
 
-function makeTypingPublicSpec(
+export function makeTypingPublicSpec(
   privateSpec: PrivateSpecTyping,
 ): PublicSpecTyping {
   const sanitizedItems = privateSpec.items.map((item) => {
@@ -115,7 +115,7 @@ function makeTypingPublicSpec(
   }
 }
 
-function makeDraggingPublicSpec(
+export function makeDraggingPublicSpec(
   privateSpec: PrivateSpecDragging,
 ): PublicSpecDragging {
   const allOptions = privateSpec.items
