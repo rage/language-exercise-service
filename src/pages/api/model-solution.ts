@@ -9,13 +9,7 @@ import {
   PrivateSpecHighlighting,
   PrivateSpecTyping,
 } from "@/protocolTypes/privateSpec"
-import {
-  extractDraggableOptionsFromPrivateSpecItem,
-  makeDraggingPublicSpec,
-  makeHighlightingPublicSpec,
-  makeTypingPublicSpec,
-  transformText,
-} from "./public-spec"
+import { extractDraggableOptionsFromPrivateSpecItem } from "./public-spec"
 import { PublicSpecOption } from "@/protocolTypes/publicSpec"
 import { paragraphToHighlightableParts } from "@/util/paragraphToHighlightablePart"
 
