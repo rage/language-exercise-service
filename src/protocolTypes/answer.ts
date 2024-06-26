@@ -1,4 +1,4 @@
-import { PublicSpec, PublicSpecOption } from "./publicSpec"
+import { Highligtable, PublicSpec, PublicSpecOption } from "./publicSpec"
 
 export type UserAnswer =
   | UserAnswerDragging
@@ -24,17 +24,10 @@ export interface UserAnswerTyping {
 export interface UserAnswerHighlighting {
   version: 1
   exerciseType: "highlighting"
-  selectedWords: SelectedWord[]
+  selectedWords: HighLightableAnswer[]
 }
 
-export interface SelectedWord {
-  /** The text that was selected */
-  text: string
-  /** Tells which paragraph the word is in. */
-  nThParagraph: number
-  /** Tells which word the word is in the paragraph. */
-  nThWord: number
-}
+export type HighLightableAnswer = Omit<Highligtable, "type">
 
 export function createEmptyUserAnswer(publicSpec: PublicSpec): UserAnswer {
   switch (publicSpec.exerciseType) {

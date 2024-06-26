@@ -17,10 +17,19 @@ export interface PublicSpecTyping {
   items: PublicSpecItem[]
 }
 
+export type Highligtable = { type: "highlightable"; text: string; id: string }
+
+export type HighlightablePart =
+  | Highligtable
+  | { type: "non-highlightable"; text: string }
+
 export interface PublicSpecHighlighting {
   version: 1
   exerciseType: "highlighting"
-  text: string
+  highligtablePartsByParagraph: {
+    paragraphNumber: number
+    highlightableParts: HighlightablePart[]
+  }[]
 }
 
 export interface PublicSpecItem {

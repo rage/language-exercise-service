@@ -27,7 +27,6 @@ import useExerciseServiceParentConnection from "@/shared-module/common/hooks/use
 import withErrorBoundary from "@/shared-module/common/utils/withErrorBoundary"
 import { Grading } from "../protocolTypes/grading"
 import { css } from "@emotion/css"
-import { set } from "lodash"
 
 export interface SubmissionData {
   submission_result: StudentExerciseTaskSubmissionResult

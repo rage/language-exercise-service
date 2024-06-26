@@ -1,8 +1,12 @@
 import useUserAnswerOutputState from "@/hooks/useUserAnswerOutputState"
 import { ExerciseProps } from "."
-import { UserAnswerHighlighting } from "@/protocolTypes/answer"
-import { useMemo } from "react"
+import {
+  HighLightableAnswer,
+  UserAnswerHighlighting,
+} from "@/protocolTypes/answer"
 import { css } from "@emotion/css"
+import { useCallback } from "react"
+import { Highligtable } from "@/protocolTypes/publicSpec"
 
 const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
   const { selected: answer, updateState: updateAnswer } =
@@ -14,9 +18,26 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
     return null
   }
 
-  const textSplitToParagraps = useMemo(
-    () => publicSpec.text.split("\n\n"),
-    [publicSpec.text],
+  const onClick = useCallback(
+    (clicked: Highligtable) => {
+      updateAnswer((current) => {
+        if (!current) {
+          throw new Error("Answer state is not initialized")
+        }
+        const partAlreadySelected = current?.selectedWords.findIndex(
+          (part) => part.id === clicked.id,
+        )
+        if (partAlreadySelected === -1) {
+          current.selectedWords.push({
+            id: clicked.id,
+            text: clicked.text,
+          } satisfies HighLightableAnswer)
+        } else {
+          current.selectedWords.splice(partAlreadySelected, 1)
+        }
+      })
+    },
+    [updateAnswer],
   )
 
   return (
@@ -28,31 +49,35 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
         }
       `}
     >
-      {textSplitToParagraps.map((paragraph, nthParagraph) => {
-        const parts = paragraphToHighlightableParts(paragraph)
+      {publicSpec.highligtablePartsByParagraph.map((paragraph) => {
         return (
-          <p key={nthParagraph}>
-            {parts.map((part, j) => {
+          <p key={paragraph.paragraphNumber}>
+            {paragraph.highlightableParts.map((part, j) => {
               if (part.type === "highlightable") {
+                const isSelected = answer.selectedWords.some(
+                  (selected) => selected.id === part.id,
+                )
                 return (
                   <span
                     className={css`
                       padding: 0.1rem;
                       cursor: pointer;
                       background-color: #f9f9f9;
+                      ${isSelected && `background-color: #ecd9ff;`}
                       filter: brightness(1) contrast(1);
                       transition: filter 0.2s;
                       &:hover {
                         filter: brightness(0.9) contrast(1.1);
                       }
                     `}
-                    key={j}
+                    key={part.id}
+                    onClick={() => onClick(part)}
                   >
                     {part.text}
                   </span>
                 )
               } else {
-                return <span key={j}>{part.text}</span>
+                return <span key={`non-highlightable-${j}`}>{part.text}</span>
               }
             })}
           </p>
@@ -60,54 +85,6 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
       })}
     </div>
   )
-}
-
-type HighlightablePart =
-  | { type: "highlightable"; text: string }
-  | { type: "non-highlightable"; text: string }
-
-/** Only words should be hightlightable */
-function paragraphToHighlightableParts(paragraph: string): HighlightablePart[] {
-  const nonHighlightable = [
-    " ", "\n", "\t", "\r", ".", ",", ":", ";", "!", "?", 
-    '"', "'", "“", "”", "‘", "’", "(", ")", "[", "]", "{", "}", 
-    "/", "\\", "*", "+", "=", "&", "%", "$", "#", "@", "^", "|", "~", "<", ">"
-  ];
-  const parts: HighlightablePart[] = [];
-  let currentText = '';
-  let currentType: 'highlightable' | 'non-highlightable' | null = null;
-
-  const addPart = () => {
-    if (currentText !== '' && currentType) {
-      parts.push({ type: currentType, text: currentText });
-      currentText = '';
-    }
-  };
-
-  for (let i = 0; i < paragraph.length; i++) {
-    const char = paragraph[i];
-    if (currentType === 'highlightable' || currentType === null) {
-      if (nonHighlightable.includes(char)) {
-        addPart();
-        currentType = 'non-highlightable';
-      } else {
-        currentType = 'highlightable';
-      }
-    } else if (currentType === 'non-highlightable') {
-      if (nonHighlightable.includes(char)) {
-        currentType = 'non-highlightable';
-      } else {
-        addPart();
-        currentType = 'highlightable';
-      }
-    }
-    currentText += char;
-  }
-
-  // Add any remaining text as a part
-  addPart();
-
-  return parts;
 }
 
 export default Highlighting

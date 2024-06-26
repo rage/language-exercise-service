@@ -10,15 +10,14 @@ import {
   PublicSpecTyping,
   TextPart,
 } from "@/protocolTypes/publicSpec"
-import { v5 } from "uuid"
 import {
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
   PrivateSpecTyping,
 } from "@/protocolTypes/privateSpec"
-import { blake3 } from "@noble/hashes/blake3"
-import { hexToUint8Array } from "@/util/keys"
+import { oneWayStringToId } from "@/util/hashing"
+import { paragraphToHighlightableParts } from "@/util/paragraphToHighlightablePart"
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === "OPTIONS") {
@@ -76,10 +75,25 @@ function makeHighlightingPublicSpec(
 ): PublicSpecHighlighting {
   const sanitizedText = privateSpec.text.replace(/\[/g, "").replace(/\]/g, "")
 
+  const splittedByParagraph = sanitizedText.split(/\n{2,}/)
+
+  const highligtablePartsByParagraph = splittedByParagraph.map(
+    (paragraph, paragraphNumber) => {
+      return {
+        paragraphNumber,
+        highlightableParts: paragraphToHighlightableParts(
+          paragraph,
+          paragraphNumber,
+          privateSpec.secretKey,
+        ),
+      }
+    },
+  )
+
   return {
     version: 1,
     exerciseType: "highlighting",
-    text: sanitizedText,
+    highligtablePartsByParagraph,
   }
 }
 
@@ -114,14 +128,13 @@ function makeDraggingPublicSpec(
         return []
       }
       return options.map((option, n) => {
-        // Creating a deterministic id for each option by using a one way cryptographic hash function to prevent leaking the correct answers
-        // It uses the random string privateSpec.secretKey to ensure that the id cannot be brute forced
-        const hash = blake3(`${n}-${item.id}`, {
-          dkLen: 256,
-          key: hexToUint8Array(privateSpec.secretKey),
-        })
-        // Uuid v5 is a convenient way to convert the uint8array to a string that is useable as an id. Actual security is provided by the blake3 hash.
-        const id = v5(hash, item.id)
+        // The id should stay the same as long as it's the sane nth option of the item
+        // It also needs not to be reversible so that we don't leak the correct answer
+        const id = oneWayStringToId(
+          `${n}-${item.id}`,
+          item.id,
+          privateSpec.secretKey,
+        )
         return { id, text: option.slice(1, -1) } satisfies PublicSpecOption
       })
     })
