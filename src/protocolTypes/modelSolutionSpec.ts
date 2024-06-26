@@ -27,7 +27,7 @@ export type HighlightablePart =
 export interface ModelSolutionSpecHighlighting {
   version: 1
   exerciseType: "highlighting"
-  highlightableIdToCorrectOption: Record<string, PublicSpecOption>
+  correctHighlightables: PublicSpecOption[]
 }
 
 export interface ModelSolutionSpecItem {

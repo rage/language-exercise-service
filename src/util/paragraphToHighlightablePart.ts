@@ -20,8 +20,6 @@ const NON_HIGHTLIGHTABLE_CHARACTERS = [
   "’",
   "(",
   ")",
-  "[",
-  "]",
   "{",
   "}",
   "/",
@@ -39,6 +37,7 @@ const NON_HIGHTLIGHTABLE_CHARACTERS = [
   "~",
   "<",
   ">",
+  // IMPORTANT: Do not add the "[" and "]" characters here, as the model solution spec generation relies on them being highlightable. They are not possible to be highlightable anyway because they are used to denote the start and end of a correct word.
 ]
 
 /** Only words should be hightlightable */

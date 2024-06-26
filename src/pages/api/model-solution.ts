@@ -16,6 +16,7 @@ import {
   makeTypingPublicSpec,
 } from "./public-spec"
 import { PublicSpecOption } from "@/protocolTypes/publicSpec"
+import { paragraphToHighlightableParts } from "@/util/paragraphToHighlightablePart"
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === "OPTIONS") {
@@ -86,11 +87,36 @@ function makeDraggingModelSolutionSpec(
 function makeHighlightingModelSolutionSpec(
   privateSpec: PrivateSpecHighlighting,
 ): ModelSolutionSpec {
-  const publicSpec = makeHighlightingPublicSpec(privateSpec)
+  const correctHighlightables: PublicSpecOption[] = []
+
+  const splittedByParagraph = privateSpec.text.split(/\n{2,}/)
+
+  splittedByParagraph.forEach(
+    (paragraph, paragraphNumber) => {
+      // Parts here include the [] characters so that we can match the correct answer
+      const parts = paragraphToHighlightableParts(
+        paragraph,
+        paragraphNumber,
+        privateSpec.secretKey,
+      )
+      parts.forEach((part) => {
+        const trimmed = part.text.trim()
+        if (part.type === "highlightable" && trimmed[0] === "[" && trimmed[trimmed.length - 1] === "]") {
+          const publicSpecOption: PublicSpecOption = {
+            text: trimmed.slice(1, -1),
+            id: part.id,
+          }
+          publicSpecOption.text = publicSpecOption.text.trim()
+          correctHighlightables.push(publicSpecOption)
+        }
+      })
+    },
+  )
+  
   return {
     version: 1,
     exerciseType: "highlighting",
-    highlightableIdToCorrectOption: {},
+    correctHighlightables,
   }
 }
 
