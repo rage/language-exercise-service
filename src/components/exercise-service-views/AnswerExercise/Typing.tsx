@@ -35,7 +35,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
           let placeHolderCounter = -1
           return (
             <div key={item.id}>
-              {item.text.map((textPart, tn) => {
+              {item.textParts.map((textPart, tn) => {
                 if (textPart.type === "text") {
                   return <span key={textPart.text}>{textPart.text.trim()}</span>
                 }

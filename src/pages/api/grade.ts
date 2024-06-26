@@ -90,14 +90,14 @@ function handleDraggingGradingRequest(
       console.warn(
         `No answer for item ${item.id}. Marking all the slots in this item as incorrect.`,
       )
-      numIncorrect += publicSpecForItem.text.filter(
+      numIncorrect += publicSpecForItem.textParts.filter(
         (tp) => tp.type === "slot",
       ).length
       continue
     }
 
     let nthSlot = -1
-    for (const textPart of publicSpecForItem.text) {
+    for (const textPart of publicSpecForItem.textParts) {
       if (textPart.type !== "slot") {
         continue
       }

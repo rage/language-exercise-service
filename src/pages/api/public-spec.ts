@@ -103,7 +103,7 @@ export function makeTypingPublicSpec(
     const parts = transformText(text)
     return {
       id: item.id,
-      text: parts,
+      textParts: parts,
     }
   })
   return {
@@ -148,7 +148,7 @@ export function makeDraggingPublicSpec(
     const parts = transformText(text)
     return {
       id: item.id,
-      text: parts,
+      textParts: parts,
     }
   })
   return {

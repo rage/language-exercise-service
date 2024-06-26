@@ -50,7 +50,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
           if (!answer) {
             return false
           }
-          const numberOfSlots = item.text.filter(
+          const numberOfSlots = item.textParts.filter(
             (o) => o.type === "slot",
           ).length
           if (answer.selectedOptions.length !== numberOfSlots) {

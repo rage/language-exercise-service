@@ -34,7 +34,7 @@ export interface PublicSpecHighlighting {
 
 export interface PublicSpecItem {
   id: string
-  text: TextPart[]
+  textParts: TextPart[]
 }
 
 export interface PublicSpecOption {
