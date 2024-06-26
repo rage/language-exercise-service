@@ -11,7 +11,12 @@ import {
   TextPart,
 } from "@/protocolTypes/publicSpec"
 import { v5 } from "uuid"
-import { PrivateSpec, PrivateSpecDragging, PrivateSpecHighlighting, PrivateSpecTyping } from "@/protocolTypes/privateSpec"
+import {
+  PrivateSpec,
+  PrivateSpecDragging,
+  PrivateSpecHighlighting,
+  PrivateSpecTyping,
+} from "@/protocolTypes/privateSpec"
 import { blake3 } from "@noble/hashes/blake3"
 import { hexToUint8Array } from "@/util/keys"
 
@@ -69,8 +74,7 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
 function makeHighlightingPublicSpec(
   privateSpec: PrivateSpecHighlighting,
 ): PublicSpecHighlighting {
-
-  const sanitizedText = privateSpec.text.replace(/\[/g, "").replace(/\]/g, "");
+  const sanitizedText = privateSpec.text.replace(/\[/g, "").replace(/\]/g, "")
 
   return {
     version: 1,
@@ -79,7 +83,9 @@ function makeHighlightingPublicSpec(
   }
 }
 
-function makeTypingPublicSpec(privateSpec: PrivateSpecTyping): PublicSpecTyping {
+function makeTypingPublicSpec(
+  privateSpec: PrivateSpecTyping,
+): PublicSpecTyping {
   const sanitizedItems = privateSpec.items.map((item) => {
     const text = item.text
     const parts = transformText(text)
@@ -94,7 +100,6 @@ function makeTypingPublicSpec(privateSpec: PrivateSpecTyping): PublicSpecTyping 
     items: sanitizedItems,
   }
 }
-
 
 function makeDraggingPublicSpec(
   privateSpec: PrivateSpecDragging,

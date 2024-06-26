@@ -24,6 +24,16 @@ export interface UserAnswerTyping {
 export interface UserAnswerHighlighting {
   version: 1
   exerciseType: "highlighting"
+  selectedWords: SelectedWord[]
+}
+
+export interface SelectedWord {
+  /** The text that was selected */
+  text: string
+  /** Tells which paragraph the word is in. */
+  nThParagraph: number
+  /** Tells which word the word is in the paragraph. */
+  nThWord: number
 }
 
 export function createEmptyUserAnswer(publicSpec: PublicSpec): UserAnswer {
@@ -43,6 +53,7 @@ export function createEmptyUserAnswer(publicSpec: PublicSpec): UserAnswer {
       return {
         version: 1,
         exerciseType: "highlighting",
+        selectedWords: [],
       }
     default:
       throw new Error("Unsupported exercise type")
