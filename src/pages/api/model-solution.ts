@@ -123,10 +123,12 @@ function makeTypingModelSolutionSpec(
   const items = privateSpec.items.map((item) => {
     // Extact all strings inside [] characters
     const regex = /\[([^\]]+)\]/g
-    const correctOptions: string[] = []
+    const correctOptions: { acceptedStrings: string[] }[] = []
     let match
     while ((match = regex.exec(item.text)) !== null) {
-      correctOptions.push(match[1].trim())
+      const matched = match[1].trim()
+      const acceptedStrings = matched.split("|").map((s) => s.trim())
+      correctOptions.push({ acceptedStrings })
     }
     return {
       id: item.id,

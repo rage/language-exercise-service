@@ -32,5 +32,6 @@ export interface ModelSolutionSpecHighlighting {
 
 export interface ModelSolutionSpecItem {
   id: string
-  correctOptions: string[]
+  /** Each entry in the array contains the correct solutions for a slot, in order. Each slot may have multiple accepted solutions, denoted by the `|` character in the editing view. */
+  correctOptions: { acceptedStrings: string[] }[]
 }
