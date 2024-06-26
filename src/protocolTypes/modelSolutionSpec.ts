@@ -32,5 +32,5 @@ export interface ModelSolutionSpecHighlighting {
 
 export interface ModelSolutionSpecItem {
   id: string
-  correctOption: PublicSpecOption[]
+  correctOptions: string[]
 }

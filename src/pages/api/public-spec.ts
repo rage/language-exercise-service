@@ -159,7 +159,7 @@ export function makeDraggingPublicSpec(
   }
 }
 
-function transformText(input: string): TextPart[] {
+export function transformText(input: string): TextPart[] {
   const regex = /\[(.*?)\]|([^[\]]+)/g
   const result: TextPart[] = []
   let match

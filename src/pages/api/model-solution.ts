@@ -14,6 +14,7 @@ import {
   makeDraggingPublicSpec,
   makeHighlightingPublicSpec,
   makeTypingPublicSpec,
+  transformText,
 } from "./public-spec"
 import { PublicSpecOption } from "@/protocolTypes/publicSpec"
 import { paragraphToHighlightableParts } from "@/util/paragraphToHighlightablePart"
@@ -91,28 +92,30 @@ function makeHighlightingModelSolutionSpec(
 
   const splittedByParagraph = privateSpec.text.split(/\n{2,}/)
 
-  splittedByParagraph.forEach(
-    (paragraph, paragraphNumber) => {
-      // Parts here include the [] characters so that we can match the correct answer
-      const parts = paragraphToHighlightableParts(
-        paragraph,
-        paragraphNumber,
-        privateSpec.secretKey,
-      )
-      parts.forEach((part) => {
-        const trimmed = part.text.trim()
-        if (part.type === "highlightable" && trimmed[0] === "[" && trimmed[trimmed.length - 1] === "]") {
-          const publicSpecOption: PublicSpecOption = {
-            text: trimmed.slice(1, -1),
-            id: part.id,
-          }
-          publicSpecOption.text = publicSpecOption.text.trim()
-          correctHighlightables.push(publicSpecOption)
+  splittedByParagraph.forEach((paragraph, paragraphNumber) => {
+    // Parts here include the [] characters so that we can match the correct answer
+    const parts = paragraphToHighlightableParts(
+      paragraph,
+      paragraphNumber,
+      privateSpec.secretKey,
+    )
+    parts.forEach((part) => {
+      const trimmed = part.text.trim()
+      if (
+        part.type === "highlightable" &&
+        trimmed[0] === "[" &&
+        trimmed[trimmed.length - 1] === "]"
+      ) {
+        const publicSpecOption: PublicSpecOption = {
+          text: trimmed.slice(1, -1),
+          id: part.id,
         }
-      })
-    },
-  )
-  
+        publicSpecOption.text = publicSpecOption.text.trim()
+        correctHighlightables.push(publicSpecOption)
+      }
+    })
+  })
+
   return {
     version: 1,
     exerciseType: "highlighting",
@@ -123,10 +126,23 @@ function makeHighlightingModelSolutionSpec(
 function makeTypingModelSolutionSpec(
   privateSpec: PrivateSpecTyping,
 ): ModelSolutionSpec {
-  const publicSpec = makeTypingPublicSpec(privateSpec)
+  const items = privateSpec.items.map((item) => {
+    // Extact all strings inside [] characters
+    const regex = /\[([^\]]+)\]/g
+    const correctOptions: string[] = []
+    let match
+    while ((match = regex.exec(item.text)) !== null) {
+      correctOptions.push(match[1].trim())
+    }
+    return {
+      id: item.id,
+      correctOptions: correctOptions,
+    }
+  })
+
   return {
     version: 1,
     exerciseType: "typing",
-    items: [],
+    items: items,
   }
 }
