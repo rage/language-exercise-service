@@ -3,7 +3,9 @@ import React, { useState } from "react"
 import { ExerciseType, PrivateSpec } from "../../../protocolTypes/privateSpec"
 import ExerciseServiceContext from "../../../contexts/ExerciseServiceContext"
 import SelectExerciseType from "./SelectExerciseType"
-import DraggingEditor from "./EditorByExerciseType/Dragging"
+import DraggingEditor from "./EditorByExerciseType/DraggingEditor"
+import HighlightingEditor from "./EditorByExerciseType/HighlightingEditor"
+import TypingEditor from "./EditorByExerciseType/TypingEditor"
 
 export interface EditorProps {
   port: MessagePort
@@ -12,8 +14,8 @@ export interface EditorProps {
 
 const exerciseTypeToComponentMap: Record<ExerciseType, React.FC> = {
   dragging: DraggingEditor,
-  typing: () => <div>TODO</div>,
-  highlighting: () => <div>TODO</div>,
+  typing: TypingEditor,
+  highlighting: HighlightingEditor,
 }
 
 const EditorImpl: React.FC<React.PropsWithChildren<EditorProps>> = ({

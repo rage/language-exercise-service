@@ -29,7 +29,6 @@ const SelectExerciseType: React.FC = () => {
             version: 1,
             exerciseType: "highlighting",
             text: "",
-            correctHighlightedWords: [],
           } satisfies PrivateSpec
         }
         if (exerciseType === "typing") {
@@ -37,7 +36,7 @@ const SelectExerciseType: React.FC = () => {
             version: 1,
             exerciseType: "typing",
             items: [],
-            fakeOptions: [],
+            matchingIsCaseInsensitive: false,
           } satisfies PrivateSpec
         }
         throw new Error("Invalid exercise type")

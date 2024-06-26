@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "exerciseType": "typing",
+  "items": [
+    {
+      "id": "adc08f34-a19d-41f9-b46e-3e4444accd13",
+      "text": "I [went] to the store yesterday and [bought] some groceries."
+    },
+    {
+      "id": "fa242ea8-1e74-424a-bf40-c5e87a8a422a",
+      "text": "She [is] very happy today because she [finished] her project."
+    },
+    {
+      "id": "32807b5e-fd48-4695-8a79-ff9f71128af9",
+      "text": "They are [buying] a new house and [are] planning to move next month."
+    }
+  ],
+  "matchingIsCaseInsensitive": false
+}

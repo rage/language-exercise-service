@@ -22,14 +22,13 @@ interface PrivateSpecTyping {
   version: 1
   exerciseType: "typing"
   items: PrivateSpecItem[]
-  fakeOptions: string[]
+  matchingIsCaseInsensitive: boolean
 }
 
 interface PrivateSpecHighlighting {
   version: 1
   exerciseType: "highlighting"
   text: string
-  correctHighlightedWords: HighlightedWord[]
 }
 
 export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>
@@ -37,10 +36,6 @@ export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>
 interface PrivateSpecItem {
   id: string
   text: string
-}
-
-interface HighlightedWord {
-  nThWordFromStart: number
 }
 
 export function createEmptyPrivateSpec(): PrivateSpec {
