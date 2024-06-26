@@ -35,7 +35,7 @@ export interface PrivateSpecHighlighting {
 
 export type ExerciseType = NonNullable<PrivateSpec["exerciseType"]>
 
-interface PrivateSpecItem {
+export interface PrivateSpecItem {
   id: string
   text: string
 }

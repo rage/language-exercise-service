@@ -14,6 +14,7 @@ import {
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
+  PrivateSpecItem,
   PrivateSpecTyping,
 } from "@/protocolTypes/privateSpec"
 import { oneWayStringToId } from "@/util/hashing"
@@ -49,7 +50,7 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     throw new Error("Invalid request")
   }
   const privateSpec = req.body.private_spec as PrivateSpec
-  let spec: PublicSpec | null = null
+  let spec: PublicSpec
   switch (privateSpec.exerciseType) {
     case "dragging":
       spec = makeDraggingPublicSpec(privateSpec)
@@ -64,9 +65,6 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
       throw new Error(`Unsupported exercise type: ${privateSpec.exerciseType}`)
   }
 
-  if (!spec) {
-    throw new Error("Failed to create public spec.")
-  }
   return res.status(200).json(spec)
 }
 
@@ -115,28 +113,33 @@ export function makeTypingPublicSpec(
   }
 }
 
+export function extractDraggableOptionsFromPrivateSpecItem(
+  item: PrivateSpecItem,
+  secretKey: string,
+): PublicSpecOption[] {
+  // Options can be found inside the template text inside square brackets
+  // e.g. if the text is "I [went] to the store yesterday and [bought] some groceries." then the options are "went" and "bought"
+  const options = item.text.match(/\[([^\]]+)\]/g)
+  if (!options) {
+    return []
+  }
+  return options.map((option, n) => {
+    // The id should stay the same as long as it's the sane nth option of the item
+    // It also needs not to be reversible so that we don't leak the correct answer
+    const id = oneWayStringToId(`${n}-${item.id}`, item.id, secretKey)
+    return { id, text: option.slice(1, -1) } satisfies PublicSpecOption
+  })
+}
+
 export function makeDraggingPublicSpec(
   privateSpec: PrivateSpecDragging,
 ): PublicSpecDragging {
   const allOptions = privateSpec.items
     .flatMap((item) => {
-      const templateText = item.text
-      // Options can be found inside the template text inside square brackets
-      // e.g. if the text is "I [went] to the store yesterday and [bought] some groceries." then the options are "went" and "bought"
-      const options = templateText.match(/\[([^\]]+)\]/g)
-      if (!options) {
-        return []
-      }
-      return options.map((option, n) => {
-        // The id should stay the same as long as it's the sane nth option of the item
-        // It also needs not to be reversible so that we don't leak the correct answer
-        const id = oneWayStringToId(
-          `${n}-${item.id}`,
-          item.id,
-          privateSpec.secretKey,
-        )
-        return { id, text: option.slice(1, -1) } satisfies PublicSpecOption
-      })
+      return extractDraggableOptionsFromPrivateSpecItem(
+        item,
+        privateSpec.secretKey,
+      )
     })
     .sort((a, b) => a.text.localeCompare(b.text))
 

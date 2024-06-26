@@ -3,6 +3,19 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import { ModelSolutionSpec } from "../../protocolTypes/modelSolutionSpec"
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
+import {
+  PrivateSpec,
+  PrivateSpecDragging,
+  PrivateSpecHighlighting,
+  PrivateSpecTyping,
+} from "@/protocolTypes/privateSpec"
+import {
+  extractDraggableOptionsFromPrivateSpecItem,
+  makeDraggingPublicSpec,
+  makeHighlightingPublicSpec,
+  makeTypingPublicSpec,
+} from "./public-spec"
+import { PublicSpecOption } from "@/protocolTypes/publicSpec"
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === "OPTIONS") {
@@ -32,7 +45,62 @@ function handleModelSolutionGeneration(
   if (!isSpecRequest(req.body)) {
     throw new Error("Request was not valid.")
   }
+  const privateSpec = req.body.private_spec as PrivateSpec
+  let spec: ModelSolutionSpec
 
-  const modelSolution: ModelSolutionSpec = { version: 1 }
-  return res.status(200).json(modelSolution)
+  switch (privateSpec.exerciseType) {
+    case "dragging":
+      spec = makeDraggingModelSolutionSpec(privateSpec)
+      break
+    case "highlighting":
+      spec = makeHighlightingModelSolutionSpec(privateSpec)
+      break
+    case "typing":
+      spec = makeTypingModelSolutionSpec(privateSpec)
+      break
+    default:
+      throw new Error(`Unsupported exercise type: ${privateSpec.exerciseType}`)
+  }
+
+  return res.status(200).json(spec)
+}
+
+function makeDraggingModelSolutionSpec(
+  privateSpec: PrivateSpecDragging,
+): ModelSolutionSpec {
+  const itemIdToCorrectOptions: Record<string, PublicSpecOption[]> = {}
+  for (const item of privateSpec.items) {
+    const options = extractDraggableOptionsFromPrivateSpecItem(
+      item,
+      privateSpec.secretKey,
+    )
+    itemIdToCorrectOptions[item.id] = options
+  }
+  return {
+    version: 1,
+    exerciseType: "dragging",
+    itemIdToCorrectOptions,
+  }
+}
+
+function makeHighlightingModelSolutionSpec(
+  privateSpec: PrivateSpecHighlighting,
+): ModelSolutionSpec {
+  const publicSpec = makeHighlightingPublicSpec(privateSpec)
+  return {
+    version: 1,
+    exerciseType: "highlighting",
+    highlightableIdToCorrectOption: {},
+  }
+}
+
+function makeTypingModelSolutionSpec(
+  privateSpec: PrivateSpecTyping,
+): ModelSolutionSpec {
+  const publicSpec = makeTypingPublicSpec(privateSpec)
+  return {
+    version: 1,
+    exerciseType: "typing",
+    items: [],
+  }
 }
