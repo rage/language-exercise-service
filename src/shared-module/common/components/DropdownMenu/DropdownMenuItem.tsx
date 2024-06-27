@@ -16,7 +16,9 @@ interface DropdownMenuItemWithHref {
   onClick?: undefined
 }
 
-export type DropdownMenuItemType = DropdownMenuItemWithOnClick | DropdownMenuItemWithHref
+export type DropdownMenuItemType =
+  | DropdownMenuItemWithOnClick
+  | DropdownMenuItemWithHref
 
 interface DropdownMenuProps {
   item: DropdownMenuItemType

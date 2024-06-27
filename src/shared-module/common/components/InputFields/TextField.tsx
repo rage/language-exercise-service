@@ -60,8 +60,21 @@ export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   onChangeByValue?: (value: string, name?: string) => void
 }
 
-const TextField: React.FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({ onChange, onChangeByValue, className, disabled, error, ...rest }: TextFieldProps, ref) => {
+const TextField: React.FC<TextFieldProps> = forwardRef<
+  HTMLInputElement,
+  TextFieldProps
+>(
+  (
+    {
+      onChange,
+      onChangeByValue,
+      className,
+      disabled,
+      error,
+      ...rest
+    }: TextFieldProps,
+    ref,
+  ) => {
     const { t } = useTranslation()
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

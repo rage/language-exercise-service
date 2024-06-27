@@ -4,7 +4,8 @@ import { AxiosResponse } from "axios"
 
 import { ErrorResponse } from "../bindings"
 
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 // usage: validateResponse(response, isOrganization)
 // checks the data in an axios response with the given guard and only returns the data if its type is correct
@@ -31,9 +32,13 @@ export function validateResponse<T>(
 }
 
 /** Usage: validateResponse(response, isArray(isOrganization)) */
-export function isArray<T>(isT: (x: unknown) => x is T): (x: unknown) => x is Array<T> {
+export function isArray<T>(
+  isT: (x: unknown) => x is T,
+): (x: unknown) => x is Array<T> {
   // ts doesn't understand this so we need the explicit cast
-  return ((x) => Array.isArray(x) && x.every((i) => isT(i))) as (x: unknown) => x is Array<T>
+  return ((x) => Array.isArray(x) && x.every((i) => isT(i))) as (
+    x: unknown,
+  ) => x is Array<T>
 }
 
 export function isString(x: unknown): x is string {

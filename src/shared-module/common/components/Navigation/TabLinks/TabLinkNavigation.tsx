@@ -52,12 +52,17 @@ const TabLinkNavigation: React.FC<
    */
   const tabListOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     // eslint-disable-next-line i18next/no-literal-string
-    const previousSiblingKey = orientation === "horizontal" ? "ArrowLeft" : "ArrowUp"
+    const previousSiblingKey =
+      orientation === "horizontal" ? "ArrowLeft" : "ArrowUp"
     // eslint-disable-next-line i18next/no-literal-string
-    const nextSiblingKey = orientation === "horizontal" ? "ArrowRight" : "ArrowDown"
+    const nextSiblingKey =
+      orientation === "horizontal" ? "ArrowRight" : "ArrowDown"
     if (event.key === previousSiblingKey) {
       event.preventDefault()
-      if (document.activeElement?.previousElementSibling instanceof HTMLAnchorElement) {
+      if (
+        document.activeElement?.previousElementSibling instanceof
+        HTMLAnchorElement
+      ) {
         document.activeElement.previousElementSibling.focus()
       } else {
         // We at the start of tab nav, go to last
@@ -68,11 +73,15 @@ const TabLinkNavigation: React.FC<
     }
     if (event.key === nextSiblingKey) {
       event.preventDefault()
-      if (document.activeElement?.nextElementSibling instanceof HTMLAnchorElement) {
+      if (
+        document.activeElement?.nextElementSibling instanceof HTMLAnchorElement
+      ) {
         document.activeElement.nextElementSibling.focus()
       } else {
         // We at the end of tab nav, go to first
-        if (event.currentTarget.firstElementChild instanceof HTMLAnchorElement) {
+        if (
+          event.currentTarget.firstElementChild instanceof HTMLAnchorElement
+        ) {
           event.currentTarget.firstElementChild.focus()
         }
       }

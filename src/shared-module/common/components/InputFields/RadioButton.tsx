@@ -51,11 +51,19 @@ const labelClass = css`
 `
 
 export interface RadioFieldProps
-  extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label: string
 }
 
-const RadioField = ({ onChange, className, label, ...rest }: RadioFieldProps) => {
+const RadioField = ({
+  onChange,
+  className,
+  label,
+  ...rest
+}: RadioFieldProps) => {
   return (
     <div
       className={cx(
@@ -67,7 +75,11 @@ const RadioField = ({ onChange, className, label, ...rest }: RadioFieldProps) =>
       )}
     >
       <label className={cx(labelClass)}>
-        <input type="radio" onChange={(event) => onChange && onChange(event)} {...rest} />
+        <input
+          type="radio"
+          onChange={(event) => onChange && onChange(event)}
+          {...rest}
+        />
         <span>{label}</span>
       </label>
     </div>

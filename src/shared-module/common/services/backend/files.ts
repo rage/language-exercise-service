@@ -10,8 +10,12 @@ export const uploadFromIframe = async (
   const data = new FormData()
   files.forEach((contents, name) => data.append(name, contents))
 
-  const response = await axios.post(`/api/v0/files/${exerciseServiceSlug}`, data, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const response = await axios.post(
+    `/api/v0/files/${exerciseServiceSlug}`,
+    data,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    },
+  )
   return validateResponse(response, isObjectMap(isString))
 }

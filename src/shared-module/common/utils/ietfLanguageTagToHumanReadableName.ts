@@ -5,7 +5,9 @@ const languages: Record<string, string> = {
   sv: "Svenska",
 }
 
-const ietfLanguageTagToHumanReadableName = (ietfLanguageTag: string): string => {
+const ietfLanguageTagToHumanReadableName = (
+  ietfLanguageTag: string,
+): string => {
   /// split to two parts
   let nameNotSpecificToRegion = null
   if (ietfLanguageTag.indexOf("-") !== -1) {

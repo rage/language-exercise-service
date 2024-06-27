@@ -3,7 +3,12 @@ import styled from "@emotion/styled"
 import Link from "next/link"
 import React from "react"
 
-import { baseTheme, headingFont, monospaceFont, secondaryFont } from "../../styles"
+import {
+  baseTheme,
+  headingFont,
+  monospaceFont,
+  secondaryFont,
+} from "../../styles"
 import CircularProgressBar from "../CircularProgressBar"
 
 const Wrapper = styled.div`
@@ -105,16 +110,12 @@ export interface StyledProps {
   bg?: string
 }
 
-export type ExerciseBox = React.HTMLAttributes<HTMLDivElement> & ExerciseBoxExtraProps
+export type ExerciseBox = React.HTMLAttributes<HTMLDivElement> &
+  ExerciseBoxExtraProps
 
-const ExerciseBox: React.FC<React.PropsWithChildren<React.PropsWithChildren<ExerciseBox>>> = ({
-  exerciseIndex,
-  exerciseTitle,
-  url,
-  scoreMaximum,
-  userPoints,
-  bg,
-}) => {
+const ExerciseBox: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<ExerciseBox>>
+> = ({ exerciseIndex, exerciseTitle, url, scoreMaximum, userPoints, bg }) => {
   return (
     <Wrapper>
       <StyledLink>
@@ -153,7 +154,11 @@ const ExerciseBox: React.FC<React.PropsWithChildren<React.PropsWithChildren<Exer
                   className="progress"
                 />
               ) : (
-                <CircularProgressBar scoreMaximum={1} userPoints={0} className="progress" />
+                <CircularProgressBar
+                  scoreMaximum={1}
+                  userPoints={0}
+                  className="progress"
+                />
               )}
             </div>
           </ExercisePart>

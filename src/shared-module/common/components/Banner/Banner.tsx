@@ -79,12 +79,12 @@ export interface BannerExtraProps {
   linkText?: string
 }
 
-export type BannerProps = React.HTMLAttributes<HTMLDivElement> & BannerExtraProps
+export type BannerProps = React.HTMLAttributes<HTMLDivElement> &
+  BannerExtraProps
 
-const Banner: React.FC<React.PropsWithChildren<React.PropsWithChildren<BannerProps>>> = (
-  { children, variant, linkHref, linkText },
-  props,
-) => {
+const Banner: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<BannerProps>>
+> = ({ children, variant, linkHref, linkText }, props) => {
   if (variant === "readOnly") {
     return <ReadOnlyBanner {...props}>{children}</ReadOnlyBanner>
   }

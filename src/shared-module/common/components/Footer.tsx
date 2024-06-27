@@ -133,7 +133,9 @@ const LogoA = styled.a`
 
 export type FooterProps = React.HTMLAttributes<HTMLDivElement>
 
-const Footer: React.FC<React.PropsWithChildren<React.PropsWithChildren<FooterProps>>> = () => {
+const Footer: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<FooterProps>>
+> = () => {
   const { t, i18n } = useTranslation()
   const useFinnishLinks = i18n.language === "fi" || i18n.language === "fi-FI"
   return (
@@ -155,7 +157,10 @@ const Footer: React.FC<React.PropsWithChildren<React.PropsWithChildren<FooterPro
             <p>{t("about-mooc-center-description")}</p>
             <p className="mooc-description">
               {t("mooc-project-description")} {t("star-the-project-on-github")}:{" "}
-              <a href="https://github.com/rage/secret-project-331/">{t("project-github")}</a>.
+              <a href="https://github.com/rage/secret-project-331/">
+                {t("project-github")}
+              </a>
+              .
             </p>
           </Text>
           <Links>
@@ -183,14 +188,22 @@ const Footer: React.FC<React.PropsWithChildren<React.PropsWithChildren<FooterPro
             `}
           >
             <LogoA
-              href={useFinnishLinks ? "https://www.mooc.fi" : "https://www.mooc.fi/en"}
+              href={
+                useFinnishLinks
+                  ? "https://www.mooc.fi"
+                  : "https://www.mooc.fi/en"
+              }
               // eslint-disable-next-line i18next/no-literal-string
               aria-label="MOOC.fi"
             >
               <MOOCfi />
             </LogoA>
             <LogoA
-              href={useFinnishLinks ? "https://www.helsinki.fi" : "https://www.helsinki.fi/en"}
+              href={
+                useFinnishLinks
+                  ? "https://www.helsinki.fi"
+                  : "https://www.helsinki.fi/en"
+              }
               aria-label={t("university-of-helsinki")}
             >
               <UHLogo />

@@ -77,15 +77,9 @@ export const StyledSVG = (Image: any) => {
 
 export type CardProps = React.HTMLAttributes<HTMLDivElement> & CardExtraProps
 
-const SimpleCard: React.FC<React.PropsWithChildren<React.PropsWithChildren<CardProps>>> = ({
-  title,
-  chapterNumber,
-  open,
-  date,
-  time,
-  bg,
-  backgroundImage,
-}) => {
+const SimpleCard: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<CardProps>>
+> = ({ title, chapterNumber, open, date, time, bg, backgroundImage }) => {
   const { t } = useTranslation()
 
   return (

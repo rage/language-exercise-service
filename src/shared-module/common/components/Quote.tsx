@@ -37,11 +37,12 @@ export interface QuoteExtraProps {
   content: string
 }
 
-export type QuoteProps = React.QuoteHTMLAttributes<HTMLQuoteElement> & QuoteExtraProps
+export type QuoteProps = React.QuoteHTMLAttributes<HTMLQuoteElement> &
+  QuoteExtraProps
 
-const Quote: React.FC<React.PropsWithChildren<React.PropsWithChildren<QuoteProps>>> = ({
-  content,
-}) => {
+const Quote: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<QuoteProps>>
+> = ({ content }) => {
   return (
     <Justify>
       <ContentWrapper>

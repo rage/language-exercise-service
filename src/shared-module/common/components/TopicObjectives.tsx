@@ -6,7 +6,8 @@ import Check from "../img/checkmark.svg"
 
 /* export interface TopicObjectivesExtraProps {} */
 
-const PLACEHOLDER_TEXT = "The passage experienced a surge in popularity during the 1960s."
+const PLACEHOLDER_TEXT =
+  "The passage experienced a surge in popularity during the 1960s."
 
 const objectives = [
   { id: 1, objective: PLACEHOLDER_TEXT },
@@ -70,7 +71,8 @@ const StyledCheck = styled(Check)`
   margin-top: 8px;
 `
 
-export type TopicObjectives = React.HTMLAttributes<HTMLDivElement> /* & TopicObjectivesExtraProps */
+export type TopicObjectives =
+  React.HTMLAttributes<HTMLDivElement> /* & TopicObjectivesExtraProps */
 
 const TopicObjectives: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<TopicObjectives>>

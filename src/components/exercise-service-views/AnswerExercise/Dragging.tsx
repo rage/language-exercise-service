@@ -100,40 +100,50 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
             flex-grow: 1;
           `}
         >
-          {publicSpec.items.map((item) => {
+          {publicSpec.items.map((item, n) => {
             let placeHolderCounter = -1
             return (
-              <div key={item.id}>
-                {item.textParts.map((textPart) => {
-                  if (textPart.type === "text") {
-                    return (
-                      <span key={textPart.text}>{textPart.text.trim()}</span>
+              <div
+                key={item.id}
+                className={css`
+                  display: flex;
+                  gap: 0.3rem;
+                  align-items: center;
+                `}
+              >
+                <div>{n + 1}. </div>
+                <div>
+                  {item.textParts.map((textPart) => {
+                    if (textPart.type === "text") {
+                      return (
+                        <span key={textPart.text}>{textPart.text.trim()}</span>
+                      )
+                    }
+                    placeHolderCounter += 1
+                    const itemAnswer = answer.itemAnswers.find(
+                      (ia) => ia.itemId === item.id,
                     )
-                  }
-                  placeHolderCounter += 1
-                  const itemAnswer = answer.itemAnswers.find(
-                    (ia) => ia.itemId === item.id,
-                  )
-                  const selectedOption =
-                    itemAnswer?.selectedOptions[placeHolderCounter]
-                  let draggable = undefined
-                  if (selectedOption) {
-                    draggable = (
-                      <Draggable
-                        option={selectedOption}
-                        key={selectedOption.id}
+                    const selectedOption =
+                      itemAnswer?.selectedOptions[placeHolderCounter]
+                    let draggable = undefined
+                    if (selectedOption) {
+                      draggable = (
+                        <Draggable
+                          option={selectedOption}
+                          key={selectedOption.id}
+                        />
+                      )
+                    }
+                    return (
+                      <Droppable
+                        itemId={item.id}
+                        nthPlaceholder={placeHolderCounter}
+                        key={item.id}
+                        children={draggable}
                       />
                     )
-                  }
-                  return (
-                    <Droppable
-                      itemId={item.id}
-                      nthPlaceholder={placeHolderCounter}
-                      key={item.id}
-                      children={draggable}
-                    />
-                  )
-                })}
+                  })}
+                </div>
               </div>
             )
           })}

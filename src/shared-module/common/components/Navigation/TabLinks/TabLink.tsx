@@ -16,12 +16,9 @@ export interface TabLinkProps {
   countHook?: () => UseQueryResult<number, unknown>
 }
 
-const TabLink: React.FC<React.PropsWithChildren<React.PropsWithChildren<TabLinkProps>>> = ({
-  children,
-  url,
-  isActive,
-  countHook,
-}) => {
+const TabLink: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<TabLinkProps>>
+> = ({ children, url, isActive, countHook }) => {
   const count = countHook?.()
   const path = `${useQueryParameter("path")}`
   const router = useRouter()
@@ -69,12 +66,15 @@ const TabLink: React.FC<React.PropsWithChildren<React.PropsWithChildren<TabLinkP
             rgba(17, 17, 26, 0.05) 0px 8px 32px;
         }
         :hover {
-          background: ${isActive ? theme.secondary.activeBg : theme.secondary.hoverBg};
+          background: ${isActive
+            ? theme.secondary.activeBg
+            : theme.secondary.hoverBg};
           color: ${theme.secondary.hoverText};
         }
       `}
     >
-      <span>{children}</span> {count?.isPending && <Spinner variant="small" disableMargin />}
+      <span>{children}</span>{" "}
+      {count?.isPending && <Spinner variant="small" disableMargin />}
       {count?.isSuccess && count.data !== 0 && (
         <span
           className={css`

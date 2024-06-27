@@ -26,7 +26,12 @@ const OnlyRenderIfPermissions: React.FC<
     enabled: loginState.signedIn === true,
   })
 
-  if (loginState.signedIn !== true || data.isPending || data.isError || !data.data) {
+  if (
+    loginState.signedIn !== true ||
+    data.isPending ||
+    data.isError ||
+    !data.data
+  ) {
     if (elseRender) {
       return <>{elseRender}</>
     }

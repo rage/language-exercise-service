@@ -47,19 +47,25 @@ const NavbarLogo = css`
   }
 `
 
-const Navigation: React.FC<React.PropsWithChildren<React.PropsWithChildren<NavigationProps>>> = ({
-  children,
-}) => {
+const Navigation: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<NavigationProps>>
+> = ({ children }) => {
   const { t, i18n } = useTranslation()
 
   const makeTopLeftButtonToTemporarilyGoToMoocfi = true
 
   const moocfiUrl =
     // eslint-disable-next-line i18next/no-literal-string
-    i18n?.language?.indexOf("fi") !== -1 ? "https://www.mooc.fi" : "https://www.mooc.fi/en"
+    i18n?.language?.indexOf("fi") !== -1
+      ? "https://www.mooc.fi"
+      : "https://www.mooc.fi/en"
 
   return (
-    <nav role="navigation" className={cx(Navbar)} aria-label={t("navigation-menu")}>
+    <nav
+      role="navigation"
+      className={cx(Navbar)}
+      aria-label={t("navigation-menu")}
+    >
       <SkipLink href="#maincontent">{t("skip-to-content")}</SkipLink>
       <div className={cx(NavbarLogo)}>
         <a

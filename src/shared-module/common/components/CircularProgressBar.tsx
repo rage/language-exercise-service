@@ -66,8 +66,18 @@ const CircularProgressBar: React.FC<
   return (
     <CircleBox point={complete}>
       <div className="progress">
-        <svg className="progress-circle" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-          <circle className="progress-circle-bg" cx="50%" cy="50%" r="20.9155"></circle>
+        <svg
+          className="progress-circle"
+          width="60"
+          height="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            className="progress-circle-bg"
+            cx="50%"
+            cy="50%"
+            r="20.9155"
+          ></circle>
           <circle
             className="progress-circle-value update-value"
             cx="50%"

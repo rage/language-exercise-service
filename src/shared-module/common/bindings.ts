@@ -748,7 +748,12 @@ export interface ExerciseTask {
   order_number: number
 }
 
-export type ActivityProgress = "Initialized" | "Started" | "InProgress" | "Submitted" | "Completed"
+export type ActivityProgress =
+  | "Initialized"
+  | "Started"
+  | "InProgress"
+  | "Submitted"
+  | "Completed"
 
 export interface CourseMaterialExercise {
   exercise: Exercise
@@ -834,7 +839,12 @@ export interface ExerciseGradingStatus {
   updated_at: string
 }
 
-export type GradingProgress = "Failed" | "NotReady" | "PendingManual" | "Pending" | "FullyGraded"
+export type GradingProgress =
+  | "Failed"
+  | "NotReady"
+  | "PendingManual"
+  | "Pending"
+  | "FullyGraded"
 
 export interface Feedback {
   id: string
@@ -1453,7 +1463,9 @@ export interface EditedBlockNoLongerExistsData {
   status: ProposalStatus
 }
 
-export type BlockProposalAction = { tag: "Accept"; data: string } | { tag: "Reject" }
+export type BlockProposalAction =
+  | { tag: "Accept"; data: string }
+  | { tag: "Reject" }
 
 export interface BlockProposalInfo {
   id: string
@@ -1870,7 +1882,12 @@ export interface ExamData {
 }
 
 export type ExamEnrollmentData =
-  | { tag: "EnrolledAndStarted"; page_id: string; page: Page; enrollment: ExamEnrollment }
+  | {
+      tag: "EnrolledAndStarted"
+      page_id: string
+      page: Page
+      enrollment: ExamEnrollment
+    }
   | { tag: "NotEnrolled"; can_enroll: boolean }
   | { tag: "NotYetStarted" }
   | { tag: "StudentTimeUp" }

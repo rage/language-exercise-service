@@ -109,11 +109,12 @@ export interface ReferenceExtraProps {
 const ELEMENT_CLASS = "#reference"
 const BEHAVIOR = "smooth"
 
-export type ReferenceProps = React.HTMLAttributes<HTMLDivElement> & ReferenceExtraProps
+export type ReferenceProps = React.HTMLAttributes<HTMLDivElement> &
+  ReferenceExtraProps
 
-const Reference: React.FC<React.PropsWithChildren<React.PropsWithChildren<ReferenceProps>>> = ({
-  data,
-}) => {
+const Reference: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<ReferenceProps>>
+> = ({ data }) => {
   const { t } = useTranslation()
   const [reference, setReference] = useState<Reference[]>([])
   const [active, setActive] = useState<string>()
@@ -121,7 +122,9 @@ const Reference: React.FC<React.PropsWithChildren<React.PropsWithChildren<Refere
   useEffect(() => {
     const arr: Reference[] = []
     // eslint-disable-next-line i18next/no-literal-string
-    const referenceEl = Array.from(document.querySelectorAll<HTMLElement>("sup"))
+    const referenceEl = Array.from(
+      document.querySelectorAll<HTMLElement>("sup"),
+    )
 
     referenceEl.forEach((ref) => {
       const { innerText: text } = ref
@@ -160,7 +163,8 @@ const Reference: React.FC<React.PropsWithChildren<React.PropsWithChildren<Refere
 
         if (evt.type === "mouseover") {
           // @ts-expect-error: Type not aware of the field
-          citation.style.cssText = "text-decoration: underline; color: #08457A; cursor: pointer"
+          citation.style.cssText =
+            "text-decoration: underline; color: #08457A; cursor: pointer"
           wrapper.style.cssText =
             "opacity: 1; z-index: 2; position: absolute; top: 20px; left: 50%; border-radius: 3px; min-width: 400px; transition: visibility 0s linear 100ms, opacity 100ms; box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;"
           // eslint-disable-next-line i18next/no-literal-string
@@ -195,7 +199,8 @@ const Reference: React.FC<React.PropsWithChildren<React.PropsWithChildren<Refere
           if (text === elementId) {
             evt.preventDefault()
             elementId = elementId.substring(1, elementId.length - 1)
-            const details = document.querySelector<HTMLDetailsElement>(ELEMENT_CLASS)
+            const details =
+              document.querySelector<HTMLDetailsElement>(ELEMENT_CLASS)
             // eslint-disable-next-line i18next/no-literal-string
             setActive(`ref-${elementId}`)
 

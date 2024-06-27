@@ -16,7 +16,8 @@ const useExerciseServiceOutputState = <OutputType, SelectorReturnType>(
   selector: (arg: OutputType | null) => SelectorReturnType | null,
   wrapper?: string,
 ): UseExerciseServiceOutputStateReturn<SelectorReturnType> => {
-  const { outputState, port, _rawSetOutputState, validate } = useContext(context)
+  const { outputState, port, _rawSetOutputState, validate } =
+    useContext(context)
 
   const updateState = useCallback(
     (func: UpdateFunction<SelectorReturnType>) => {

@@ -98,11 +98,9 @@ const CircleText = styled.div`
   top: -1px;
 `
 
-const Pagination: React.FC<React.PropsWithChildren<React.PropsWithChildren<PaginationProps>>> = ({
-  paginationInfo,
-  totalPages,
-  disableItemsPerPage = false,
-}) => {
+const Pagination: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<PaginationProps>>
+> = ({ paginationInfo, totalPages, disableItemsPerPage = false }) => {
   const { t } = useTranslation()
   const page = paginationInfo.page
   const handleChangeEvent = useCallback(
@@ -131,7 +129,9 @@ const Pagination: React.FC<React.PropsWithChildren<React.PropsWithChildren<Pagin
       `}
     >
       <Container key={componentsKey}>{generatedComponents}</Container>
-      {!disableItemsPerPage && <PaginationItemsPerPage paginationInfo={paginationInfo} />}
+      {!disableItemsPerPage && (
+        <PaginationItemsPerPage paginationInfo={paginationInfo} />
+      )}
     </div>
   )
 }
@@ -166,7 +166,10 @@ const generateComponents = (
   // In case there is nothing
   if (totalPages === 0) {
     components.push(
-      <SelectedCircle key={t("current-page-x")} aria-label={t("current-page-x", { number: 1 })}>
+      <SelectedCircle
+        key={t("current-page-x")}
+        aria-label={t("current-page-x", { number: 1 })}
+      >
         <CircleText>1</CircleText>
       </SelectedCircle>,
     )
@@ -192,7 +195,10 @@ const generateComponents = (
     for (let idx = 1; idx <= totalPages; idx++) {
       if (idx == page) {
         components.push(
-          <SelectedCircle key={idx} aria-label={t("current-page-x", { number: idx })}>
+          <SelectedCircle
+            key={idx}
+            aria-label={t("current-page-x", { number: idx })}
+          >
             <CircleText>{idx}</CircleText>
           </SelectedCircle>,
         )
@@ -233,7 +239,10 @@ const generateComponents = (
     for (let idx = 1; idx <= CAPACITY; idx++) {
       if (idx == page) {
         components.push(
-          <SelectedCircle key={idx} aria-label={t("current-page-x", { number: idx })}>
+          <SelectedCircle
+            key={idx}
+            aria-label={t("current-page-x", { number: idx })}
+          >
             <CircleText>{idx}</CircleText>
           </SelectedCircle>,
         )
@@ -281,7 +290,10 @@ const generateComponents = (
       </Circle>,
     )
     components.push(
-      <SelectedCircle key={t("current-page-x")} aria-label={t("current-page-x", { number: page })}>
+      <SelectedCircle
+        key={t("current-page-x")}
+        aria-label={t("current-page-x", { number: page })}
+      >
         <CircleText>{page}</CircleText>
       </SelectedCircle>,
     )
@@ -332,7 +344,10 @@ const generateComponents = (
     for (let idx = totalPages - CAPACITY + 1; idx <= totalPages; idx++) {
       if (idx == page) {
         components.push(
-          <SelectedCircle key={idx} aria-label={t("current-page-x", { number: idx })}>
+          <SelectedCircle
+            key={idx}
+            aria-label={t("current-page-x", { number: idx })}
+          >
             <CircleText>{idx}</CircleText>
           </SelectedCircle>,
         )

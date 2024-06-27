@@ -25,14 +25,19 @@ export function dontRenderUntilQueryParametersReady<T, P = unknown>(
 ) {
   // Name to display in React Dev tools
   // eslint-disable-next-line i18next/no-literal-string
-  const displayName = WrappedComponent.displayName || WrappedComponent.name || "Component"
+  const displayName =
+    WrappedComponent.displayName || WrappedComponent.name || "Component"
 
   const InnerComponent = (props: T) => {
     const queryParameters: NodeJS.Dict<string> = {}
     const router = useRouter()
     // We're a bit defensive with the null checks because the type definitions
     // around query seem to be unreliable.
-    if (!router || !router.isReady || (!allowNoQueryParameters && !router.query)) {
+    if (
+      !router ||
+      !router.isReady ||
+      (!allowNoQueryParameters && !router.query)
+    ) {
       return null
     }
 
@@ -52,7 +57,12 @@ export function dontRenderUntilQueryParametersReady<T, P = unknown>(
       queryParameters[key] = value?.toString()
     }
 
-    return <WrappedComponent {...(props as T)} query={queryParameters as SimplifiedUrlQuery<P>} />
+    return (
+      <WrappedComponent
+        {...(props as T)}
+        query={queryParameters as SimplifiedUrlQuery<P>}
+      />
+    )
   }
 
   // eslint-disable-next-line i18next/no-literal-string

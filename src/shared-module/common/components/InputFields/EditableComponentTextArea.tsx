@@ -1,7 +1,8 @@
 import { css, cx } from "@emotion/css"
 import React, { TextareaHTMLAttributes, useEffect, useRef } from "react"
 
-export interface TextFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextFieldProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   errorMessage?: string
   autoResize?: boolean

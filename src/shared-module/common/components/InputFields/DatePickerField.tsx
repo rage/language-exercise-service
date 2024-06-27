@@ -7,7 +7,12 @@ export interface DatePickerProps extends InputHTMLAttributes<HTMLInputElement> {
   onChangeByValue: (value: string, name?: string) => void
 }
 
-const DatePicker = ({ onChange, onChangeByValue, className, ...rest }: DatePickerProps) => {
+const DatePicker = ({
+  onChange,
+  onChangeByValue,
+  className,
+  ...rest
+}: DatePickerProps) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChangeByValue) {
       const {

@@ -79,8 +79,12 @@ const ProgressBar: React.FC<
   label,
   required,
 }) => {
-  const ratio = (exercisesTotal ?? 0) > 0 ? (exercisesAttempted ?? 0) / (exercisesTotal ?? 0) : 0
-  const requiredRatio = (exercisesTotal ?? 0) > 0 ? (required ?? 0) / (exercisesTotal ?? 0) : 0
+  const ratio =
+    (exercisesTotal ?? 0) > 0
+      ? (exercisesAttempted ?? 0) / (exercisesTotal ?? 0)
+      : 0
+  const requiredRatio =
+    (exercisesTotal ?? 0) > 0 ? (required ?? 0) / (exercisesTotal ?? 0) : 0
 
   const percentage = ratio * 100
   const requiredPercentage = requiredRatio * 100
@@ -120,7 +124,11 @@ const ProgressBar: React.FC<
               height: inherit;
             `}
           >
-            <LinearProgressFill light percentage={requiredPercentage} height={height} />
+            <LinearProgressFill
+              light
+              percentage={requiredPercentage}
+              height={height}
+            />
             <LinearProgressFill percentage={visualPercentage} height={height} />
           </div>
         </LinearProgress>

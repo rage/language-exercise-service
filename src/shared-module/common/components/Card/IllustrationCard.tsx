@@ -46,15 +46,9 @@ const CardContentWrapper = styled.div`
 
 export type CardProps = React.HTMLAttributes<HTMLDivElement> & CardExtraProps
 
-const IllustrationCard: React.FC<React.PropsWithChildren<React.PropsWithChildren<CardProps>>> = ({
-  title,
-  chapterNumber,
-  bg,
-  backgroundImage,
-  open,
-  date,
-  time,
-}) => {
+const IllustrationCard: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<CardProps>>
+> = ({ title, chapterNumber, bg, backgroundImage, open, date, time }) => {
   const { t } = useTranslation()
 
   return (

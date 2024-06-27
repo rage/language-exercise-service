@@ -54,7 +54,10 @@ const Review: React.FC<
       </StyledInstruction>
 
       <span className="comment">{GENERAL_COMMENTS}</span>
-      <TextArea placeholder={t("write-a-review")} onChange={() => null}></TextArea>
+      <TextArea
+        placeholder={t("write-a-review")}
+        onChange={() => null}
+      ></TextArea>
       <LikertScale
         question={EXAMPLE_QUESTION}
         answerRequired={false}

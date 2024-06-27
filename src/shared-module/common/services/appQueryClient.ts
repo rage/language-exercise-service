@@ -30,7 +30,9 @@ export const queryClient = new QueryClient({
         if (willRetry) {
           console.info("Retrying... (${statusCode})")
         } else {
-          console.info("Maximum number of retries reached. Not retrying anymore. (${statusCode})")
+          console.info(
+            "Maximum number of retries reached. Not retrying anymore. (${statusCode})",
+          )
         }
         return willRetry
       },

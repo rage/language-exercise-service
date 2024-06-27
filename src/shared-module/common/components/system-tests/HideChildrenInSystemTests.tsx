@@ -7,7 +7,9 @@ interface HideChildrenInSystemTestsProps {
 }
 
 // If you have something that gets in the way in the system tests screenshots
-const HideTextInSystemTests: React.FC<HideChildrenInSystemTestsProps> = ({ children }) => {
+const HideTextInSystemTests: React.FC<HideChildrenInSystemTestsProps> = ({
+  children,
+}) => {
   const shouldHideStuff = useShouldHideStuffFromSystemTestScreenshots()
   if (shouldHideStuff) {
     return null

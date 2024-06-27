@@ -30,13 +30,23 @@ interface ReadyState<T> {
   refetch: () => Promise<unknown>
 }
 
-export type QueryState<T> = DisabledState | LoadingState<T> | ReadyState<T> | ErrorState
+export type QueryState<T> =
+  | DisabledState
+  | LoadingState<T>
+  | ReadyState<T>
+  | ErrorState
 
 /**
  * Expansion of the `useQuery` hook that is only enabled once all values in key are defined. This
  * helps when having to chain multiple queries in a single component.
  */
-export default function useStateQuery<T, A1 = unknown, A2 = unknown, A3 = unknown, A4 = unknown>(
+export default function useStateQuery<
+  T,
+  A1 = unknown,
+  A2 = unknown,
+  A3 = unknown,
+  A4 = unknown,
+>(
   compositeKey: [string, A1?, A2?, A3?, A4?],
   query: (
     a1: NonNullable<A1>,
@@ -70,7 +80,12 @@ export default function useStateQuery<T, A1 = unknown, A2 = unknown, A3 = unknow
 
   useEffect(() => {
     if (!enabled) {
-      setQueryState({ state: "disabled", data: null, error: null, refetch: getQueryState.refetch })
+      setQueryState({
+        state: "disabled",
+        data: null,
+        error: null,
+        refetch: getQueryState.refetch,
+      })
     } else if (getQueryState.isError) {
       setQueryState({
         state: "error",

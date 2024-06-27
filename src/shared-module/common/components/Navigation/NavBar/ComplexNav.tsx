@@ -240,7 +240,11 @@ const Navigation: React.FC<
         role="button"
         aria-label={t("open-menu")}
       >
-        <Hamburger isActive={clicked} toggleButton={callback} buttonId={buttonId} />
+        <Hamburger
+          isActive={clicked}
+          toggleButton={callback}
+          buttonId={buttonId}
+        />
       </div>
 
       <ol className={clicked ? cx(navMenu, active) : cx(navMenu)}>

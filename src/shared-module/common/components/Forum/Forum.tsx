@@ -177,7 +177,11 @@ const Forum = () => {
             checked={visibility === "hide"}
           />
         </RadioSection>
-        <TextAreaField name="comment" placeholder={t("leave-a-comment")} onChange={() => null} />
+        <TextAreaField
+          name="comment"
+          placeholder={t("leave-a-comment")}
+          onChange={() => null}
+        />
         <StyledButton type="submit" name="submit" value={t("submit")} />
       </CommentSection>
     </Wrapper>

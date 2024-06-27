@@ -3,9 +3,9 @@ import { InfoCircle } from "@vectopus/atlas-icons-react"
 
 import { baseTheme } from "../styles"
 
-const GenericInfobox: React.FC<React.PropsWithChildren<React.PropsWithChildren<unknown>>> = ({
-  children,
-}) => {
+const GenericInfobox: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<unknown>>
+> = ({ children }) => {
   return (
     <div
       className={css`

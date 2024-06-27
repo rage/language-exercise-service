@@ -80,10 +80,9 @@ export interface MenuProps {
   children: ReactNode
 }
 
-const Menu: React.FC<React.PropsWithChildren<React.PropsWithChildren<MenuProps>>> = ({
-  children,
-  variant,
-}) => {
+const Menu: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<MenuProps>>
+> = ({ children, variant }) => {
   const [clicked, setClicked] = useState(false)
   const { t } = useTranslation()
 
@@ -102,7 +101,11 @@ const Menu: React.FC<React.PropsWithChildren<React.PropsWithChildren<MenuProps>>
         aria-label={t("open-menu")}
         tabIndex={0}
       >
-        <Hamburger isActive={clicked} toggleButton={onClickHandler} buttonId={buttonId} />
+        <Hamburger
+          isActive={clicked}
+          toggleButton={onClickHandler}
+          buttonId={buttonId}
+        />
       </div>
       <ul
         className={
@@ -110,7 +113,9 @@ const Menu: React.FC<React.PropsWithChildren<React.PropsWithChildren<MenuProps>>
             ? cx(
                 ToolTip,
                 css`
-                  ${variant === "bottom" ? "bottom: 70px;" : "top: 70px;right:17px;"}
+                  ${variant === "bottom"
+                    ? "bottom: 70px;"
+                    : "top: 70px;right:17px;"}
                 `,
               )
             : cx(Hide)

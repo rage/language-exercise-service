@@ -1,4 +1,7 @@
-export function getValueFromCookieString(cookieString: string, key: string): string | null {
+export function getValueFromCookieString(
+  cookieString: string,
+  key: string,
+): string | null {
   const cookies = cookieString.split("; ")
   const wantedCookie = cookies.find((c) => c.startsWith(key))
   if (!wantedCookie) {

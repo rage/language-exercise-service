@@ -6,7 +6,12 @@ export interface TimePickerProps extends InputHTMLAttributes<HTMLInputElement> {
   onChangeByValue: (value: string, name?: string) => void
 }
 
-const TimePicker = ({ onChangeByValue, onChange, className, ...rest }: TimePickerProps) => {
+const TimePicker = ({
+  onChangeByValue,
+  onChange,
+  className,
+  ...rest
+}: TimePickerProps) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChangeByValue) {
       const {

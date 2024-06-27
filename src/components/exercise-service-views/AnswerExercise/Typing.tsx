@@ -14,7 +14,11 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
     return null
   }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>, ItemId: string, nthSlot: number) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    ItemId: string,
+    nthSlot: number,
+  ) => {
     const { value } = event.target
 
     event.target.style.width = `${Math.max(20, value.length * 9)}px`
@@ -36,6 +40,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
       className={css`
         display: flex;
         flex-gap: 1rem;
+        margin-top: 1rem;
       `}
     >
       <div
@@ -43,10 +48,20 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
           flex-grow: 1;
         `}
       >
-        {publicSpec.items.map((item) => {
+        {publicSpec.items.map((item, n) => {
           let placeHolderCounter = -1
           return (
-            <div key={item.id}>
+            <div
+            key={item.id}
+            className={css`
+              display: flex;
+              gap: 0.3rem;
+              align-items: center;
+              margin-bottom: 1rem;
+            `}
+          >
+            <div>{n + 1}. </div>
+            <div>
               {item.textParts.map((textPart, tn) => {
                 if (textPart.type === "text") {
                   return <span key={textPart.text}>{textPart.text.trim()}</span>
@@ -70,6 +85,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                   </>
                 )
               })}
+              </div>
             </div>
           )
         })}

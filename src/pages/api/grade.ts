@@ -17,9 +17,7 @@ import {
 import { ExerciseTaskGradingResult } from "@/shared-module/common/bindings"
 import { GradingRequest as GenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types-2"
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
-import {
-  makeDraggingPublicSpec,
-} from "./public-spec"
+import { makeDraggingPublicSpec } from "./public-spec"
 import {
   makeDraggingModelSolutionSpec,
   makeHighlightingModelSolutionSpec,
@@ -82,7 +80,8 @@ function handleDraggingGradingRequest(
   let numIncorrect = 0
   for (const item of exerciseSpec.items) {
     const publicSpecForItem = publicSpec.items.find((i) => i.id === item.id)
-    const modelSolutionSpecForItem = modelSolutionSpec.itemIdTooptionsBySlot[item.id]
+    const modelSolutionSpecForItem =
+      modelSolutionSpec.itemIdTooptionsBySlot[item.id]
     if (!publicSpecForItem || !modelSolutionSpecForItem) {
       throw new Error(
         "Parsing the exercise configuration produced an illegal state",

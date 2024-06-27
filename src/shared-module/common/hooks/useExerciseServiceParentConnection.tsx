@@ -22,7 +22,9 @@ function useExerciseServiceParentConnection(
         port.onmessage = (message: WindowEventMap["message"]) => {
           if (message.data.message) {
             // eslint-disable-next-line i18next/no-literal-string
-            console.groupCollapsed(`Frame received a ${message.data.message} message from port`)
+            console.groupCollapsed(
+              `Frame received a ${message.data.message} message from port`,
+            )
           } else {
             // eslint-disable-next-line i18next/no-literal-string
             console.groupCollapsed(`Frame received a message from port`)

@@ -60,7 +60,17 @@ export interface FileFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FileField = forwardRef<HTMLInputElement, FileFieldProps>(
-  ({ onChange, onChangeByValue, className, disabled, error, ...rest }: FileFieldProps, ref) => {
+  (
+    {
+      onChange,
+      onChangeByValue,
+      className,
+      disabled,
+      error,
+      ...rest
+    }: FileFieldProps,
+    ref,
+  ) => {
     const { t } = useTranslation()
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

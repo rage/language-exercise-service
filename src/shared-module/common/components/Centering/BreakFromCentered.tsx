@@ -20,7 +20,8 @@ const BreakFromCentered: React.FC<
   // 100vw unfortunately does not take into account the scrollbar width, so we need to calculate its width and substract it from the width of the page
   let scrollbarWidth = 0
   if (typeof window !== "undefined") {
-    scrollbarWidth = Math.abs(window.innerWidth - document.documentElement.clientWidth) / 2
+    scrollbarWidth =
+      Math.abs(window.innerWidth - document.documentElement.clientWidth) / 2
   }
   if (props.sidebar) {
     if (props.sidebarThreshold) {

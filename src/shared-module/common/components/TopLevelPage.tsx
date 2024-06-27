@@ -75,16 +75,15 @@ export interface TopLevelPageExtraProps {
   index: number
 }
 
-export type TopLevelPage = React.HTMLAttributes<HTMLDivElement> & TopLevelPageExtraProps
+export type TopLevelPage = React.HTMLAttributes<HTMLDivElement> &
+  TopLevelPageExtraProps
 
 // eslint-disable-next-line i18next/no-literal-string
 /* const subtitlePlaceholder = "Find answers to frequently asked questions on the FAQ page" */
 
-const TopLevelPage: React.FC<React.PropsWithChildren<React.PropsWithChildren<TopLevelPage>>> = ({
-  title,
-  url,
-  index,
-}) => {
+const TopLevelPage: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<TopLevelPage>>
+> = ({ title, url, index }) => {
   const isEven = index % 2 === 0
   return (
     <Link
@@ -95,11 +94,17 @@ const TopLevelPage: React.FC<React.PropsWithChildren<React.PropsWithChildren<Top
     >
       <Content>
         <div>
-          <SVGWrapper isEven={isEven}>{isEven ? <Bulleye /> : <Cross />}</SVGWrapper>
+          <SVGWrapper isEven={isEven}>
+            {isEven ? <Bulleye /> : <Cross />}
+          </SVGWrapper>
           <h3>{title}</h3>
           {/* <span>{subtitlePlaceholder}</span> */}
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.957 49" className="right-arrow">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 56.957 49"
+          className="right-arrow"
+        >
           <path
             d="M32.466,0,29.321,3.146l19.123,19.11H0v4.475H48.444L29.321,45.854,32.466,49l24.49-24.506Z"
             fill="#44827E"

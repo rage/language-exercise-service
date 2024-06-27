@@ -78,7 +78,8 @@ const StyledLink = styled(Link)`
   }
 `
 
-export type NextSectionLinkProps = React.HTMLAttributes<HTMLDivElement> & NextSectionLinkExtraProps
+export type NextSectionLinkProps = React.HTMLAttributes<HTMLDivElement> &
+  NextSectionLinkExtraProps
 
 const NextSectionLink: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<NextSectionLinkProps>>

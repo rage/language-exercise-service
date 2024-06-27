@@ -31,10 +31,15 @@ export default function withErrorBoundary<T>(
 
       console.groupEnd()
       if (this.state.error !== undefined) {
-        console.warn(`ErrorBoundary caught multiple errors. Showing only the first one.`)
+        console.warn(
+          `ErrorBoundary caught multiple errors. Showing only the first one.`,
+        )
         return
       }
-      this.setState({ error: error.message, trace: info.componentStack ?? undefined })
+      this.setState({
+        error: error.message,
+        trace: info.componentStack ?? undefined,
+      })
     }
 
     render() {
@@ -51,7 +56,9 @@ export default function withErrorBoundary<T>(
                 </p>
                 {trace && (
                   <>
-                    <button onClick={() => this.setState({ showTrace: !showTrace })}>
+                    <button
+                      onClick={() => this.setState({ showTrace: !showTrace })}
+                    >
                       {showTrace ? t("hide-trace") : t("show-trace")}
                     </button>
                     {showTrace && <pre>{trace}</pre>}

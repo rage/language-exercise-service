@@ -28,7 +28,8 @@ export interface CardExtraProps {
   backgroundImage?: string | null
 }
 
-export type CardProps = React.ButtonHTMLAttributes<HTMLDivElement> & CardExtraProps
+export type CardProps = React.ButtonHTMLAttributes<HTMLDivElement> &
+  CardExtraProps
 
 const variantToComponent = {
   simple: SimpleCard,
@@ -36,7 +37,9 @@ const variantToComponent = {
   illustration: IllustrationCard,
 }
 
-const Card: React.FC<React.PropsWithChildren<React.PropsWithChildren<CardProps>>> = (props) => {
+const Card: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<CardProps>>
+> = (props) => {
   const Component = variantToComponent[props.variant]
 
   if (props.url && (props.open || props.allowedToPreview)) {

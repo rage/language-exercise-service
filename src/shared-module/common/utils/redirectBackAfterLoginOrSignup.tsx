@@ -48,7 +48,10 @@ export function validateReturnToRouteOrDefault(
 
 export function useCurrentPagePathForReturnTo(currentPagePath: string): string {
   const uncheckedReturnTo = useQueryParameter("return_to")
-  if (currentPagePath.startsWith("/login") || currentPagePath.startsWith("/signup")) {
+  if (
+    currentPagePath.startsWith("/login") ||
+    currentPagePath.startsWith("/signup")
+  ) {
     if (uncheckedReturnTo && uncheckedReturnTo !== "") {
       return uncheckedReturnTo
     }

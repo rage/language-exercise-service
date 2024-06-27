@@ -1,4 +1,8 @@
-export function updateQueryStringParameter(url: string, key: string, value: string) {
+export function updateQueryStringParameter(
+  url: string,
+  key: string,
+  value: string,
+) {
   const parsedUrl = new URL(url)
   if (parsedUrl.searchParams.has(key)) {
     parsedUrl.searchParams.delete(key)

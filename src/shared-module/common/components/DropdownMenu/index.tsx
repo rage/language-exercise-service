@@ -19,8 +19,11 @@ const DropdownMenu: React.FC<
   const [expanded, setExpanded] = useState(false)
 
   // This is the right way according to popper.js docs
-  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null)
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLButtonElement | null>(null)
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null,
+  )
 
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: "bottom-start",
@@ -54,7 +57,8 @@ const DropdownMenu: React.FC<
       }
       if (
         referenceElement &&
-        (referenceElement.contains(event.target as Node) || referenceElement === event.target)
+        (referenceElement.contains(event.target as Node) ||
+          referenceElement === event.target)
       ) {
         return
       }

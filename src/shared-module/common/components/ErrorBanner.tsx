@@ -116,11 +116,12 @@ export interface BannerExtraProps {
   error: unknown | string
 }
 
-export type BannerProps = React.HTMLAttributes<HTMLDivElement> & BannerExtraProps
+export type BannerProps = React.HTMLAttributes<HTMLDivElement> &
+  BannerExtraProps
 
-const ErrorBanner: React.FC<React.PropsWithChildren<React.PropsWithChildren<BannerProps>>> = (
-  props,
-) => {
+const ErrorBanner: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<BannerProps>>
+> = (props) => {
   const { t } = useTranslation()
 
   const { error: unknownError } = props
@@ -129,7 +130,11 @@ const ErrorBanner: React.FC<React.PropsWithChildren<React.PropsWithChildren<Bann
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [error, setError] = useState<any>(undefined)
   useEffect(() => {
-    if (typeof anyError === "object" && anyError !== null && anyError.data instanceof Blob) {
+    if (
+      typeof anyError === "object" &&
+      anyError !== null &&
+      anyError.data instanceof Blob
+    ) {
       const blob: Blob = anyError.data
       blob.text().then((text) => {
         try {
@@ -218,7 +223,13 @@ const ErrorBanner: React.FC<React.PropsWithChildren<React.PropsWithChildren<Bann
                   <summary>{t("show-error-source")}</summary>
                   <ul>
                     <li>
-                      <pre>{JSON.stringify(axiosError.response?.data, undefined, 2)}</pre>
+                      <pre>
+                        {JSON.stringify(
+                          axiosError.response?.data,
+                          undefined,
+                          2,
+                        )}
+                      </pre>
                     </li>
                   </ul>
                 </details>

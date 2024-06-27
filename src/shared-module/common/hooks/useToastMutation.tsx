@@ -42,11 +42,16 @@ export default function useToastMutation<
 >(
   mutationFn: MutationFunction<TData, TVariables>,
   notificationOptions: NotificationOptions,
-  mutationOptions: Omit<UseMutationOptions<TData, TError, TVariables, TContext>, "mutationFn"> = {},
+  mutationOptions: Omit<
+    UseMutationOptions<TData, TError, TVariables, TContext>,
+    "mutationFn"
+  > = {},
 ): UseMutationResult<TData, TError, TVariables, TContext> {
   const showToastInfinitely = useSetShowStuffInfinitelyInSystemTestScreenshots()
   let toastId = ""
-  const displaySuccessNotification = (notificationOptions: EnableNotifications) => {
+  const displaySuccessNotification = (
+    notificationOptions: EnableNotifications,
+  ) => {
     toast.custom(
       (toast) => {
         return (
@@ -59,7 +64,9 @@ export default function useToastMutation<
       },
       {
         ...notificationOptions.toastOptions,
-        duration: showToastInfinitely ? Infinity : notificationOptions.toastOptions?.duration,
+        duration: showToastInfinitely
+          ? Infinity
+          : notificationOptions.toastOptions?.duration,
         id: toastId,
       },
     )
@@ -73,9 +80,12 @@ export default function useToastMutation<
         // Remove old toasts
         toast.remove()
         // Set toastId that is updated once operation is successful or erronous.
-        toastId = toast.custom(<LoadingNotification message={notificationOptions.loadingText} />, {
-          ...notificationOptions.toastOptions,
-        })
+        toastId = toast.custom(
+          <LoadingNotification message={notificationOptions.loadingText} />,
+          {
+            ...notificationOptions.toastOptions,
+          },
+        )
       }
       if (mutationOptions?.onMutate) {
         mutationOptions.onMutate(variables)
@@ -141,14 +151,18 @@ export default function useToastMutation<
               <ErrorNotification
                 header={notificationOptions.errorHeader}
                 message={errorMessage}
-                {...(notificationOptions.dismissable ? { toastId: toast.id } : {})}
+                {...(notificationOptions.dismissable
+                  ? { toastId: toast.id }
+                  : {})}
               />
             )
           },
           {
             ...notificationOptions.toastOptions,
             id: toastId,
-            duration: showToastInfinitely ? Infinity : notificationOptions.toastOptions?.duration,
+            duration: showToastInfinitely
+              ? Infinity
+              : notificationOptions.toastOptions?.duration,
           },
         )
       }

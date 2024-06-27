@@ -98,17 +98,20 @@ export interface AccordionExtraProps {
   variant: "simple" | "detail"
 }
 
-export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> & AccordionExtraProps
+export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
+  AccordionExtraProps
 
-const Accordion: React.FC<React.PropsWithChildren<React.PropsWithChildren<AccordionProps>>> = (
-  props,
-) => {
+const Accordion: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<AccordionProps>>
+> = (props) => {
   if (props.variant === "detail") {
     return <DetailAccordion {...props}></DetailAccordion>
   }
 
   if (props.children) {
-    return <TextWrapper className={props.className}>{props.children}</TextWrapper>
+    return (
+      <TextWrapper className={props.className}>{props.children}</TextWrapper>
+    )
   }
   return (
     <div className={props.className}>

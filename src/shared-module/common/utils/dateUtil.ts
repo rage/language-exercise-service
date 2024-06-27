@@ -3,11 +3,18 @@
  * @param first first date object
  * @param second second date object, if let out will default to current date
  */
-export const dateDiffInDays = (first: Date, second: Date = new Date()): number => {
+export const dateDiffInDays = (
+  first: Date,
+  second: Date = new Date(),
+): number => {
   const _MS_PER_DAY = 1000 * 60 * 60 * 24
 
   const utc1 = Date.UTC(first.getFullYear(), first.getMonth(), first.getDate())
-  const utc2 = Date.UTC(second.getFullYear(), second.getMonth(), second.getDate())
+  const utc2 = Date.UTC(
+    second.getFullYear(),
+    second.getMonth(),
+    second.getDate(),
+  )
 
   return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
@@ -25,7 +32,9 @@ export const dateDiffInDays = (first: Date, second: Date = new Date()): number =
  * @param dateString Date in a string format.
  * @returns Modified date string
  */
-export const makeDateStringTimezoneErrorsLessLikely = (dateString: string): string => {
+export const makeDateStringTimezoneErrorsLessLikely = (
+  dateString: string,
+): string => {
   const input = dateString.trim()
   if (!/^\d+-\d+-\d+$/.test(input)) {
     // The date string specifies something other than a date. We won't do anything in this case.

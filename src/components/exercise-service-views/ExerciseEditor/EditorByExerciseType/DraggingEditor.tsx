@@ -24,13 +24,22 @@ const DraggingEditor: React.FC = () => {
   }
   return (
     <div>
-      {selected.items.map((item) => (
+      {selected.items.map((item, n) => (
         <>
-          <div key={item.id}>
+          <div
+            className={css`
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              margin-bottom: 1rem;
+            `}
+            key={item.id}
+          >
+            <div>{n + 1}. </div>
             <textarea
               className={css`
                 width: 100%;
-                margin-bottom: 1rem;
+
                 resize: vertical;
               `}
               value={item.text}
@@ -50,7 +59,7 @@ const DraggingEditor: React.FC = () => {
           </div>
         </>
       ))}
-      <button onClick={addNewItem}>Add option</button>
+      <button onClick={addNewItem}>Add item</button>
     </div>
   )
 }

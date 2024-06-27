@@ -13,7 +13,9 @@ const StyledText = styled.div`
 
 const PLACEHOLDER_TEXT = "I am testing"
 
-const Test: React.FC<React.PropsWithChildren<React.PropsWithChildren<TestProps>>> = (props) => {
+const Test: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<TestProps>>
+> = (props) => {
   return <StyledText {...props}>{PLACEHOLDER_TEXT}</StyledText>
 }
 

@@ -19,7 +19,11 @@ const MaskOverThisInSystemTests: React.FC<MaskOverThisInSystemTestsProps> = ({
 }) => {
   return (
     <span
-      className={useDisplayBlockAndHideOverflow ? displayBlockAndHideOverflowStyle : undefined}
+      className={
+        useDisplayBlockAndHideOverflow
+          ? displayBlockAndHideOverflowStyle
+          : undefined
+      }
       data-mask-over-this-in-system-tests="true"
     >
       {children}

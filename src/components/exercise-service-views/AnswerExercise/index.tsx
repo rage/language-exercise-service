@@ -73,10 +73,17 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
           if (!answer) {
             return false
           }
-          if (answer.answers.length !== item.textParts.filter((o) => o.type === "slot").length) {
+          if (
+            answer.answers.length !==
+            item.textParts.filter((o) => o.type === "slot").length
+          ) {
             return false
           }
-          if (Array.from(answer.answers).some((o) => o === null || o === undefined || o === "")) {
+          if (
+            Array.from(answer.answers).some(
+              (o) => o === null || o === undefined || o === "",
+            )
+          ) {
             return false
           }
         }

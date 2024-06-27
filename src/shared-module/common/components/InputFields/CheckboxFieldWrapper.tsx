@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next"
 
 import CheckBox from "./CheckBox"
 
-export interface CheckboxFieldWrapperProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxFieldWrapperProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   fieldName: string
   onUncheck: () => void
   initialChecked?: boolean

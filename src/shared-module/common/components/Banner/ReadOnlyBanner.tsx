@@ -34,9 +34,12 @@ export interface BannerExtraProps {
   content: string
 }
 
-export type BannerProps = React.HTMLAttributes<HTMLDivElement> & BannerExtraProps
+export type BannerProps = React.HTMLAttributes<HTMLDivElement> &
+  BannerExtraProps
 
-const Quote: React.FC<React.PropsWithChildren<React.PropsWithChildren<BannerProps>>> = (props) => {
+const Quote: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<BannerProps>>
+> = (props) => {
   return (
     <BannerWrapper {...props}>
       <Content>

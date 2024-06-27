@@ -20,7 +20,8 @@ interface SelectMenuExtraProps {
 
 const DEFAULT_VALUE_KEY = "default-value"
 
-export type SelectMenuProps = React.HTMLAttributes<HTMLInputElement> & SelectMenuExtraProps
+export type SelectMenuProps = React.HTMLAttributes<HTMLInputElement> &
+  SelectMenuExtraProps
 
 const SelectIcon = () => {
   return (

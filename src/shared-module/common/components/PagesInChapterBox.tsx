@@ -123,7 +123,12 @@ const PagesInChapterBox: React.FC<
               <span>{props.chapterIndex}</span>
             </PageNumberBox>
             <span>{props.chapterTitle}</span>
-            <ArrowSVGIcon className="page-link-arrow" role="presentation" alt="" width="15" />
+            <ArrowSVGIcon
+              className="page-link-arrow"
+              role="presentation"
+              alt=""
+              width="15"
+            />
           </ChapterParts>
         </Link>
       </>

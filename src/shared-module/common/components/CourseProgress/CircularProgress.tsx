@@ -90,10 +90,13 @@ const CircularProgress: React.FC<CircularProgressExtraProps> = ({
   const radius = 160
   const circumference = 2 * Math.PI * radius
   const receivedPointsRatio = givenScore / maximum
-  const requiredForCompletionRatio = required && required > 0 && max && max > 0 ? required / max : 0
+  const requiredForCompletionRatio =
+    required && required > 0 && max && max > 0 ? required / max : 0
 
-  const receivedPointsStrokeDashOffset = (1 - receivedPointsRatio) * circumference
-  const requiredForCompletionStrokeDashOffset = (1 - requiredForCompletionRatio) * circumference
+  const receivedPointsStrokeDashOffset =
+    (1 - receivedPointsRatio) * circumference
+  const requiredForCompletionStrokeDashOffset =
+    (1 - requiredForCompletionRatio) * circumference
 
   useLayoutEffect(() => {
     const onScroll = () => {
@@ -128,7 +131,12 @@ const CircularProgress: React.FC<CircularProgressExtraProps> = ({
         {label}
       </h2>
       <StyledSVG>
-        <svg xmlns="http://www.w3.org/2000/svg" width="497" height="497" viewBox="0 0 497 497">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="497"
+          height="497"
+          viewBox="0 0 497 497"
+        >
           <g id="Group_11" transform="translate(-712 -7629)">
             <g id="Ellipse_2" transform="translate(712 7629)" fill="#edf2f4">
               <path

@@ -6,10 +6,13 @@ import Spinner from "../Spinner"
 
 const MonacoLoading = <Spinner variant="medium" />
 
-const MonacoDiffEditorImpl = dynamic(() => import("./impl/MonacoDiffEditorImpl"), {
-  ssr: false,
-  loading: () => MonacoLoading,
-})
+const MonacoDiffEditorImpl = dynamic(
+  () => import("./impl/MonacoDiffEditorImpl"),
+  {
+    ssr: false,
+    loading: () => MonacoLoading,
+  },
+)
 
 const MonacoDiffEditor: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<DiffEditorProps>>

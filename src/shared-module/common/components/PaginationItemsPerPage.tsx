@@ -10,7 +10,9 @@ interface PaginationItemsPerPageProps {
   paginationInfo: PaginationInfo
 }
 
-const PaginationItemsPerPage: React.FC<PaginationItemsPerPageProps> = ({ paginationInfo }) => {
+const PaginationItemsPerPage: React.FC<PaginationItemsPerPageProps> = ({
+  paginationInfo,
+}) => {
   const { t } = useTranslation()
   const options = useMemo(() => {
     const options = [

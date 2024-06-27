@@ -36,7 +36,8 @@ const Likert = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px 0;
-  background-color: ${({ active }: StyledProps) => (active ? "#313947" : "#f9f9f9")};
+  background-color: ${({ active }: StyledProps) =>
+    active ? "#313947" : "#f9f9f9"};
   cursor: pointer;
   transition: all 0.2s;
 
@@ -50,7 +51,8 @@ const Likert = styled.div`
   }
 
   &:hover {
-    background: ${({ active }: StyledProps) => (active ? "#313947" : "#babdc2")};
+    background: ${({ active }: StyledProps) =>
+      active ? "#313947" : "#babdc2"};
     svg .bg {
       fill: #ffd93b;
     }
@@ -79,7 +81,9 @@ interface StyledProps {
   active: boolean
 }
 
-const LikertScale: React.FC<React.PropsWithChildren<React.PropsWithChildren<LikertScaleProps>>> = ({
+const LikertScale: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<LikertScaleProps>>
+> = ({
   disabled,
   question,
   answerRequired,

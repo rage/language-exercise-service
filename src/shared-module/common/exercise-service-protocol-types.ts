@@ -1,6 +1,13 @@
 /* eslint-disable i18next/no-literal-string */
-import { ExerciseTaskGradingResult, RepositoryExercise, UserInfo } from "./bindings"
-import { GradingRequest, GradingResult } from "./exercise-service-protocol-types-2"
+import {
+  ExerciseTaskGradingResult,
+  RepositoryExercise,
+  UserInfo,
+} from "./bindings"
+import {
+  GradingRequest,
+  GradingResult,
+} from "./exercise-service-protocol-types-2"
 import { isSetStateMessage } from "./exercise-service-protocol-types.guard"
 
 /**
@@ -8,7 +15,10 @@ import { isSetStateMessage } from "./exercise-service-protocol-types.guard"
  *
  * to: parent
  */
-export type MessageFromIframe = CurrentStateMessage | HeightChangedMessage | FileUploadMessage
+export type MessageFromIframe =
+  | CurrentStateMessage
+  | HeightChangedMessage
+  | FileUploadMessage
 
 export interface CurrentStateMessage {
   message: "current-state"
@@ -31,7 +41,10 @@ export interface FileUploadMessage {
  *
  * to: IFrame
  */
-export type MessageToIframe = SetLanguageMessage | SetStateMessage | UploadResultMessage
+export type MessageToIframe =
+  | SetLanguageMessage
+  | SetStateMessage
+  | UploadResultMessage
 
 export interface SetLanguageMessage {
   message: "set-language"
@@ -61,7 +74,9 @@ export type UploadResultMessage = {
  * the type. Won't fail if the set state message gets extended but still checks whether the message is
  * intended to be the right kind of message.
  */
-export function forgivingIsSetStateMessage(obj: unknown): obj is SetStateMessage {
+export function forgivingIsSetStateMessage(
+  obj: unknown,
+): obj is SetStateMessage {
   if (isSetStateMessage(obj)) {
     // Passes the stricter check, all is good.
     return true
@@ -69,7 +84,9 @@ export function forgivingIsSetStateMessage(obj: unknown): obj is SetStateMessage
 
   const typedObj = obj as SetStateMessage
   const forgivingCheck =
-    typedObj !== null && typeof typedObj === "object" && typedObj["message"] === "set-state"
+    typedObj !== null &&
+    typeof typedObj === "object" &&
+    typedObj["message"] === "set-state"
   if (forgivingCheck === true) {
     console.warn(
       `Message did not pass the strict set-state message check, but it did have the message field "set-state", so treating the object as a set-state message. However, we don't gurantee all fields in the object will match the type. If this has happened because the set-state message has been extended with more fields, everything is ok.`,

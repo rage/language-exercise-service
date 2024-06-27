@@ -3,7 +3,9 @@
 /**
  * @param {{requireTrustedTypesFor: boolean}} options
  */
-function generateNormalResponseHeaders(options = { requireTrustedTypesFor: false }) {
+function generateNormalResponseHeaders(
+  options = { requireTrustedTypesFor: false },
+) {
   return [
     {
       key: "Referrer-Policy",
@@ -16,7 +18,10 @@ function generateNormalResponseHeaders(options = { requireTrustedTypesFor: false
 
     {
       key: "Permissions-Policy",
-      value: [`fullscreen=(self "https://www.thinglink.com")`, `encrypted-media=*`]
+      value: [
+        `fullscreen=(self "https://www.thinglink.com")`,
+        `encrypted-media=*`,
+      ]
         .filter((o) => !!o)
         .join(", "),
     },
@@ -84,7 +89,10 @@ const externallyEmbeddableIFrameResponseHeaders = [
   // That causes that we need cors headers some for some resrouces like api routes, fonts, development files etc.
   // It's best to enable all origins for all files since it should be fine to make requests to the services from anywhere.
   { key: "Access-Control-Allow-Origin", value: "*" },
-  {key: "Access-Control-Allow-Headers", value: "*"},
+  { key: "Access-Control-Allow-Headers", value: "*" },
 ]
 
-module.exports = { generateNormalResponseHeaders, externallyEmbeddableIFrameResponseHeaders }
+module.exports = {
+  generateNormalResponseHeaders,
+  externallyEmbeddableIFrameResponseHeaders,
+}

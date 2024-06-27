@@ -20,7 +20,10 @@ import { BreakFromCenteredProps } from "./Centering/BreakFromCentered"
 interface MessageChannelIFrameProps {
   url: string
   postThisStateToIFrame: ExtendedIframeState | null
-  onMessageFromIframe: (message: MessageFromIframe, responsePort: MessagePort) => void
+  onMessageFromIframe: (
+    message: MessageFromIframe,
+    responsePort: MessagePort,
+  ) => void
   breakFromCenteredProps?: BreakFromCenteredProps
   title: string
   showBorders?: boolean
@@ -58,7 +61,9 @@ const MessageChannelIFrame: React.FC<
       const data = message.data
       if (data.message) {
         // eslint-disable-next-line i18next/no-literal-string
-        console.groupCollapsed(`Parent page: received message ${data.message} from iframe`)
+        console.groupCollapsed(
+          `Parent page: received message ${data.message} from iframe`,
+        )
       } else {
         // eslint-disable-next-line i18next/no-literal-string
         console.groupCollapsed(`Parent page: received message from iframe`)
@@ -68,7 +73,9 @@ const MessageChannelIFrame: React.FC<
       if (isHeightChangedMessage(data)) {
         if (!iframeRef.current) {
           // eslint-disable-next-line i18next/no-literal-string
-          console.error("Cannot send data to iframe because reference does not exist.")
+          console.error(
+            "Cannot send data to iframe because reference does not exist.",
+          )
           return
         }
         // eslint-disable-next-line i18next/no-literal-string
@@ -115,9 +122,11 @@ const MessageChannelIFrame: React.FC<
         console.info("Parent posting message port to iframe")
         try {
           // The iframe will use port 2 for communication
-          iframeRef.current.contentWindow.postMessage("communication-port", "*", [
-            messageChannel.port2,
-          ])
+          iframeRef.current.contentWindow.postMessage(
+            "communication-port",
+            "*",
+            [messageChannel.port2],
+          )
         } catch (e) {
           // eslint-disable-next-line i18next/no-literal-string
           console.error("Posting communication port to iframe failed", e)
@@ -147,7 +156,9 @@ const MessageChannelIFrame: React.FC<
       data: language,
     }
     // eslint-disable-next-line i18next/no-literal-string
-    console.groupCollapsed(`Parent posting set-language message to iframe (${language})`)
+    console.groupCollapsed(
+      `Parent posting set-language message to iframe (${language})`,
+    )
     console.info(JSON.stringify(message, undefined, 2))
     console.groupEnd()
     messageChannel.port1.postMessage(message)
@@ -212,7 +223,11 @@ const MessageChannelIFrame: React.FC<
         </h4>
       )}
       <iframe
-        sandbox={disableSandbox ? undefined : "allow-scripts allow-forms allow-downloads"}
+        sandbox={
+          disableSandbox
+            ? undefined
+            : "allow-scripts allow-forms allow-downloads"
+        }
         className={css`
           overflow: hidden;
           width: 100%;

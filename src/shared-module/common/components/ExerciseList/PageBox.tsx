@@ -38,11 +38,12 @@ export interface PageBoxExtraProps {
   pageTitle: string
 }
 
-export type PageBoxProps = React.HTMLAttributes<HTMLDivElement> & PageBoxExtraProps
+export type PageBoxProps = React.HTMLAttributes<HTMLDivElement> &
+  PageBoxExtraProps
 
-const PageBox: React.FC<React.PropsWithChildren<React.PropsWithChildren<PageBoxProps>>> = (
-  props,
-) => {
+const PageBox: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<PageBoxProps>>
+> = (props) => {
   return (
     <Wrapper>
       <PageBoxRow>

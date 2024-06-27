@@ -9,13 +9,17 @@ const TEN_MEGABYTES = 10 * 1024 * 1024
  * @param typesAndExtensions Array of mimetypes and file extensions for matching. Mimetypes are
  * eg. of the form `image` or `image/png`. Extensions start with a dot eg. `.png`.
  */
-export function fileMatchesType(file: File, typesAndExtensions: string[] | undefined): boolean {
+export function fileMatchesType(
+  file: File,
+  typesAndExtensions: string[] | undefined,
+): boolean {
   if (!typesAndExtensions || typesAndExtensions.length === 0) {
     return true
   }
 
   const extensionIndex = file.name.lastIndexOf(".")
-  const fileExtension = extensionIndex > 0 ? file.name.substring(extensionIndex) : undefined
+  const fileExtension =
+    extensionIndex > 0 ? file.name.substring(extensionIndex) : undefined
   const fileType = file.type || undefined
 
   return typesAndExtensions.some((type) => {
@@ -38,13 +42,16 @@ export function fileMatchesType(file: File, typesAndExtensions: string[] | undef
   })
 }
 
-export function fileMatchAudio(file: File): { [key: string]: string | undefined } | undefined {
+export function fileMatchAudio(
+  file: File,
+): { [key: string]: string | undefined } | undefined {
   if (!file) {
     return
   }
 
   const extensionIndex = file.name.lastIndexOf(".")
-  const fileExtension = extensionIndex > 0 ? file.name.substring(extensionIndex) : undefined
+  const fileExtension =
+    extensionIndex > 0 ? file.name.substring(extensionIndex) : undefined
   const fileType = file.type || undefined
 
   return { extension: fileExtension, type: fileType }
@@ -59,14 +66,22 @@ export function fileMatchAudio(file: File): { [key: string]: string | undefined 
  * `image` or `image/png`. Extensions start with a dot eg. `.png`.
  * @param maxSize Maximum size of the file in bytes. Defaults to 10MiB.
  */
-export function validateFile(file: File, allowedTypes: string[], maxSize = TEN_MEGABYTES): void {
+export function validateFile(
+  file: File,
+  allowedTypes: string[],
+  maxSize = TEN_MEGABYTES,
+): void {
   if (file.size <= 0) {
     throw new Error(formatError(file, `You sent an empty file.`))
   }
 
   // we need to the limit of the size for audio; prefered - 42MB
   const audio = fileMatchAudio(file)
-  if (audio && (audio.extension === "mp3" || "oga") && file.size > maxSize * 4) {
+  if (
+    audio &&
+    (audio.extension === "mp3" || "oga") &&
+    file.size > maxSize * 4
+  ) {
     const fileSizeMb = Math.ceil(file.size * 0.000001)
     throw new Error(
       formatError(
@@ -79,12 +94,17 @@ export function validateFile(file: File, allowedTypes: string[], maxSize = TEN_M
   if (file.size > maxSize) {
     const fileSizeMb = Math.ceil(file.size * 0.000001)
     throw new Error(
-      formatError(file, `File is too big. Your file was ${fileSizeMb}MB while the limit is 10MB.`),
+      formatError(
+        file,
+        `File is too big. Your file was ${fileSizeMb}MB while the limit is 10MB.`,
+      ),
     )
   }
 
   if (!fileMatchesType(file, allowedTypes)) {
-    throw new Error(formatError(file, `File type (${file.type}) not supported.`))
+    throw new Error(
+      formatError(file, `File type (${file.type}) not supported.`),
+    )
   }
 }
 

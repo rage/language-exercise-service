@@ -95,8 +95,12 @@ const DeleteNotification = (props: DeleteNotificationProps) => {
           <BellXmark color={baseTheme.colors.red[700]} size={20} />
         </IconWrapper>
         <TextWrapper role="alert">
-          <DeleteHeader>{props.header ?? t("default-toast-delete-title")}</DeleteHeader>
-          <DeleteMessage>{props.message ?? t("default-toast-delete-message")}</DeleteMessage>
+          <DeleteHeader>
+            {props.header ?? t("default-toast-delete-title")}
+          </DeleteHeader>
+          <DeleteMessage>
+            {props.message ?? t("default-toast-delete-message")}
+          </DeleteMessage>
         </TextWrapper>
         {props.toastId && (
           <CloseIconWrapper onClick={() => toast.remove(props.toastId)}>

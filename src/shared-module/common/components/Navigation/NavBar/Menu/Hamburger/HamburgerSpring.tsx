@@ -3,7 +3,8 @@
 import styled from "@emotion/styled"
 
 // eslint-disable-next-line i18next/no-literal-string
-const getBarColor = ({ barColor }: { barColor: BarColor }) => `background-color: ${barColor};`
+const getBarColor = ({ barColor }: { barColor: BarColor }) =>
+  `background-color: ${barColor};`
 const getLayerHeight = (buttonWidth: ButtonWidth) => buttonWidth * 0.1
 const getLayerSpacing = (buttonWidth: ButtonWidth) => buttonWidth * 0.15
 
@@ -69,7 +70,8 @@ const StyledLines = styled.span<LineProps>`
 // eslint-disable-next-line i18next/no-literal-string
 const StyledLinesSpring = styled(StyledLines)`
   &::before {
-    top: ${({ buttonWidth }) => getLayerHeight(buttonWidth) + getLayerSpacing(buttonWidth)}px;
+    top: ${({ buttonWidth }) =>
+      getLayerHeight(buttonWidth) + getLayerSpacing(buttonWidth)}px;
     transition:
       top 0.1s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1),
       transform 0.13s cubic-bezier(0.55, 0.055, 0.675, 0.19);
@@ -159,7 +161,9 @@ const StyledButton = styled.div<StyledButtonProps>`
   overflow: visible;
 `
 
-const Button: React.FC<React.PropsWithChildren<React.PropsWithChildren<ButtonProps>>> = (props) => {
+const Button: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<ButtonProps>>
+> = (props) => {
   const {
     barColor = "black",
     Box = StyledBox,

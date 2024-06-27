@@ -113,7 +113,9 @@ const DetailAccordion: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<AccordionProps>>
 > = (props) => {
   if (props.children) {
-    return <TextWrapper className={props.className}>{props.children}</TextWrapper>
+    return (
+      <TextWrapper className={props.className}>{props.children}</TextWrapper>
+    )
   }
   return (
     <div className={props.className}>

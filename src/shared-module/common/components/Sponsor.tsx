@@ -83,12 +83,12 @@ interface StyledSponsor {
   width?: string
 }
 
-export type SponsorProps = React.HTMLAttributes<HTMLDivElement> & SponsorExtraProps
+export type SponsorProps = React.HTMLAttributes<HTMLDivElement> &
+  SponsorExtraProps
 
-const Sponsor: React.FC<React.PropsWithChildren<React.PropsWithChildren<SponsorProps>>> = ({
-  width = "250px",
-  logos,
-}) => {
+const Sponsor: React.FC<
+  React.PropsWithChildren<React.PropsWithChildren<SponsorProps>>
+> = ({ width = "250px", logos }) => {
   const { t } = useTranslation()
 
   return (

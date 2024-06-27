@@ -43,7 +43,11 @@ const LANGUAGE: {
   "de-DE": { humanReadableName: "german", image: Germany },
   "sv-SE": { humanReadableName: "swedish", image: Sweden },
   "en-US": { humanReadableName: "english", image: USA },
-  "en-GB": { humanReadableName: "english", image: UK, clipPath: "circle(25% at 50% 50%)" },
+  "en-GB": {
+    humanReadableName: "english",
+    image: UK,
+    clipPath: "circle(25% at 50% 50%)",
+  },
   "nl-NL": { humanReadableName: "dutch", image: Netherlands },
   "nl-BE": { humanReadableName: "dutch-belgium", image: Netherlands },
   "cs-CZ": { humanReadableName: "czech", image: Czech },

@@ -7,7 +7,8 @@ interface SelectOption {
   disabled?: boolean
 }
 
-export interface SelectMenuProps extends InputHTMLAttributes<HTMLSelectElement> {
+export interface SelectMenuProps
+  extends InputHTMLAttributes<HTMLSelectElement> {
   label?: string
   labelStyle?: string
   error?: string
@@ -123,7 +124,12 @@ const SelectField = forwardRef<HTMLSelectElement, SelectMenuProps>(
             // Register overrides onChange if specified
           >
             {options.map(({ value, label, disabled }) => (
-              <option value={value} key={label} disabled={disabled} selected={disabled && true}>
+              <option
+                value={value}
+                key={label}
+                disabled={disabled}
+                selected={disabled && true}
+              >
                 {label}
               </option>
             ))}

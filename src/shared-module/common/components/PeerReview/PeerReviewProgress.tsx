@@ -19,7 +19,8 @@ export interface ReviewExtraProps {
   attempt: number
 }
 
-export type ReviewComponentProps = React.HTMLAttributes<HTMLDivElement> & ReviewExtraProps
+export type ReviewComponentProps = React.HTMLAttributes<HTMLDivElement> &
+  ReviewExtraProps
 
 const PeerReviewProgress: React.FC<
   React.PropsWithChildren<React.PropsWithChildren<ReviewComponentProps>>
