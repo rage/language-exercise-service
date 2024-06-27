@@ -212,8 +212,7 @@ function handleTypingGradingRequest(
     let answerIndex = -1
     for (const correctAnswersBySlot of correctAnswers.optionsBySlot) {
       answerIndex += 1
-      const userAnswerBySlot =
-        userAnswer.answers[answerIndex]
+      const userAnswerBySlot = userAnswer.answers[answerIndex]
       if (!userAnswerBySlot) {
         console.warn(
           `No answer for slot ${correctAnswersBySlot}. Marking this slot as incorrect.`,
