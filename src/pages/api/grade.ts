@@ -19,9 +19,12 @@ import { GradingRequest as GenericGradingRequest } from "@/shared-module/common/
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
 import {
   makeDraggingPublicSpec,
-  makeHighlightingPublicSpec,
 } from "./public-spec"
-import { PublicSpecOption } from "@/protocolTypes/publicSpec"
+import {
+  makeDraggingModelSolutionSpec,
+  makeHighlightingModelSolutionSpec,
+  makeTypingModelSolutionSpec,
+} from "./model-solution"
 
 type GradingRequest = GenericGradingRequest<PrivateSpec, UserAnswer>
 
@@ -74,11 +77,13 @@ function handleDraggingGradingRequest(
   submissionData: UserAnswerDragging,
 ): ExerciseTaskGradingResult {
   const publicSpec = makeDraggingPublicSpec(exerciseSpec)
+  const modelSolutionSpec = makeDraggingModelSolutionSpec(exerciseSpec)
   let numCorrect = 0
   let numIncorrect = 0
   for (const item of exerciseSpec.items) {
     const publicSpecForItem = publicSpec.items.find((i) => i.id === item.id)
-    if (!publicSpecForItem) {
+    const modelSolutionSpecForItem = modelSolutionSpec.itemIdTooptionsBySlot[item.id]
+    if (!publicSpecForItem || !modelSolutionSpecForItem) {
       throw new Error(
         "Parsing the exercise configuration produced an illegal state",
       )
@@ -110,8 +115,12 @@ function handleDraggingGradingRequest(
         numIncorrect += 1
         continue
       }
-      // TODO: Implement finding the correct option
-      const correctOption = null as any as PublicSpecOption
+      const correctOption = modelSolutionSpecForItem[nthSlot]
+      if (!correctOption) {
+        throw new Error(
+          "Parsing the exercise configuration produced an illegal state",
+        )
+      }
       // We check correctness both by the option id and the option text during submission so that the grading is fair even if the exercise has been updated after the submission.
       const acceptableAnswers = [correctOption.text]
       const sameOptionFoundById = publicSpec.allOptions.find(
@@ -145,14 +154,25 @@ function handleHighlightingGradingRequest(
   exerciseSpec: PrivateSpecHighlighting,
   submissionData: UserAnswerHighlighting,
 ): ExerciseTaskGradingResult {
-  const publicSpec = makeHighlightingPublicSpec(exerciseSpec)
-  const numCorrect = 0
-  const numIncorrect = 0
-  for (const paragraph of publicSpec.highligtablePartsByParagraph) {
-    for (const hightlightablePart of paragraph.highlightableParts) {
-      if (hightlightablePart.type === "non-highlightable") {
-        continue
-      }
+  const modelSolutionSpec = makeHighlightingModelSolutionSpec(exerciseSpec)
+  let numCorrect = 0
+  let numIncorrect = 0
+
+  const seenHighligtableIds = new Set<string>()
+
+  for (const highlightable of modelSolutionSpec.correctHighlightables) {
+    seenHighligtableIds.add(highlightable.id)
+    if (submissionData.selectedWords.some((sw) => sw.id === highlightable.id)) {
+      numCorrect += 1
+    } else {
+      numIncorrect += 1
+    }
+  }
+
+  // Penalize for selecting extra words
+  for (const selectedWord of submissionData.selectedWords) {
+    if (!seenHighligtableIds.has(selectedWord.id)) {
+      numIncorrect += 1
     }
   }
 
@@ -169,10 +189,58 @@ function handleTypingGradingRequest(
   exerciseSpec: PrivateSpecTyping,
   submissionData: UserAnswerTyping,
 ): ExerciseTaskGradingResult {
-  // TODO
+  const modelSolutionSpec = makeTypingModelSolutionSpec(exerciseSpec)
+  let numCorrect = 0
+  let numIncorrect = 0
+
+  for (const item of exerciseSpec.items) {
+    const correctAnswers = modelSolutionSpec.items.find((i) => i.id === item.id)
+    if (!correctAnswers) {
+      throw new Error(
+        "Parsing the exercise configuration produced an illegal state",
+      )
+    }
+    const userAnswer = submissionData.itemAnswers.find(
+      (ia) => ia.itemId === item.id,
+    )
+    if (!userAnswer) {
+      console.warn(
+        `No answer for item ${item.id}. Marking all the slots in this item as incorrect.`,
+      )
+      numIncorrect += correctAnswers.optionsBySlot.length
+      continue
+    }
+    for (const correctAnswersBySlot of correctAnswers.optionsBySlot) {
+      const userAnswerBySlot =
+        userAnswer.answers[correctAnswersBySlot.acceptedStrings.length]
+      if (!userAnswerBySlot) {
+        console.warn(
+          `No answer for slot ${correctAnswersBySlot}. Marking this slot as incorrect.`,
+        )
+        numIncorrect += 1
+        continue
+      }
+      if (exerciseSpec.matchingIsCaseInsensitive) {
+        if (
+          correctAnswersBySlot.acceptedStrings
+            .map((s) => s.toLowerCase())
+            .includes(userAnswerBySlot.toLowerCase())
+        ) {
+          numCorrect += 1
+        }
+      } else if (
+        correctAnswersBySlot.acceptedStrings.includes(userAnswerBySlot)
+      ) {
+        numCorrect += 1
+      } else {
+        numIncorrect += 1
+      }
+    }
+  }
+
   return {
     grading_progress: "FullyGraded",
-    score_given: 0,
+    score_given: numCorrect / (numCorrect + numIncorrect),
     score_maximum: 1,
     feedback_text: null,
     feedback_json: {},

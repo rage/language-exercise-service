@@ -1,7 +1,12 @@
 /* eslint-disable i18next/no-literal-string */
 import { NextApiRequest, NextApiResponse } from "next"
 
-import { ModelSolutionSpec } from "../../protocolTypes/modelSolutionSpec"
+import {
+  ModelSolutionSpec,
+  ModelSolutionSpecDragging,
+  ModelSolutionSpecHighlighting,
+  ModelSolutionSpecTyping,
+} from "../../protocolTypes/modelSolutionSpec"
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
 import {
   PrivateSpec,
@@ -61,27 +66,27 @@ function handleModelSolutionGeneration(
   return res.status(200).json(spec)
 }
 
-function makeDraggingModelSolutionSpec(
+export function makeDraggingModelSolutionSpec(
   privateSpec: PrivateSpecDragging,
-): ModelSolutionSpec {
-  const itemIdToCorrectOptions: Record<string, PublicSpecOption[]> = {}
+): ModelSolutionSpecDragging {
+  const itemIdTooptionsBySlot: Record<string, PublicSpecOption[]> = {}
   for (const item of privateSpec.items) {
     const options = extractDraggableOptionsFromPrivateSpecItem(
       item,
       privateSpec.secretKey,
     )
-    itemIdToCorrectOptions[item.id] = options
+    itemIdTooptionsBySlot[item.id] = options
   }
   return {
     version: 1,
     exerciseType: "dragging",
-    itemIdToCorrectOptions,
+    itemIdTooptionsBySlot,
   }
 }
 
-function makeHighlightingModelSolutionSpec(
+export function makeHighlightingModelSolutionSpec(
   privateSpec: PrivateSpecHighlighting,
-): ModelSolutionSpec {
+): ModelSolutionSpecHighlighting {
   const correctHighlightables: PublicSpecOption[] = []
 
   const splittedByParagraph = privateSpec.text.split(/\n{2,}/)
@@ -117,22 +122,22 @@ function makeHighlightingModelSolutionSpec(
   }
 }
 
-function makeTypingModelSolutionSpec(
+export function makeTypingModelSolutionSpec(
   privateSpec: PrivateSpecTyping,
-): ModelSolutionSpec {
+): ModelSolutionSpecTyping {
   const items = privateSpec.items.map((item) => {
     // Extact all strings inside [] characters
     const regex = /\[([^\]]+)\]/g
-    const correctOptions: { acceptedStrings: string[] }[] = []
+    const optionsBySlot: { acceptedStrings: string[] }[] = []
     let match
     while ((match = regex.exec(item.text)) !== null) {
       const matched = match[1].trim()
       const acceptedStrings = matched.split("|").map((s) => s.trim())
-      correctOptions.push({ acceptedStrings })
+      optionsBySlot.push({ acceptedStrings })
     }
     return {
       id: item.id,
-      correctOptions: correctOptions,
+      optionsBySlot: optionsBySlot,
     }
   })
 

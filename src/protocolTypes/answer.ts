@@ -16,9 +16,15 @@ export interface ItemAnswer {
   selectedOptions: (PublicSpecOption | null)[]
 }
 
+export interface ItemAnswerTyping {
+  itemId: string
+  answers: string[]
+}
+
 export interface UserAnswerTyping {
   version: 1
   exerciseType: "typing"
+  itemAnswers: ItemAnswerTyping[]
 }
 
 export interface UserAnswerHighlighting {
@@ -41,6 +47,7 @@ export function createEmptyUserAnswer(publicSpec: PublicSpec): UserAnswer {
       return {
         version: 1,
         exerciseType: "typing",
+        itemAnswers: [],
       }
     case "highlighting":
       return {
