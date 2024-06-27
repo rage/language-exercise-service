@@ -209,9 +209,11 @@ function handleTypingGradingRequest(
       numIncorrect += correctAnswers.optionsBySlot.length
       continue
     }
+    let answerIndex = -1
     for (const correctAnswersBySlot of correctAnswers.optionsBySlot) {
+      answerIndex += 1
       const userAnswerBySlot =
-        userAnswer.answers[correctAnswersBySlot.acceptedStrings.length]
+        userAnswer.answers[answerIndex]
       if (!userAnswerBySlot) {
         console.warn(
           `No answer for slot ${correctAnswersBySlot}. Marking this slot as incorrect.`,
@@ -223,12 +225,12 @@ function handleTypingGradingRequest(
         if (
           correctAnswersBySlot.acceptedStrings
             .map((s) => s.toLowerCase())
-            .includes(userAnswerBySlot.toLowerCase())
+            .includes(userAnswerBySlot.trim().toLowerCase())
         ) {
           numCorrect += 1
         }
       } else if (
-        correctAnswersBySlot.acceptedStrings.includes(userAnswerBySlot)
+        correctAnswersBySlot.acceptedStrings.includes(userAnswerBySlot.trim())
       ) {
         numCorrect += 1
       } else {
