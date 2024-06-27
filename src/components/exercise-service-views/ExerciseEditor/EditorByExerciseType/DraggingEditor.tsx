@@ -19,6 +19,15 @@ const DraggingEditor: React.FC = () => {
     })
   }, [updateState])
 
+  const addFakeOption = useCallback(() => {
+    updateState((draft) => {
+      if (!draft || draft.exerciseType !== "dragging") {
+        return draft
+      }
+      draft.fakeOptions.push("")
+    })
+  }, [updateState])
+
   if (!selected || selected.exerciseType !== "dragging") {
     return null
   }
@@ -60,6 +69,38 @@ const DraggingEditor: React.FC = () => {
         </>
       ))}
       <button onClick={addNewItem}>Add item</button>
+      <h2>Fake options</h2>
+      <div>
+        {selected.fakeOptions.map((fakeOption, n) => (
+          <div
+            className={css`
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              margin-bottom: 1rem;
+            `}
+            key={n}
+          >
+            <input
+              type="text"
+              className={css`
+                width: 100%;
+                resize: vertical;
+              `}
+              value={fakeOption}
+              onChange={(e) => {
+                updateState((draft) => {
+                  if (!draft || draft.exerciseType !== "dragging") {
+                    return draft
+                  }
+                  draft.fakeOptions[n] = e.target.value
+                })
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      <button onClick={addFakeOption}>Add fake option</button>
     </div>
   )
 }

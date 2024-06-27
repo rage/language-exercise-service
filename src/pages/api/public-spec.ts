@@ -19,6 +19,7 @@ import {
 } from "@/protocolTypes/privateSpec"
 import { oneWayStringToId } from "@/util/hashing"
 import { paragraphToHighlightableParts } from "@/util/paragraphToHighlightablePart"
+import { shuffle } from "lodash"
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
   if (req.method === "OPTIONS") {
@@ -134,14 +135,22 @@ export function extractDraggableOptionsFromPrivateSpecItem(
 export function makeDraggingPublicSpec(
   privateSpec: PrivateSpecDragging,
 ): PublicSpecDragging {
-  const allOptions = privateSpec.items
-    .flatMap((item) => {
-      return extractDraggableOptionsFromPrivateSpecItem(
-        item,
-        privateSpec.secretKey,
-      )
-    })
-    .sort((a, b) => a.text.localeCompare(b.text))
+  const fakeOptions = privateSpec.fakeOptions.map((text) => {
+    const id = oneWayStringToId(
+      `${text}-fake`,
+      "00000000-0000-0000-0000-000000000000",
+      privateSpec.secretKey,
+    )
+    return { id, text } satisfies PublicSpecOption
+  })
+  let allOptions = privateSpec.items.flatMap((item) => {
+    return extractDraggableOptionsFromPrivateSpecItem(
+      item,
+      privateSpec.secretKey,
+    )
+  })
+  allOptions.push(...fakeOptions)
+  allOptions = shuffle(allOptions).sort((a, b) => a.text.localeCompare(b.text))
 
   const sanitizedItems = privateSpec.items.map((item) => {
     const text = item.text

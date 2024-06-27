@@ -52,39 +52,41 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
           let placeHolderCounter = -1
           return (
             <div
-            key={item.id}
-            className={css`
-              display: flex;
-              gap: 0.3rem;
-              align-items: center;
-              margin-bottom: 1rem;
-            `}
-          >
-            <div>{n + 1}. </div>
-            <div>
-              {item.textParts.map((textPart, tn) => {
-                if (textPart.type === "text") {
-                  return <span key={textPart.text}>{textPart.text.trim()}</span>
-                }
-                placeHolderCounter += 1
-                const nthSlot = placeHolderCounter
+              key={item.id}
+              className={css`
+                display: flex;
+                gap: 0.3rem;
+                align-items: center;
+                margin-bottom: 1rem;
+              `}
+            >
+              <div>{n + 1}. </div>
+              <div>
+                {item.textParts.map((textPart, tn) => {
+                  if (textPart.type === "text") {
+                    return (
+                      <span key={textPart.text}>{textPart.text.trim()}</span>
+                    )
+                  }
+                  placeHolderCounter += 1
+                  const nthSlot = placeHolderCounter
 
-                return (
-                  <>
-                    &nbsp;
-                    <input
-                      className={css`
-                        width: 3rem;
-                        min-width: 3rem;
-                      `}
-                      onChange={(e) => handleInputChange(e, item.id, nthSlot)}
-                      type="text"
-                      key={textPart.type + tn}
-                    />
-                    &nbsp;
-                  </>
-                )
-              })}
+                  return (
+                    <>
+                      &nbsp;
+                      <input
+                        className={css`
+                          width: 3rem;
+                          min-width: 3rem;
+                        `}
+                        onChange={(e) => handleInputChange(e, item.id, nthSlot)}
+                        type="text"
+                        key={textPart.type + tn}
+                      />
+                      &nbsp;
+                    </>
+                  )
+                })}
               </div>
             </div>
           )
