@@ -62,6 +62,35 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
         }
         return true
       }
+      if (publicSpec.exerciseType === "typing") {
+        for (const item of publicSpec.items) {
+          if (newState.exerciseType !== "typing") {
+            return false
+          }
+          const answer = newState.itemAnswers.find(
+            (ia) => ia.itemId === item.id,
+          )
+          if (!answer) {
+            return false
+          }
+          if (answer.answers.length !== item.textParts.filter((o) => o.type === "slot").length) {
+            return false
+          }
+          if (Array.from(answer.answers).some((o) => o === null || o === undefined || o === "")) {
+            return false
+          }
+        }
+        return true
+      }
+      if (publicSpec.exerciseType === "highlighting") {
+        if (newState.exerciseType !== "highlighting") {
+          return false
+        }
+        if (newState.selectedWords.length === 0) {
+          return false
+        }
+        return true
+      }
       return false
     },
     [publicSpec],
