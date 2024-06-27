@@ -19,6 +19,18 @@ const TypingEditor: React.FC = () => {
     })
   }, [updateState])
 
+  const removeItem = useCallback(
+    (id: string) => {
+      updateState((draft) => {
+        if (!draft || draft.exerciseType !== "typing") {
+          return draft
+        }
+        draft.items = draft.items.filter((i) => i.id !== id)
+      })
+    },
+    [updateState],
+  )
+
   if (!selected || selected.exerciseType !== "typing") {
     return null
   }
@@ -56,6 +68,7 @@ const TypingEditor: React.FC = () => {
                 })
               }}
             />
+            <button onClick={() => removeItem(item.id)}>Remove</button>
           </div>
         </>
       ))}

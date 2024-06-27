@@ -19,6 +19,30 @@ const DraggingEditor: React.FC = () => {
     })
   }, [updateState])
 
+  const remvoeItem = useCallback(
+    (id: string) => {
+      updateState((draft) => {
+        if (!draft || draft.exerciseType !== "dragging") {
+          return draft
+        }
+        draft.items = draft.items.filter((i) => i.id !== id)
+      })
+    },
+    [updateState],
+  )
+
+  const removeFakeOption = useCallback(
+    (index: number) => {
+      updateState((draft) => {
+        if (!draft || draft.exerciseType !== "dragging") {
+          return draft
+        }
+        draft.fakeOptions = draft.fakeOptions.filter((_, i) => i !== index)
+      })
+    },
+    [updateState],
+  )
+
   const addFakeOption = useCallback(() => {
     updateState((draft) => {
       if (!draft || draft.exerciseType !== "dragging") {
@@ -65,6 +89,7 @@ const DraggingEditor: React.FC = () => {
                 })
               }}
             />
+            <button onClick={() => remvoeItem(item.id)}>Remove</button>
           </div>
         </>
       ))}
@@ -97,6 +122,7 @@ const DraggingEditor: React.FC = () => {
                 })
               }}
             />
+            <button onClick={() => removeFakeOption(n)}>Remove</button>
           </div>
         ))}
       </div>
