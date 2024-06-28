@@ -15,13 +15,10 @@ import {
   PrivateSpecTyping,
 } from "../../protocolTypes/privateSpec"
 
-import {
-  ExerciseTaskGradingResult,
-  Feedback,
-} from "@/shared-module/common/bindings"
+import { ExerciseTaskGradingResult } from "@/shared-module/common/bindings"
 import { GradingRequest as GenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types-2"
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
-import publicSpec, { makeDraggingPublicSpec } from "./public-spec"
+import { makeDraggingPublicSpec } from "./public-spec"
 import {
   makeDraggingModelSolutionSpec,
   makeHighlightingModelSolutionSpec,
@@ -100,6 +97,10 @@ function handleDraggingGradingRequest(
         "Parsing the exercise configuration produced an illegal state",
       )
     }
+    const slotsCount = publicSpecForItem.textParts.filter(
+      (o) => o.type === "slot",
+    ).length
+    const nthWasCorrect: boolean[] = new Array(slotsCount).fill(false)
     const itemAnswerForItem = submissionData.itemAnswers.find(
       (ia) => ia.itemId === item.id,
     )
@@ -110,6 +111,11 @@ function handleDraggingGradingRequest(
       numIncorrect += publicSpecForItem.textParts.filter(
         (tp) => tp.type === "slot",
       ).length
+      itemIdToGradingInfo[item.id] = {
+        correctness: "incorrect",
+        feedbackMessage: null,
+        nthWasCorrect,
+      }
       continue
     }
 
@@ -125,6 +131,7 @@ function handleDraggingGradingRequest(
           `No answer for slot ${nthSlot} in item ${item.id}. Marking this slot as incorrect.`,
         )
         numIncorrect += 1
+        nthWasCorrect[nthSlot] = false
         continue
       }
       const correctOption = modelSolutionSpecForItem[nthSlot]
@@ -148,8 +155,10 @@ function handleDraggingGradingRequest(
           .includes(selectedOption.text.trim())
       ) {
         numCorrect += 1
+        nthWasCorrect[nthSlot] = true
       } else {
         numIncorrect += 1
+        nthWasCorrect[nthSlot] = false
       }
     }
     let correctness: GradingCorrectness
@@ -166,9 +175,9 @@ function handleDraggingGradingRequest(
         item.feedbackMessages ?? [],
         correctness,
       ),
+      nthWasCorrect,
     }
   }
-
 
   const feedbackJson: GradingDragging = {
     version: 1,
@@ -189,6 +198,8 @@ function handleHighlightingGradingRequest(
   submissionData: UserAnswerHighlighting,
 ): ExerciseTaskGradingResult {
   const modelSolutionSpec = makeHighlightingModelSolutionSpec(exerciseSpec)
+  const answerLength = submissionData.selectedWords.length
+  const nthWasCorrect: boolean[] = new Array(answerLength).fill(false)
   let numCorrect = 0
   let numIncorrect = 0
 
@@ -196,8 +207,12 @@ function handleHighlightingGradingRequest(
 
   for (const highlightable of modelSolutionSpec.correctHighlightables) {
     seenHighligtableIds.add(highlightable.id)
-    if (submissionData.selectedWords.some((sw) => sw.id === highlightable.id)) {
+    const index = submissionData.selectedWords.findIndex(
+      (sw) => sw.id === highlightable.id,
+    )
+    if (index !== -1) {
       numCorrect += 1
+      nthWasCorrect[index] = true
     } else {
       numIncorrect += 1
     }
@@ -228,6 +243,7 @@ function handleHighlightingGradingRequest(
         exerciseSpec.feedbackMessages ?? [],
         correctness,
       ),
+      nthWasCorrect,
     },
   }
 
@@ -244,6 +260,7 @@ function handleTypingGradingRequest(
   exerciseSpec: PrivateSpecTyping,
   submissionData: UserAnswerTyping,
 ): ExerciseTaskGradingResult {
+  const publicSpec = makeTypingModelSolutionSpec(exerciseSpec)
   const modelSolutionSpec = makeTypingModelSolutionSpec(exerciseSpec)
   let numCorrect = 0
   let numIncorrect = 0
@@ -251,6 +268,9 @@ function handleTypingGradingRequest(
   const itemIdToGradingInfo: Record<string, GradingInfo> = {}
 
   for (const item of exerciseSpec.items) {
+    const publicSpecForItem = publicSpec.items.find((i) => i.id === item.id)
+    const slotsCount = publicSpecForItem?.optionsBySlot.length
+    const nthWasCorrect: boolean[] = new Array(slotsCount).fill(false)
     const correctAnswers = modelSolutionSpec.items.find((i) => i.id === item.id)
     if (!correctAnswers) {
       throw new Error(
@@ -265,6 +285,11 @@ function handleTypingGradingRequest(
         `No answer for item ${item.id}. Marking all the slots in this item as incorrect.`,
       )
       numIncorrect += correctAnswers.optionsBySlot.length
+      itemIdToGradingInfo[item.id] = {
+        correctness: "incorrect",
+        feedbackMessage: null,
+        nthWasCorrect,
+      }
       continue
     }
     let answerIndex = -1
@@ -276,6 +301,7 @@ function handleTypingGradingRequest(
           `No answer for slot ${correctAnswersBySlot}. Marking this slot as incorrect.`,
         )
         numIncorrect += 1
+        nthWasCorrect[answerIndex] = false
         continue
       }
       if (exerciseSpec.matchingIsCaseInsensitive) {
@@ -290,8 +316,10 @@ function handleTypingGradingRequest(
         correctAnswersBySlot.acceptedStrings.includes(userAnswerBySlot.trim())
       ) {
         numCorrect += 1
+        nthWasCorrect[answerIndex] = true
       } else {
         numIncorrect += 1
+        nthWasCorrect[answerIndex] = false
       }
     }
 
@@ -310,6 +338,7 @@ function handleTypingGradingRequest(
         item.feedbackMessages ?? [],
         correctness,
       ),
+      nthWasCorrect,
     }
   }
 

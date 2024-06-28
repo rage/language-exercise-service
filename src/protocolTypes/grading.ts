@@ -23,6 +23,8 @@ export interface GradingHighlighting {
 export interface GradingInfo {
   feedbackMessage: FeedbackMessage | null
   correctness: GradingCorrectness
+  /** Nth slot in the case of dragging or typing, nth selected word in the answer in the case of highlighting */
+  nthWasCorrect: boolean[]
 }
 
 export type GradingCorrectness = "correct" | "partially-correct" | "incorrect"
