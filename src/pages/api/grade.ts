@@ -89,6 +89,8 @@ function handleDraggingGradingRequest(
   const modelSolutionSpec = makeDraggingModelSolutionSpec(exerciseSpec)
   let numCorrect = 0
   let numIncorrect = 0
+  const itemIdToGradingInfo: Record<string, GradingInfo> = {}
+
   for (const item of exerciseSpec.items) {
     const publicSpecForItem = publicSpec.items.find((i) => i.id === item.id)
     const modelSolutionSpecForItem =
@@ -150,15 +152,24 @@ function handleDraggingGradingRequest(
         numIncorrect += 1
       }
     }
+    let correctness: GradingCorrectness
+    if (numCorrect > 0 && numIncorrect === 0) {
+      correctness = "correct"
+    } else if (numCorrect > 0 && numIncorrect > 0) {
+      correctness = "partially-correct"
+    } else {
+      correctness = "incorrect"
+    }
+    itemIdToGradingInfo[item.id] = {
+      correctness,
+      feedbackMessage: pickBestFeedbackForGrading(
+        item.feedbackMessages ?? [],
+        correctness,
+      ),
+    }
   }
 
-  const itemIdToGradingInfo: Record<string, GradingInfo> = {}
-  for (const item of exerciseSpec.items) {
-    const allFeedback =
-      item.feedbackMessages?.filter(
-        (fm) => fm.visibility === "before-model-solution",
-      ) ?? []
-  }
+
   const feedbackJson: GradingDragging = {
     version: 1,
     exerciseType: "dragging",
@@ -213,7 +224,9 @@ function handleHighlightingGradingRequest(
     exerciseType: "highlighting",
     gradingInfo: {
       correctness,
-      feedbackMessage: pickBestFeedbackForGrading(exerciseSpec.feedbackMessages ?? [], correctness
+      feedbackMessage: pickBestFeedbackForGrading(
+        exerciseSpec.feedbackMessages ?? [],
+        correctness,
       ),
     },
   }
@@ -234,6 +247,8 @@ function handleTypingGradingRequest(
   const modelSolutionSpec = makeTypingModelSolutionSpec(exerciseSpec)
   let numCorrect = 0
   let numIncorrect = 0
+
+  const itemIdToGradingInfo: Record<string, GradingInfo> = {}
 
   for (const item of exerciseSpec.items) {
     const correctAnswers = modelSolutionSpec.items.find((i) => i.id === item.id)
@@ -279,12 +294,29 @@ function handleTypingGradingRequest(
         numIncorrect += 1
       }
     }
+
+    let correctness: GradingCorrectness
+    if (numCorrect > 0 && numIncorrect === 0) {
+      correctness = "correct"
+    } else if (numCorrect > 0 && numIncorrect > 0) {
+      correctness = "partially-correct"
+    } else {
+      correctness = "incorrect"
+    }
+
+    itemIdToGradingInfo[item.id] = {
+      correctness,
+      feedbackMessage: pickBestFeedbackForGrading(
+        item.feedbackMessages ?? [],
+        correctness,
+      ),
+    }
   }
 
   const feedbackJson: GradingTyping = {
     version: 1,
     exerciseType: "typing",
-    itemIdToGradingInfo: undefined,
+    itemIdToGradingInfo,
   }
 
   return {
@@ -300,7 +332,9 @@ function pickBestFeedbackForGrading(
   feedbacks: FeedbackMessage[],
   correctness: GradingCorrectness,
 ): FeedbackMessage | null {
-  const specificMessageForCorrectness = feedbacks.find((fm) => fm.correctness === correctness)
+  const specificMessageForCorrectness = feedbacks.find(
+    (fm) => fm.correctness === correctness,
+  )
   if (specificMessageForCorrectness) {
     return specificMessageForCorrectness
   }
