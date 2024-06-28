@@ -14,10 +14,6 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
       (state) => state as UserAnswerHighlighting,
     )
 
-  if (publicSpec.exerciseType !== "highlighting" || !answer) {
-    return null
-  }
-
   const onClick = useCallback(
     (clicked: Highligtable) => {
       updateAnswer((current) => {
@@ -39,6 +35,10 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
     },
     [updateAnswer],
   )
+
+  if (publicSpec.exerciseType !== "highlighting" || !answer) {
+    return null
+  }
 
   return (
     <div

@@ -31,7 +31,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
       return previousSubmission
     }
     return createEmptyUserAnswer(publicSpec)
-  }, [previousSubmission])
+  }, [previousSubmission, publicSpec])
   const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(

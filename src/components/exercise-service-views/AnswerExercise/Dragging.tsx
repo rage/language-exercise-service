@@ -13,18 +13,18 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
       (state) => state as UserAnswerDragging,
     )
 
+  const usedOptions = useMemo(
+    () =>
+      answer?.itemAnswers
+        .map((ia) => ia.selectedOptions)
+        .filter((o) => !!o)
+        .flat() || [],
+    [answer],
+  )
+
   if (publicSpec.exerciseType !== "dragging" || !answer) {
     return null
   }
-
-  const usedOptions = useMemo(
-    () =>
-      answer.itemAnswers
-        .map((ia) => ia.selectedOptions)
-        .filter((o) => !!o)
-        .flat(),
-    [answer],
-  )
 
   function handleDragEnd(dragEvent: DragEndEvent) {
     const dragged = dragEvent.active.data.current
