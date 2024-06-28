@@ -29,6 +29,7 @@ const SelectExerciseType: React.FC = () => {
             version: 1,
             exerciseType: "highlighting",
             text: "",
+            feedbackMessages: [],
             secretKey: uint8ArrayToHex(generateRandomKey(32)),
           } satisfies PrivateSpec
         }

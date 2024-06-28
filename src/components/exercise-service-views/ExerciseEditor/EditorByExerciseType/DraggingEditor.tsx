@@ -15,6 +15,7 @@ const DraggingEditor: React.FC = () => {
       draft.items.push({
         id: v4(),
         text: "",
+        feedbackMessages: [],
       })
     })
   }, [updateState])
