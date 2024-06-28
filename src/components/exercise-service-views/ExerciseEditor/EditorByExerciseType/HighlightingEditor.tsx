@@ -1,23 +1,24 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useCallback } from "react"
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { css } from "@emotion/css"
+import FeedbackMessageEditor from "@/components/FeedbackMessageEditor"
 
 const HighlightingEditor: React.FC = () => {
   const { selected, updateState } = useExerciseServiceOutputState((arg) => arg)
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const adjustHeight = () => {
+  const adjustHeight = useCallback(() => {
     const textarea = textareaRef.current
     if (textarea) {
       textarea.style.height = "auto"
       textarea.style.height = `${textarea.scrollHeight}px`
     }
-  }
+  }, [])
 
   useEffect(() => {
     adjustHeight()
-  }, [selected])
+  }, [adjustHeight, selected])
 
   if (!selected || selected.exerciseType !== "highlighting") {
     return null
@@ -43,6 +44,17 @@ const HighlightingEditor: React.FC = () => {
             draft.text = e.target.value
           })
           adjustHeight()
+        }}
+      />
+      <FeedbackMessageEditor
+        feedbackMessages={selected.feedbackMessages}
+        setFeedbackMessages={(e) => {
+          updateState((draft) => {
+            if (!draft || draft.exerciseType !== "highlighting") {
+              return draft
+            }
+            draft.feedbackMessages = e
+          })
         }}
       />
     </div>

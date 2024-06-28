@@ -5,10 +5,12 @@ import {
   ModelSolutionSpec,
   ModelSolutionSpecDragging,
   ModelSolutionSpecHighlighting,
+  ModelSolutionSpecItem,
   ModelSolutionSpecTyping,
 } from "../../protocolTypes/modelSolutionSpec"
 import { isSpecRequest } from "@/shared-module/common/bindings.guard"
 import {
+  FeedbackMessage,
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
@@ -70,17 +72,25 @@ export function makeDraggingModelSolutionSpec(
   privateSpec: PrivateSpecDragging,
 ): ModelSolutionSpecDragging {
   const itemIdTooptionsBySlot: Record<string, PublicSpecOption[]> = {}
+  const itemIdToFeedbackMessages: Record<string, FeedbackMessage[]> = {}
   for (const item of privateSpec.items) {
     const options = extractDraggableOptionsFromPrivateSpecItem(
       item,
       privateSpec.secretKey,
     )
     itemIdTooptionsBySlot[item.id] = options
+
+    itemIdToFeedbackMessages[item.id] =
+      item.feedbackMessages?.filter(
+        (fm) => fm.visibility === "model-solution",
+      ) ?? []
   }
+
   return {
     version: 1,
     exerciseType: "dragging",
     itemIdTooptionsBySlot,
+    itemIdToFeedbackMessages,
   }
 }
 
@@ -115,10 +125,16 @@ export function makeHighlightingModelSolutionSpec(
     })
   })
 
+  const feedbackMessages =
+    privateSpec.feedbackMessages?.filter(
+      (fm) => fm.visibility === "model-solution",
+    ) ?? []
+
   return {
     version: 1,
     exerciseType: "highlighting",
     correctHighlightables,
+    feedbackMessages,
   }
 }
 
@@ -135,10 +151,16 @@ export function makeTypingModelSolutionSpec(
       const acceptedStrings = matched.split("|").map((s) => s.trim())
       optionsBySlot.push({ acceptedStrings })
     }
+
+    const feedbackMessages =
+      item.feedbackMessages?.filter(
+        (fm) => fm.visibility === "model-solution",
+      ) ?? []
     return {
       id: item.id,
       optionsBySlot: optionsBySlot,
-    }
+      feedbackMessages,
+    } satisfies ModelSolutionSpecItem
   })
 
   return {

@@ -1,3 +1,5 @@
+import { GradingCorrectness } from "./grading"
+
 export type PrivateSpec =
   | PrivateSpecNoExerciseTypeSelected
   | PrivateSpecDragging
@@ -46,8 +48,11 @@ export interface FeedbackMessage {
   id: string
   text: string
   visibility: "model-solution" | "before-model-solution"
-  correctness: "correct" | "partially-correct" | "incorrect" | "any"
+  correctness: GradingCorrectness | "any"
 }
+
+export type FeedbackMessageVisibility = FeedbackMessage["visibility"]
+export type FeedbackMessageCorrectness = FeedbackMessage["correctness"]
 
 export function createEmptyPrivateSpec(): PrivateSpec {
   return {

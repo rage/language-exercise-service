@@ -8,21 +8,32 @@ import {
   UserAnswerTyping,
 } from "../../protocolTypes/answer"
 import {
+  FeedbackMessage,
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
   PrivateSpecTyping,
 } from "../../protocolTypes/privateSpec"
 
-import { ExerciseTaskGradingResult } from "@/shared-module/common/bindings"
+import {
+  ExerciseTaskGradingResult,
+  Feedback,
+} from "@/shared-module/common/bindings"
 import { GradingRequest as GenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types-2"
 import { isNonGenericGradingRequest } from "@/shared-module/common/exercise-service-protocol-types.guard"
-import { makeDraggingPublicSpec } from "./public-spec"
+import publicSpec, { makeDraggingPublicSpec } from "./public-spec"
 import {
   makeDraggingModelSolutionSpec,
   makeHighlightingModelSolutionSpec,
   makeTypingModelSolutionSpec,
 } from "./model-solution"
+import {
+  GradingCorrectness,
+  GradingDragging,
+  GradingHighlighting,
+  GradingInfo,
+  GradingTyping,
+} from "@/protocolTypes/grading"
 
 type GradingRequest = GenericGradingRequest<PrivateSpec, UserAnswer>
 
@@ -140,12 +151,25 @@ function handleDraggingGradingRequest(
       }
     }
   }
+
+  const itemIdToGradingInfo: Record<string, GradingInfo> = {}
+  for (const item of exerciseSpec.items) {
+    const allFeedback =
+      item.feedbackMessages?.filter(
+        (fm) => fm.visibility === "before-model-solution",
+      ) ?? []
+  }
+  const feedbackJson: GradingDragging = {
+    version: 1,
+    exerciseType: "dragging",
+    itemIdToGradingInfo,
+  }
   return {
     grading_progress: "FullyGraded",
     score_given: numCorrect / (numCorrect + numIncorrect),
     score_maximum: 1,
     feedback_text: null,
-    feedback_json: {},
+    feedback_json: feedbackJson,
   }
 }
 
@@ -175,12 +199,31 @@ function handleHighlightingGradingRequest(
     }
   }
 
+  let correctness: GradingCorrectness
+  if (numCorrect > 0 && numIncorrect === 0) {
+    correctness = "correct"
+  } else if (numCorrect > 0 && numIncorrect > 0) {
+    correctness = "partially-correct"
+  } else {
+    correctness = "incorrect"
+  }
+
+  const feedbackJson: GradingHighlighting = {
+    version: 1,
+    exerciseType: "highlighting",
+    gradingInfo: {
+      correctness,
+      feedbackMessage: pickBestFeedbackForGrading(exerciseSpec.feedbackMessages ?? [], correctness
+      ),
+    },
+  }
+
   return {
     grading_progress: "FullyGraded",
     score_given: numCorrect / (numCorrect + numIncorrect),
     score_maximum: 1,
     feedback_text: null,
-    feedback_json: {},
+    feedback_json: feedbackJson,
   }
 }
 
@@ -238,13 +281,34 @@ function handleTypingGradingRequest(
     }
   }
 
+  const feedbackJson: GradingTyping = {
+    version: 1,
+    exerciseType: "typing",
+    itemIdToGradingInfo: undefined,
+  }
+
   return {
     grading_progress: "FullyGraded",
     score_given: numCorrect / (numCorrect + numIncorrect),
     score_maximum: 1,
     feedback_text: null,
-    feedback_json: {},
+    feedback_json: feedbackJson,
   }
+}
+
+function pickBestFeedbackForGrading(
+  feedbacks: FeedbackMessage[],
+  correctness: GradingCorrectness,
+): FeedbackMessage | null {
+  const specificMessageForCorrectness = feedbacks.find((fm) => fm.correctness === correctness)
+  if (specificMessageForCorrectness) {
+    return specificMessageForCorrectness
+  }
+  const anyMessage = feedbacks.find((fm) => fm.correctness === "any")
+  if (anyMessage) {
+    return anyMessage
+  }
+  return null
 }
 
 /**

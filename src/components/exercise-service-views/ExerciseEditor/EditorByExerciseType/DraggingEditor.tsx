@@ -1,3 +1,4 @@
+import FeedbackMessageEditor from "@/components/FeedbackMessageEditor"
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
@@ -59,7 +60,7 @@ const DraggingEditor: React.FC = () => {
   return (
     <div>
       {selected.items.map((item, n) => (
-        <>
+        <div key={item.id}>
           <div
             className={css`
               display: flex;
@@ -92,7 +93,22 @@ const DraggingEditor: React.FC = () => {
             />
             <button onClick={() => remvoeItem(item.id)}>Remove</button>
           </div>
-        </>
+          <FeedbackMessageEditor
+            feedbackMessages={item.feedbackMessages}
+            setFeedbackMessages={(e) => {
+              updateState((draft) => {
+                if (!draft || draft.exerciseType !== "dragging") {
+                  return draft
+                }
+                const draftItem = draft.items.find((i) => i.id === item.id)
+                if (!draftItem) {
+                  return draft
+                }
+                draftItem.feedbackMessages = e
+              })
+            }}
+          />
+        </div>
       ))}
       <button onClick={addNewItem}>Add item</button>
       <h2>Fake options</h2>

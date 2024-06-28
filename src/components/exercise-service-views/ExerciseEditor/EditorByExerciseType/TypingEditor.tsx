@@ -1,3 +1,4 @@
+import FeedbackMessageEditor from "@/components/FeedbackMessageEditor"
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
@@ -38,7 +39,7 @@ const TypingEditor: React.FC = () => {
   return (
     <div>
       {selected.items.map((item, n) => (
-        <>
+        <div key={item.id}>
           <div
             className={css`
               display: flex;
@@ -46,7 +47,6 @@ const TypingEditor: React.FC = () => {
               align-items: center;
               margin-bottom: 1rem;
             `}
-            key={item.id}
           >
             <div>{n + 1}. </div>
 
@@ -71,7 +71,22 @@ const TypingEditor: React.FC = () => {
             />
             <button onClick={() => removeItem(item.id)}>Remove</button>
           </div>
-        </>
+          <FeedbackMessageEditor
+            feedbackMessages={item.feedbackMessages}
+            setFeedbackMessages={(e) => {
+              updateState((draft) => {
+                if (!draft || draft.exerciseType !== "typing") {
+                  return draft
+                }
+                const draftItem = draft.items.find((i) => i.id === item.id)
+                if (!draftItem) {
+                  return draft
+                }
+                draftItem.feedbackMessages = e
+              })
+            }}
+          />
+        </div>
       ))}
       <button onClick={addNewItem}>Add item</button>
 
