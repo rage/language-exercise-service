@@ -44,9 +44,9 @@ export type State =
   | {
       viewType: "view-submission"
       publicSpec: PublicSpec
-      modelSolutions: ModelSolutionSpec | null
+      modelSolutionSpec: ModelSolutionSpec | null
       userAnswer: UserAnswer
-      gradingFeedbackJson: Grading | null
+      gradingFeedback: Grading | null
       userInformation: UserInformation
     }
   | {
@@ -111,10 +111,10 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
           setState({
             viewType: messageData.view_type,
             publicSpec: public_spec as PublicSpec,
-            modelSolutions: model_solution_spec as ModelSolutionSpec | null,
+            modelSolutionSpec: model_solution_spec as ModelSolutionSpec | null,
             userAnswer: quiz_answer as UserAnswer,
             userInformation: messageData.user_information,
-            gradingFeedbackJson: messageData.data.grading
+            gradingFeedback: messageData.data.grading
               ?.feedback_json as Grading | null,
           })
         } else {

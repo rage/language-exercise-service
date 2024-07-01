@@ -57,11 +57,11 @@ const Renderer: React.FC<React.PropsWithChildren<RendererProps>> = ({
     return (
       <div id={EXERCISE_SERVICE_CONTENT_ID}>
         <ViewSubmission
-          publicAlternatives={state.publicSpec}
-          modelSolutions={state.modelSolutions}
-          user_answer={state.userAnswer}
-          gradingFeedbackJson={state.gradingFeedbackJson}
-          user_information={state.userInformation}
+          publicSpec={state.publicSpec}
+          modelSolutionSpec={state.modelSolutionSpec}
+          userAnswer={state.userAnswer}
+          gradingFeedback={state.gradingFeedback}
+          userInformation={state.userInformation}
         />
       </div>
     )
