@@ -134,7 +134,7 @@ const IFrame: React.FC<React.PropsWithChildren<unknown>> = () => {
     <HeightTrackingContainer port={port}>
       <div
         className={css`
-          padding: 1px;
+          padding: 1rem 0;
         `}
       >
         <Renderer port={port} setState={setState} state={state} />

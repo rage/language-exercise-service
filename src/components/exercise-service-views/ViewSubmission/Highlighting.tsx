@@ -1,8 +1,18 @@
 import { SubmissionProps } from "."
 import { css } from "@emotion/css"
 
-const Highlighting: React.FC<SubmissionProps> = ({ publicSpec }) => {
-  if (publicSpec.exerciseType !== "highlighting") {
+const Highlighting: React.FC<SubmissionProps> = ({
+  publicSpec,
+  userAnswer,
+  modelSolutionSpec,
+  gradingFeedback,
+}) => {
+  if (
+    publicSpec.exerciseType !== "highlighting" ||
+    userAnswer.exerciseType !== "highlighting" ||
+    (modelSolutionSpec && modelSolutionSpec.exerciseType !== "highlighting") ||
+    (gradingFeedback && gradingFeedback.exerciseType !== "highlighting")
+  ) {
     return null
   }
 
@@ -11,7 +21,10 @@ const Highlighting: React.FC<SubmissionProps> = ({ publicSpec }) => {
       className={css`
         p {
           margin-bottom: 1rem;
-          user-select: none;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
         }
       `}
     >
@@ -20,19 +33,40 @@ const Highlighting: React.FC<SubmissionProps> = ({ publicSpec }) => {
           <p key={paragraph.paragraphNumber}>
             {paragraph.highlightableParts.map((part, j) => {
               if (part.type === "highlightable") {
-                const isSelected = false
+                const wasSelected = userAnswer.selectedWords.some(
+                  (selectedWord) => selectedWord.id === part.id,
+                )
+                let selectedWordWasCorrect: boolean | undefined = undefined
+                if (wasSelected) {
+                  selectedWordWasCorrect =
+                    modelSolutionSpec?.correctHighlightables.some(
+                      (correctHighlightable) =>
+                        correctHighlightable.id === part.id,
+                    )
+                  if (selectedWordWasCorrect === undefined && gradingFeedback) {
+                    selectedWordWasCorrect =
+                      gradingFeedback.gradingInfo.correctness === "correct"
+                  }
+                }
+                let backgroundColor: string | undefined = undefined
+                let textColor: string | undefined = undefined
+                let borderColor: string | undefined = undefined
+                if (selectedWordWasCorrect !== undefined) {
+                  backgroundColor = selectedWordWasCorrect
+                    ? "#d4eadf"
+                    : "fbeef0"
+                  textColor = selectedWordWasCorrect ? "#68ae8a" : "#ed878c"
+                  borderColor = selectedWordWasCorrect ? "#bedecd" : "#f3c7ca"
+                }
                 return (
                   <span
                     className={css`
                       padding: 0.1rem;
-                      cursor: pointer;
                       background-color: #f9f9f9;
-                      ${isSelected && `background-color: #ecd9ff;`}
-                      filter: brightness(1) contrast(1);
-                      transition: filter 0.2s;
-                      &:hover {
-                        filter: brightness(0.9) contrast(1.1);
-                      }
+                      border-radius: 6px;
+                      ${backgroundColor && `background-color: ${backgroundColor};`}
+                      ${textColor && `color: ${textColor};`}
+                      ${borderColor && `border: 2px solid ${borderColor};`}
                     `}
                     key={part.id}
                   >
