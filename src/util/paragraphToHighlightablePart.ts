@@ -40,6 +40,14 @@ const NON_HIGHTLIGHTABLE_CHARACTERS = [
   // IMPORTANT: Do not add the "[" and "]" characters here, as the model solution spec generation relies on them being highlightable. They are not possible to be highlightable anyway because they are used to denote the start and end of a correct word.
 ]
 
+function sanitizeText(text: string): string {
+  text = text.trim()
+  if (text[0] === "[" && text[text.length - 1] === "]") {
+    text = text.slice(1, -1)
+  }
+  return text
+}
+
 /** Only words should be hightlightable */
 export function paragraphToHighlightableParts(
   paragraph: string,
@@ -55,12 +63,12 @@ export function paragraphToHighlightableParts(
   // We don't want the id to change if someone slightly edits the paragrap before this word
   // That's why we derive the id from the paragraph number, the word itself, and the number of times the word has appeared so far in the paragraph
   const deriveId = (text: string) => {
-    const trimmedText = text.trim()
-    const prevAppearedCount = numberOfTimesWordHasAppeared.get(trimmedText) || 0
+    const sanitizedText = sanitizeText(text)
+    const prevAppearedCount = numberOfTimesWordHasAppeared.get(sanitizedText) || 0
     const apperedCount = prevAppearedCount + 1
-    numberOfTimesWordHasAppeared.set(trimmedText, apperedCount)
+    numberOfTimesWordHasAppeared.set(sanitizedText, apperedCount)
     const hash = oneWayStringToId(
-      `${paragraphNumber}-${trimmedText}-${apperedCount}`,
+      `${paragraphNumber}-${sanitizedText}-${apperedCount}`,
       // No need to namespace this one, so we use a NULL UUID
       "00000000-0000-0000-0000-000000000000",
       secretKey,

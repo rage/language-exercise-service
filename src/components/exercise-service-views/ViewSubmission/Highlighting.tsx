@@ -1,3 +1,4 @@
+import CorrectnessMarker from "@/components/CorrectnessMarker"
 import { SubmissionProps } from "."
 import { css } from "@emotion/css"
 
@@ -48,15 +49,21 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       gradingFeedback.gradingInfo.correctness === "correct"
                   }
                 }
-                let backgroundColor: string | undefined = undefined
-                let textColor: string | undefined = undefined
-                let borderColor: string | undefined = undefined
+                let highlightingStyles:
+                  | {
+                      backgroundColor: string
+                      textColor: string
+                      borderColor: string
+                    }
+                  | undefined = undefined
                 if (selectedWordWasCorrect !== undefined) {
-                  backgroundColor = selectedWordWasCorrect
-                    ? "#d4eadf"
-                    : "fbeef0"
-                  textColor = selectedWordWasCorrect ? "#68ae8a" : "#ed878c"
-                  borderColor = selectedWordWasCorrect ? "#bedecd" : "#f3c7ca"
+                  highlightingStyles = {
+                    backgroundColor: selectedWordWasCorrect
+                      ? "#d4eadf"
+                      : "fbeef0",
+                    textColor: selectedWordWasCorrect ? "#68ae8a" : "#ed878c",
+                    borderColor: selectedWordWasCorrect ? "#bedecd" : "#f3c7ca",
+                  }
                 }
                 return (
                   <span
@@ -64,12 +71,16 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       padding: 0.1rem;
                       background-color: #f9f9f9;
                       border-radius: 6px;
-                      ${backgroundColor && `background-color: ${backgroundColor};`}
-                      ${textColor && `color: ${textColor};`}
-                      ${borderColor && `border: 2px solid ${borderColor};`}
+                      ${highlightingStyles &&
+                      `
+                        background-color: ${highlightingStyles.backgroundColor};
+                        color: ${highlightingStyles.textColor};
+                        border: 2px solid ${highlightingStyles.borderColor};
+                        `}
                     `}
                     key={part.id}
                   >
+                    {wasSelected && <CorrectnessMarker isCorrect={selectedWordWasCorrect ?? false} />}
                     {part.text}
                   </span>
                 )
