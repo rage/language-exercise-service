@@ -34,11 +34,17 @@ const Highlighting: React.FC<SubmissionProps> = ({
           <p key={paragraph.paragraphNumber}>
             {paragraph.highlightableParts.map((part, j) => {
               if (part.type === "highlightable") {
+                const modelSolutionSpecTellsThisIsCorrect = modelSolutionSpec?.correctHighlightables.some(
+                  (correctHighlightable) => correctHighlightable.id === part.id,
+                )
                 const wasSelected = userAnswer.selectedWords.some(
                   (selectedWord) => selectedWord.id === part.id,
                 )
                 let selectedWordWasCorrect: boolean | undefined = undefined
                 if (wasSelected) {
+                  const selectedIndex = userAnswer.selectedWords.findIndex(
+                    (selectedWord) => selectedWord.id === part.id,
+                  )
                   selectedWordWasCorrect =
                     modelSolutionSpec?.correctHighlightables.some(
                       (correctHighlightable) =>
@@ -46,14 +52,14 @@ const Highlighting: React.FC<SubmissionProps> = ({
                     )
                   if (selectedWordWasCorrect === undefined && gradingFeedback) {
                     selectedWordWasCorrect =
-                      gradingFeedback.gradingInfo.correctness === "correct"
+                      gradingFeedback.gradingInfo.nthWasCorrect[selectedIndex]
                   }
                 }
                 let highlightingStyles:
                   | {
                       backgroundColor: string
                       textColor: string
-                      borderColor: string
+                      borderColor: string | undefined
                     }
                   | undefined = undefined
                 if (selectedWordWasCorrect !== undefined) {
@@ -63,6 +69,13 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       : "fbeef0",
                     textColor: selectedWordWasCorrect ? "#68ae8a" : "#ed878c",
                     borderColor: selectedWordWasCorrect ? "#bedecd" : "#f3c7ca",
+                  }
+                }
+                if (!wasSelected && modelSolutionSpecTellsThisIsCorrect) {
+                  highlightingStyles = {
+                    backgroundColor: "#e0eae6",
+                    textColor: "#578f64",
+                    borderColor: undefined,
                   }
                 }
                 return (
@@ -75,7 +88,7 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       `
                         background-color: ${highlightingStyles.backgroundColor};
                         color: ${highlightingStyles.textColor};
-                        border: 2px solid ${highlightingStyles.borderColor};
+                        ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
                         `}
                     `}
                     key={part.id}
