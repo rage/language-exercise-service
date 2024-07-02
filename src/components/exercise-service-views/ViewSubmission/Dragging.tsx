@@ -151,11 +151,11 @@ const Dragging: React.FC<SubmissionProps> = ({
                             border-radius: 6px;
                             ${highlightingStyles &&
                             `
-                      padding: 0.3rem 0.2rem;
-                      background-color: ${highlightingStyles.backgroundColor};
-                      color: ${highlightingStyles.textColor};
-                      ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
-                      `}
+                              padding: 0.3rem 0.2rem;
+                              background-color: ${highlightingStyles.backgroundColor};
+                              color: ${highlightingStyles.textColor};
+                              ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
+                            `}
                           `}
                           key={`slot-${selectedOption.id}`}
                         >
