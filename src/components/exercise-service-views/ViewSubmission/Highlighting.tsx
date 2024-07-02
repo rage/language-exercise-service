@@ -34,9 +34,11 @@ const Highlighting: React.FC<SubmissionProps> = ({
           <p key={paragraph.paragraphNumber}>
             {paragraph.highlightableParts.map((part, j) => {
               if (part.type === "highlightable") {
-                const modelSolutionSpecTellsThisIsCorrect = modelSolutionSpec?.correctHighlightables.some(
-                  (correctHighlightable) => correctHighlightable.id === part.id,
-                )
+                const modelSolutionSpecTellsThisIsCorrect =
+                  modelSolutionSpec?.correctHighlightables.some(
+                    (correctHighlightable) =>
+                      correctHighlightable.id === part.id,
+                  )
                 const wasSelected = userAnswer.selectedWords.some(
                   (selectedWord) => selectedWord.id === part.id,
                 )
@@ -93,7 +95,11 @@ const Highlighting: React.FC<SubmissionProps> = ({
                     `}
                     key={part.id}
                   >
-                    {wasSelected && <CorrectnessMarker isCorrect={selectedWordWasCorrect ?? false} />}
+                    {wasSelected && (
+                      <CorrectnessMarker
+                        isCorrect={selectedWordWasCorrect ?? false}
+                      />
+                    )}
                     {part.text}
                   </span>
                 )

@@ -64,7 +64,8 @@ export function paragraphToHighlightableParts(
   // That's why we derive the id from the paragraph number, the word itself, and the number of times the word has appeared so far in the paragraph
   const deriveId = (text: string) => {
     const sanitizedText = sanitizeText(text)
-    const prevAppearedCount = numberOfTimesWordHasAppeared.get(sanitizedText) || 0
+    const prevAppearedCount =
+      numberOfTimesWordHasAppeared.get(sanitizedText) || 0
     const apperedCount = prevAppearedCount + 1
     numberOfTimesWordHasAppeared.set(sanitizedText, apperedCount)
     const hash = oneWayStringToId(
