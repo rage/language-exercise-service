@@ -6,9 +6,7 @@ import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 
 const SelectExerciseType: React.FC = () => {
-  const { updateState } = useExerciseServiceOutputState(
-    (arg) => arg,
-  )
+  const { updateState } = useExerciseServiceOutputState((arg) => arg)
 
   const { t } = useTranslation()
 
@@ -63,7 +61,9 @@ const SelectExerciseType: React.FC = () => {
       <button onClick={() => handleExerciseTypeChange("highlighting")}>
         {t("highlighting")}
       </button>
-      <button onClick={() => handleExerciseTypeChange("typing")}>{t("typing")}</button>
+      <button onClick={() => handleExerciseTypeChange("typing")}>
+        {t("typing")}
+      </button>
     </div>
   )
 }

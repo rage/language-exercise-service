@@ -111,7 +111,6 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
   }, [port, previousSubmission, publicSpec, validate])
   const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
-
   const Component = exerciseTypeToComponent[publicSpec.exerciseType] ?? null
 
   return (

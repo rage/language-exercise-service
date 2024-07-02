@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { v4 } from "uuid"
 
 const DraggingEditor: React.FC = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { selected: selected, updateState } = useExerciseServiceOutputState(
     (arg) => arg,
   )

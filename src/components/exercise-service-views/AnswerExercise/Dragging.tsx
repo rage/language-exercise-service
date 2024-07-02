@@ -155,10 +155,15 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
         </div>
         <div>
           {publicSpec.allOptions.map((option) => {
-            if (usedOptions.find((o) => o && o.id === option.id)){
+            if (usedOptions.find((o) => o && o.id === option.id)) {
               return null
             }
-            return <Draggable option={option} key={`draggable-sidebar-${option.id}`} />
+            return (
+              <Draggable
+                option={option}
+                key={`draggable-sidebar-${option.id}`}
+              />
+            )
           })}
         </div>
       </div>
