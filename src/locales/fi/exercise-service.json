@@ -1,7 +1,21 @@
 {
-  "waiting-for-port": "Odottaa porttia",
-  "waiting-for-content": "Odottaa sisältöä",
+  "waiting-for-port": "Odotetaan porttia",
+  "waiting-for-content": "Odotetaan sisältöä",
   "wrong-view-type": "Väärä näkymätyyppi",
-  "no-answer-selected": "Ei valittua vastausta",
-  "no-answer": "Ei vastausta"
-}
+  "no-answer-selected": "Vastausta ei ole valittu",
+  "no-answer": "Ei vastausta",
+  "unsupported-exercise-type": "Ei-tuettu tehtävätyyppi",
+  "select-exercise-type": "Valitse tehtävätyyppi",
+  "dragging": "Vetäminen",
+  "typing": "Kirjoittaminen",
+  "highlighting": "Korostaminen",
+  "remove": "Poista",
+  "add-item": "Lisää kohde",
+  "matching-is-case-insensitive": "Älä huomioi isoja ja pieniä kirjaimia vertailussa",
+  "fake-options": "Valevaihtoehdot",
+  "add-fake-option": "Lisää valevaihtoehto",
+  "visibility": "Näkyvyys",
+  "correctness": "Oikeellisuus",
+  "message": "Viesti",
+  "add-feedback-message": "Lisää palauteviesti"
+ }
