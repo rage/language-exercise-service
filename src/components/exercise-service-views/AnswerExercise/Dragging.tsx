@@ -109,6 +109,11 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                   display: flex;
                   gap: 0.3rem;
                   align-items: center;
+                  margin-bottom: 1rem;
+
+                  &:last-of-type {
+                    margin-bottom: 0;
+                  }
                 `}
               >
                 <div>{n + 1}. </div>

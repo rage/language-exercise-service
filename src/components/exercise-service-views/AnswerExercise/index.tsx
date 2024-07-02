@@ -28,13 +28,6 @@ const exerciseTypeToComponent = {
 const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
   const { t } = useTranslation()
   const { port, publicSpec, previousSubmission } = props
-  const intialAnswer = useMemo(() => {
-    if (previousSubmission) {
-      return previousSubmission
-    }
-    return createEmptyUserAnswer(publicSpec)
-  }, [previousSubmission, publicSpec])
-  const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
 
   const validate: (newState: UserAnswer | null) => boolean = useCallback(
     (newState) => {
@@ -104,6 +97,20 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
     },
     [publicSpec],
   )
+
+  const intialAnswer = useMemo(() => {
+    if (previousSubmission) {
+      port.postMessage({
+        data: previousSubmission,
+        message: "current-state",
+        valid: validate(previousSubmission),
+      })
+      return previousSubmission
+    }
+    return createEmptyUserAnswer(publicSpec)
+  }, [port, previousSubmission, publicSpec, validate])
+  const [userAnswer, setUserAnswer] = useState<UserAnswer | null>(intialAnswer)
+
 
   const Component = exerciseTypeToComponent[publicSpec.exerciseType] ?? null
 
