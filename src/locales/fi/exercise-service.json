@@ -2,5 +2,6 @@
   "waiting-for-port": "Odottaa porttia",
   "waiting-for-content": "Odottaa sisältöä",
   "wrong-view-type": "Väärä näkymätyyppi",
-  "no-answer-selected": "Ei valittu vastausta"
+  "no-answer-selected": "Ei valittua vastausta",
+  "no-answer": "Ei vastausta"
 }

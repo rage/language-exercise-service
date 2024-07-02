@@ -1,8 +1,21 @@
-import { SubmissionProps } from "."
 import { css } from "@emotion/css"
+import { SubmissionProps } from "."
+import { useTranslation } from "react-i18next"
+import CorrectnessMarker from "@/components/CorrectnessMarker"
 
-const Typing: React.FC<SubmissionProps> = ({ publicSpec }) => {
-  if (publicSpec.exerciseType !== "typing") {
+const Typing: React.FC<SubmissionProps> = ({
+  publicSpec,
+  userAnswer,
+  modelSolutionSpec,
+  gradingFeedback,
+}) => {
+  const { t } = useTranslation()
+  if (
+    publicSpec.exerciseType !== "typing" ||
+    userAnswer.exerciseType !== "typing" ||
+    (modelSolutionSpec && modelSolutionSpec.exerciseType !== "typing") ||
+    (gradingFeedback && gradingFeedback.exerciseType !== "typing")
+  ) {
     return null
   }
 
@@ -11,7 +24,6 @@ const Typing: React.FC<SubmissionProps> = ({ publicSpec }) => {
       className={css`
         display: flex;
         flex-gap: 1rem;
-        margin-top: 1rem;
       `}
     >
       <div
@@ -20,6 +32,13 @@ const Typing: React.FC<SubmissionProps> = ({ publicSpec }) => {
         `}
       >
         {publicSpec.items.map((item, n) => {
+          const itemAnswer = userAnswer.itemAnswers.find(
+            (ia) => ia.itemId === item.id,
+          )
+          const modelSolutionSpecItem = modelSolutionSpec?.items.find((i) => i.id === item.id)
+          const gradingGradingInfo =
+            gradingFeedback?.itemIdToGradingInfo[item.id]
+          let nthSlot = -1
           return (
             <div
               key={item.id}
@@ -28,22 +47,102 @@ const Typing: React.FC<SubmissionProps> = ({ publicSpec }) => {
                 gap: 0.3rem;
                 align-items: center;
                 margin-bottom: 1rem;
+
+                &:last-of-type {
+                  margin-bottom: 0;
+                }
               `}
             >
               <div>{n + 1}. </div>
               <div>
-                {item.textParts.map((textPart, tn) => {
+                {item.textParts.map((textPart) => {
                   if (textPart.type === "text") {
                     return (
                       <span key={textPart.text}>{textPart.text.trim()}</span>
                     )
                   }
+                  nthSlot += 1
+
+                  const answer = itemAnswer?.answers[nthSlot]
+
+                  if (!answer) {
+                    return (
+                      <span key={`slot-${n}-${nthSlot}`}>
+                        &nbsp;{t("no-answer-selected")}&nbsp;
+                      </span>
+                    )
+                  }
+
+                  let answerWasCorrect = false
+
+                  const modelSolutionsBySlot = modelSolutionSpecItem?.optionsBySlot[nthSlot]
+                  if (modelSolutionsBySlot) {
+                    answerWasCorrect = modelSolutionsBySlot.acceptedStrings.includes(answer.trim())
+                  } else {
+                    answerWasCorrect = gradingGradingInfo?.nthWasCorrect[nthSlot] === true
+                  }
+                  
+                  let highlightingStyles: {
+                    backgroundColor: string
+                    textColor: string
+                    borderColor: string | undefined
+                  }
+
+                  if (answerWasCorrect) {
+                    highlightingStyles = {
+                      backgroundColor: "#EAF5F0",
+                      textColor: "#3D7150",
+                      borderColor: "#bedecd",
+                    }
+                  } else {
+                    highlightingStyles = {
+                      backgroundColor: "#fbeef0",
+                      textColor: "#D4212A",
+                      borderColor: "#f3c7ca",
+                    }
+                  }
+
+                  const correctSolutionWhenAnsweredIncorrectly = !answerWasCorrect && modelSolutionsBySlot?.acceptedStrings[0]
 
                   return (
-                    <span key={`slot-${n}-${tn}`}>
+                    <span>
                       &nbsp;
-                      <span>SLOT</span>
+                      <span
+                        className={css`
+                          padding: 0.1rem;
+                          border-radius: 6px;
+                          ${highlightingStyles &&
+                          `
+                      padding: 0.3rem 0.2rem;
+                      background-color: ${highlightingStyles.backgroundColor};
+                      color: ${highlightingStyles.textColor};
+                      ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
+                      `}
+                        `}
+                        key={`slot-${item.id}-${nthSlot}`}
+                      >
+                        <CorrectnessMarker
+                          isCorrect={answerWasCorrect}
+                        />
+                        {answer.trim()}
+                      </span>
                       &nbsp;
+                      {correctSolutionWhenAnsweredIncorrectly && (
+                        <>
+                          <span
+                            className={css`
+                              border-radius: 6px;
+                              padding: 0.3rem 0.2rem;
+                              background-color: #EAF5F0;
+                              color: #3D7150;
+                              border: 2px solid #EAF5F0;
+                            `}
+                          >
+                            {correctSolutionWhenAnsweredIncorrectly.trim()}
+                          </span>
+                          &nbsp;
+                        </>
+                      )}
                     </span>
                   )
                 })}

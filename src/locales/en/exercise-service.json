@@ -2,5 +2,6 @@
   "waiting-for-port": "Waiting for port",
   "waiting-for-content": "Waiting for content",
   "wrong-view-type": "Wrong view type",
-  "no-answer-selected": "No answer selected"
+  "no-answer-selected": "No answer selected",
+  "no-answer": "No answer"
 }
