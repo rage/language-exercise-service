@@ -35,7 +35,9 @@ const Typing: React.FC<SubmissionProps> = ({
           const itemAnswer = userAnswer.itemAnswers.find(
             (ia) => ia.itemId === item.id,
           )
-          const modelSolutionSpecItem = modelSolutionSpec?.items.find((i) => i.id === item.id)
+          const modelSolutionSpecItem = modelSolutionSpec?.items.find(
+            (i) => i.id === item.id,
+          )
           const gradingGradingInfo =
             gradingFeedback?.itemIdToGradingInfo[item.id]
           let nthSlot = -1
@@ -75,13 +77,18 @@ const Typing: React.FC<SubmissionProps> = ({
 
                   let answerWasCorrect = false
 
-                  const modelSolutionsBySlot = modelSolutionSpecItem?.optionsBySlot[nthSlot]
+                  const modelSolutionsBySlot =
+                    modelSolutionSpecItem?.optionsBySlot[nthSlot]
                   if (modelSolutionsBySlot) {
-                    answerWasCorrect = modelSolutionsBySlot.acceptedStrings.includes(answer.trim())
+                    answerWasCorrect =
+                      modelSolutionsBySlot.acceptedStrings.includes(
+                        answer.trim(),
+                      )
                   } else {
-                    answerWasCorrect = gradingGradingInfo?.nthWasCorrect[nthSlot] === true
+                    answerWasCorrect =
+                      gradingGradingInfo?.nthWasCorrect[nthSlot] === true
                   }
-                  
+
                   let highlightingStyles: {
                     backgroundColor: string
                     textColor: string
@@ -102,7 +109,9 @@ const Typing: React.FC<SubmissionProps> = ({
                     }
                   }
 
-                  const correctSolutionWhenAnsweredIncorrectly = !answerWasCorrect && modelSolutionsBySlot?.acceptedStrings[0]
+                  const correctSolutionWhenAnsweredIncorrectly =
+                    !answerWasCorrect &&
+                    modelSolutionsBySlot?.acceptedStrings[0]
 
                   return (
                     <span>
@@ -121,9 +130,7 @@ const Typing: React.FC<SubmissionProps> = ({
                         `}
                         key={`slot-${item.id}-${nthSlot}`}
                       >
-                        <CorrectnessMarker
-                          isCorrect={answerWasCorrect}
-                        />
+                        <CorrectnessMarker isCorrect={answerWasCorrect} />
                         {answer.trim()}
                       </span>
                       &nbsp;
@@ -133,9 +140,9 @@ const Typing: React.FC<SubmissionProps> = ({
                             className={css`
                               border-radius: 6px;
                               padding: 0.3rem 0.2rem;
-                              background-color: #EAF5F0;
-                              color: #3D7150;
-                              border: 2px solid #EAF5F0;
+                              background-color: #eaf5f0;
+                              color: #3d7150;
+                              border: 2px solid #eaf5f0;
                             `}
                           >
                             {correctSolutionWhenAnsweredIncorrectly.trim()}

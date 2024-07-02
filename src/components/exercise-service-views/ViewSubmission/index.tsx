@@ -6,6 +6,7 @@ import { Grading } from "../../../protocolTypes/grading"
 import { UserInformation } from "@/shared-module/common/exercise-service-protocol-types"
 
 import dynamic from "next/dynamic"
+import { useTranslation } from "react-i18next"
 
 export interface SubmissionProps {
   userAnswer: UserAnswer
@@ -24,13 +25,14 @@ const exerciseTypeToComponent = {
 const Submission: React.FC<React.PropsWithChildren<SubmissionProps>> = (
   props,
 ) => {
+  const { t } = useTranslation()
   const Component = exerciseTypeToComponent[props.publicSpec.exerciseType]
   return (
     <div>
       {Component ? (
         <Component {...props} />
       ) : (
-        <div>Unsupported exercise type</div>
+        <div>{t("unsupported-exercise-type")}</div>
       )}
     </div>
   )

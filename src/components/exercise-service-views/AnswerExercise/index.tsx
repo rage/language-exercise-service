@@ -17,6 +17,7 @@ export interface ExerciseProps {
 }
 
 import dynamic from "next/dynamic"
+import { useTranslation } from "react-i18next"
 
 const exerciseTypeToComponent = {
   dragging: dynamic(() => import("./Dragging")),
@@ -25,6 +26,7 @@ const exerciseTypeToComponent = {
 }
 
 const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
+  const { t } = useTranslation()
   const { port, publicSpec, previousSubmission } = props
   const intialAnswer = useMemo(() => {
     if (previousSubmission) {
@@ -117,7 +119,7 @@ const Exercise: React.FC<React.PropsWithChildren<ExerciseProps>> = (props) => {
       {Component ? (
         <Component {...props} />
       ) : (
-        <div>Unsupported exercise type</div>
+        <div>{t("unsupported-exercise-type")}</div>
       )}
     </UserItemAnswerContext.Provider>
   )

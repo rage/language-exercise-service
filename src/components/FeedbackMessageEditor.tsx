@@ -7,6 +7,7 @@ import { css } from "@emotion/css"
 import { useEffect } from "react"
 import { v4 } from "uuid"
 import Collapsable from "./Collapsable"
+import { useTranslation } from "react-i18next"
 
 interface FeedbackMessageEditorProps {
   feedbackMessages: FeedbackMessage[] | undefined
@@ -17,6 +18,7 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
   feedbackMessages,
   setFeedbackMessages,
 }) => {
+  const { t } = useTranslation()
   useEffect(() => {
     if (feedbackMessages === undefined) {
       setFeedbackMessages([])
@@ -55,7 +57,7 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
                     `}
                   >
                     <label>
-                      Visibility{" "}
+                      {t("visibility")}{" "}
                       <select
                         value={feedbackMessage.visibility}
                         onChange={(e) => {
@@ -94,7 +96,7 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
                     </label>
 
                     <label>
-                      Correctness{" "}
+                      {t("correctness")}{" "}
                       <select
                         value={feedbackMessage.correctness}
                         onChange={(e) => {
@@ -144,12 +146,12 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
                         )
                       }}
                     >
-                      Remove
+                      {t("remove")}
                     </button>
                   </div>
                   <div>
                     <label>
-                      Message{" "}
+                      {t("message")}{" "}
                       <textarea
                         className={css`
                           width: 100%;
@@ -190,7 +192,7 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
             ])
           }}
         >
-          Add feedback message
+          {t("add-feedback-message")}
         </button>
       </Collapsable>
     </div>

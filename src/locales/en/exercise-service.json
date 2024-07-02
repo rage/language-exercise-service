@@ -3,5 +3,19 @@
   "waiting-for-content": "Waiting for content",
   "wrong-view-type": "Wrong view type",
   "no-answer-selected": "No answer selected",
-  "no-answer": "No answer"
+  "no-answer": "No answer",
+  "unsupported-exercise-type": "Unsupported exercise type",
+  "select-exercise-type": "Select exercise type",
+  "dragging": "Dragging",
+  "typing": "Typing",
+  "highlighting": "Highlighting",
+  "remove": "Remove",
+  "add-item": "Add item",
+  "matching-is-case-insensitive": "Matching is case insensitive",
+  "fake-options": "Fake options",
+  "add-fake-option": "Add fake option",
+  "visibility": "Visibility",
+  "correctness": "Correctness",
+  "message": "Message",
+  "add-feedback-message": "Add feedback message"
 }

@@ -2,9 +2,11 @@ import FeedbackMessageEditor from "@/components/FeedbackMessageEditor"
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { v4 } from "uuid"
 
 const DraggingEditor: React.FC = () => {
+  const {t} = useTranslation()
   const { selected: selected, updateState } = useExerciseServiceOutputState(
     (arg) => arg,
   )
@@ -91,7 +93,7 @@ const DraggingEditor: React.FC = () => {
                 })
               }}
             />
-            <button onClick={() => remvoeItem(item.id)}>Remove</button>
+            <button onClick={() => remvoeItem(item.id)}>{t("remove")}</button>
           </div>
           <FeedbackMessageEditor
             feedbackMessages={item.feedbackMessages}
@@ -110,8 +112,8 @@ const DraggingEditor: React.FC = () => {
           />
         </div>
       ))}
-      <button onClick={addNewItem}>Add item</button>
-      <h2>Fake options</h2>
+      <button onClick={addNewItem}>{t("add-item")}</button>
+      <h2>{t("fake-options")}</h2>
       <div>
         {selected.fakeOptions.map((fakeOption, n) => (
           <div
@@ -139,11 +141,11 @@ const DraggingEditor: React.FC = () => {
                 })
               }}
             />
-            <button onClick={() => removeFakeOption(n)}>Remove</button>
+            <button onClick={() => removeFakeOption(n)}>{t("remove")}</button>
           </div>
         ))}
       </div>
-      <button onClick={addFakeOption}>Add fake option</button>
+      <button onClick={addFakeOption}>{t("add-fake-option")}</button>
     </div>
   )
 }

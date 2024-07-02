@@ -144,9 +144,9 @@ const Dragging: React.FC<SubmissionProps> = ({
                             className={css`
                               border-radius: 6px;
                               padding: 0.3rem 0.2rem;
-                              background-color: #EAF5F0;
-                              color: #3D7150;
-                              border: 2px solid #EAF5F0;
+                              background-color: #eaf5f0;
+                              color: #3d7150;
+                              border: 2px solid #eaf5f0;
                             `}
                           >
                             {correctOptionWhenChosenIncorrectly.text}

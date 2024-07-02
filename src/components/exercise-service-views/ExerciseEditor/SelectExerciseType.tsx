@@ -3,11 +3,14 @@ import { ExerciseType, PrivateSpec } from "@/protocolTypes/privateSpec"
 import { generateRandomKey, uint8ArrayToHex } from "@/util/hashing"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 
 const SelectExerciseType: React.FC = () => {
-  const { selected: _selected, updateState } = useExerciseServiceOutputState(
+  const { updateState } = useExerciseServiceOutputState(
     (arg) => arg,
   )
+
+  const { t } = useTranslation()
 
   const handleExerciseTypeChange = useCallback(
     (exerciseType: ExerciseType) => {
@@ -53,14 +56,14 @@ const SelectExerciseType: React.FC = () => {
         margin: 1rem;
       `}
     >
-      <h1>Select exercise type</h1>
+      <h1>{t("select-exercise-type")}</h1>
       <button onClick={() => handleExerciseTypeChange("dragging")}>
-        Dragging
+        {t("dragging")}
       </button>
       <button onClick={() => handleExerciseTypeChange("highlighting")}>
-        Highlighting
+        {t("highlighting")}
       </button>
-      <button onClick={() => handleExerciseTypeChange("typing")}>Typing</button>
+      <button onClick={() => handleExerciseTypeChange("typing")}>{t("typing")}</button>
     </div>
   )
 }

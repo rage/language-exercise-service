@@ -2,9 +2,11 @@ import FeedbackMessageEditor from "@/components/FeedbackMessageEditor"
 import useExerciseServiceOutputState from "@/hooks/useExerciseServiceOutputState"
 import { css } from "@emotion/css"
 import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { v4 } from "uuid"
 
 const TypingEditor: React.FC = () => {
+  const {t} = useTranslation()
   const { selected: selected, updateState } = useExerciseServiceOutputState(
     (arg) => arg,
   )
@@ -69,7 +71,7 @@ const TypingEditor: React.FC = () => {
                 })
               }}
             />
-            <button onClick={() => removeItem(item.id)}>Remove</button>
+            <button onClick={() => removeItem(item.id)}>{t("remove")}</button>
           </div>
           <FeedbackMessageEditor
             feedbackMessages={item.feedbackMessages}
@@ -88,7 +90,7 @@ const TypingEditor: React.FC = () => {
           />
         </div>
       ))}
-      <button onClick={addNewItem}>Add item</button>
+      <button onClick={addNewItem}>{t("add-item")}</button>
 
       <div
         className={css`
@@ -108,7 +110,7 @@ const TypingEditor: React.FC = () => {
               })
             }}
           />
-          Matching is case insensitive
+          {t("matching-is-case-insensitive")}
         </label>
       </div>
     </div>
