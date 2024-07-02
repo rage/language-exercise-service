@@ -16,7 +16,7 @@ html {
 
 const SERVICE_NAME = "language-exercise"
 
-const i18n = initI18n(SERVICE_NAME)
+const i18n = initI18n("exercise-service")
 
 const MyApp: React.FC<React.PropsWithChildren<AppProps>> = ({
   Component,
