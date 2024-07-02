@@ -8,6 +8,7 @@ import {
   UserAnswerTyping,
 } from "../../protocolTypes/answer"
 import {
+  FeedbackMessage,
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
@@ -172,7 +173,7 @@ function handleDraggingGradingRequest(
     itemIdToGradingInfo[item.id] = {
       correctness,
       feedbackMessage: pickBestFeedbackForGrading(
-        item.feedbackMessages ?? [],
+        filterFeedback(item.feedbackMessages ?? []),
         correctness,
       ),
       nthWasCorrect,
@@ -240,7 +241,7 @@ function handleHighlightingGradingRequest(
     gradingInfo: {
       correctness,
       feedbackMessage: pickBestFeedbackForGrading(
-        exerciseSpec.feedbackMessages ?? [],
+        filterFeedback(exerciseSpec.feedbackMessages ?? []),
         correctness,
       ),
       nthWasCorrect,
@@ -335,7 +336,7 @@ function handleTypingGradingRequest(
     itemIdToGradingInfo[item.id] = {
       correctness,
       feedbackMessage: pickBestFeedbackForGrading(
-        item.feedbackMessages ?? [],
+        filterFeedback(item.feedbackMessages ?? []),
         correctness,
       ),
       nthWasCorrect,
@@ -355,6 +356,13 @@ function handleTypingGradingRequest(
     feedback_text: null,
     feedback_json: feedbackJson,
   }
+}
+
+/** Allow only feedback messages with the visibility before model solution because the students can see the grading before they can see the model solution */
+function filterFeedback(feedbackMessags: FeedbackMessage[]): FeedbackMessage[] {
+  return feedbackMessags.filter(
+    (fm) => fm.visibility === "before-model-solution",
+  )
 }
 
 /**

@@ -1,6 +1,8 @@
 import CorrectnessMarker from "@/components/CorrectnessMarker"
 import { SubmissionProps } from "."
 import { css } from "@emotion/css"
+import { pickBestFeedbackForGrading } from "@/util/feedback"
+import FeedbackMessageBox from "@/components/FeedbackMessageBox"
 
 const Highlighting: React.FC<SubmissionProps> = ({
   publicSpec,
@@ -15,6 +17,20 @@ const Highlighting: React.FC<SubmissionProps> = ({
     (gradingFeedback && gradingFeedback.exerciseType !== "highlighting")
   ) {
     return null
+  }
+
+  let feedbackMessage = undefined
+  if (
+    modelSolutionSpec?.feedbackMessages &&
+    gradingFeedback?.gradingInfo.correctness
+  ) {
+    feedbackMessage = pickBestFeedbackForGrading(
+      modelSolutionSpec.feedbackMessages,
+      gradingFeedback?.gradingInfo.correctness,
+    )
+  }
+  if (!feedbackMessage) {
+    feedbackMessage = gradingFeedback?.gradingInfo.feedbackMessage
   }
 
   return (
@@ -110,6 +126,7 @@ const Highlighting: React.FC<SubmissionProps> = ({
           </p>
         )
       })}
+      {feedbackMessage && <FeedbackMessageBox message={feedbackMessage} />}
     </div>
   )
 }
