@@ -135,7 +135,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                       draggable = (
                         <Draggable
                           option={selectedOption}
-                          key={selectedOption.id}
+                          key={`draggable-in-slot-${selectedOption.id}`}
                         />
                       )
                     }
@@ -143,7 +143,7 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                       <Droppable
                         itemId={item.id}
                         nthPlaceholder={placeHolderCounter}
-                        key={item.id}
+                        key={`droppable-slot-${item.id}`}
                         children={draggable}
                       />
                     )
@@ -155,10 +155,10 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
         </div>
         <div>
           {publicSpec.allOptions.map((option) => {
-            if (usedOptions.includes(option)) {
+            if (usedOptions.find((o) => o && o.id === option.id)){
               return null
             }
-            return <Draggable option={option} key={option.id} />
+            return <Draggable option={option} key={`draggable-sidebar-${option.id}`} />
           })}
         </div>
       </div>
