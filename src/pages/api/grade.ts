@@ -8,7 +8,6 @@ import {
   UserAnswerTyping,
 } from "../../protocolTypes/answer"
 import {
-  FeedbackMessage,
   PrivateSpec,
   PrivateSpecDragging,
   PrivateSpecHighlighting,
@@ -31,6 +30,7 @@ import {
   GradingInfo,
   GradingTyping,
 } from "@/protocolTypes/grading"
+import { pickBestFeedbackForGrading } from "@/util/feedback"
 
 type GradingRequest = GenericGradingRequest<PrivateSpec, UserAnswer>
 
@@ -355,23 +355,6 @@ function handleTypingGradingRequest(
     feedback_text: null,
     feedback_json: feedbackJson,
   }
-}
-
-function pickBestFeedbackForGrading(
-  feedbacks: FeedbackMessage[],
-  correctness: GradingCorrectness,
-): FeedbackMessage | null {
-  const specificMessageForCorrectness = feedbacks.find(
-    (fm) => fm.correctness === correctness,
-  )
-  if (specificMessageForCorrectness) {
-    return specificMessageForCorrectness
-  }
-  const anyMessage = feedbacks.find((fm) => fm.correctness === "any")
-  if (anyMessage) {
-    return anyMessage
-  }
-  return null
 }
 
 /**
