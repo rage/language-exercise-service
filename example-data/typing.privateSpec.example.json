@@ -4,15 +4,37 @@
   "items": [
     {
       "id": "adc08f34-a19d-41f9-b46e-3e4444accd13",
-      "text": "I [went] to the store yesterday and [bought] some groceries."
+      "text": "I [went] to the store yesterday and [bought] some groceries.",
+      "feedbackMessages": [
+        {
+          "id": "62d3d840-9c5b-4899-a9ed-7caa249f566e",
+          "text": "Incorrect model solution.",
+          "visibility": "model-solution",
+          "correctness": "incorrect"
+        },
+        {
+          "id": "88bdfc1d-f477-4326-a8c0-52f84c375831",
+          "text": "Any before model solution.",
+          "visibility": "before-model-solution",
+          "correctness": "any"
+        },
+        {
+          "id": "953e1a5c-a3a7-428b-b0b7-e6450e2b6da1",
+          "text": "Correct before model solution.",
+          "visibility": "before-model-solution",
+          "correctness": "correct"
+        }
+      ]
     },
     {
       "id": "fa242ea8-1e74-424a-bf40-c5e87a8a422a",
-      "text": "She [is] very happy today because she [finished] her project."
+      "text": "She [is] very happy today because she [finished] her project.",
+      "feedbackMessages": []
     },
     {
       "id": "32807b5e-fd48-4695-8a79-ff9f71128af9",
-      "text": "They are [buying] a new house and [are] planning to move next month."
+      "text": "They are [buying] a new house and [are] planning to move next month.",
+      "feedbackMessages": []
     }
   ],
   "matchingIsCaseInsensitive": false
