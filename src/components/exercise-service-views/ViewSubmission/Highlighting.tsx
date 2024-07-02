@@ -65,16 +65,16 @@ const Highlighting: React.FC<SubmissionProps> = ({
                 if (selectedWordWasCorrect !== undefined) {
                   highlightingStyles = {
                     backgroundColor: selectedWordWasCorrect
-                      ? "#d4eadf"
-                      : "fbeef0",
-                    textColor: selectedWordWasCorrect ? "#68ae8a" : "#ed878c",
+                      ? "#EAF5F0"
+                      : "#fbeef0",
+                    textColor: selectedWordWasCorrect ? "#3D7150" : "#D4212A",
                     borderColor: selectedWordWasCorrect ? "#bedecd" : "#f3c7ca",
                   }
                 }
                 if (!wasSelected && modelSolutionSpecTellsThisIsCorrect) {
                   highlightingStyles = {
-                    backgroundColor: "#e0eae6",
-                    textColor: "#578f64",
+                    backgroundColor: "#EAF5F0",
+                    textColor: "#3D7150",
                     borderColor: undefined,
                   }
                 }
@@ -82,10 +82,10 @@ const Highlighting: React.FC<SubmissionProps> = ({
                   <span
                     className={css`
                       padding: 0.1rem;
-                      background-color: #f9f9f9;
                       border-radius: 6px;
                       ${highlightingStyles &&
                       `
+                        padding: 0.3rem 0.2rem;
                         background-color: ${highlightingStyles.backgroundColor};
                         color: ${highlightingStyles.textColor};
                         ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
