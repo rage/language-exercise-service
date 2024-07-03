@@ -4,15 +4,31 @@
   "items": [
     {
       "id": "ee7ca9e1-c760-4609-9ec8-d4414759defb",
-      "text": "I [went] to the store yesterday and [bought] some groceries."
+      "text": "I [went] to the store yesterday and [bought] some groceries.",
+      "feedbackMessages": [
+        {
+          "id": "8498e831-7d24-4251-920d-345634cea6a3",
+          "text": "Model solution incorrect",
+          "visibility": "model-solution",
+          "correctness": "incorrect"
+        },
+        {
+          "id": "cd192531-928e-4f81-b690-d97cf02f44fb",
+          "text": "Before model solution incorrect",
+          "visibility": "before-model-solution",
+          "correctness": "incorrect"
+        }
+      ]
     },
     {
       "id": "56ed091d-1051-4269-849b-2edcc177a3f2",
-      "text": "She [is] very happy today because she [finished] her project."
+      "text": "She [is] very happy today because she [finished] her project.",
+      "feedbackMessages": []
     },
     {
       "id": "dfb34029-e75a-40d8-9e84-76b0ad6a335c",
-      "text": "They are [buying] a new house and [are] planning to move next month."
+      "text": "They are [buying] a new house and [are] planning to move next month.",
+      "feedbackMessages": []
     }
   ],
   "fakeOptions": [],
