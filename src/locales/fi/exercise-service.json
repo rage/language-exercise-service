@@ -19,6 +19,6 @@
   "message": "Viesti",
   "add-feedback-message": "Lisää palauteviesti",
   "select-an-option": "Valitse vaihtoehto",
-  "accessibility-mode": "Saavutettava tila",
-  "exit-accessibility-mode": "Poistu saavutettavasta tilasta"
+  "accessible-mode": "Saavutettava tila",
+  "exit-accessible-mode": "Poistu saavutettavasta tilasta"
 }
