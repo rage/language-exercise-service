@@ -17,5 +17,8 @@
   "visibility": "Visibility",
   "correctness": "Correctness",
   "message": "Message",
-  "add-feedback-message": "Add feedback message"
+  "add-feedback-message": "Add feedback message",
+  "select-an-option": "Select an option",
+  "accessible-mode": "Accessible mode",
+  "exit-accessible-mode": "Exit accessible mode"
 }

@@ -17,5 +17,8 @@
   "visibility": "Näkyvyys",
   "correctness": "Oikeellisuus",
   "message": "Viesti",
-  "add-feedback-message": "Lisää palauteviesti"
+  "add-feedback-message": "Lisää palauteviesti",
+  "select-an-option": "Valitse vaihtoehto",
+  "accessibility-mode": "Saavutettava tila",
+  "exit-accessibility-mode": "Poistu saavutettavasta tilasta"
 }

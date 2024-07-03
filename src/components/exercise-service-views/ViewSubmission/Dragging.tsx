@@ -13,6 +13,7 @@ const Dragging: React.FC<SubmissionProps> = ({
   gradingFeedback,
 }) => {
   const { t } = useTranslation()
+
   if (
     publicSpec.exerciseType !== "dragging" ||
     userAnswer.exerciseType !== "dragging" ||

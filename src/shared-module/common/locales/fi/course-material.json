@@ -102,7 +102,7 @@
   "label-course-instance": "Kurssiversio",
   "label-exercise": "Tehtävä",
   "language-language": "Kieli: {{language}}",
-  "link-text-open-accessible-view-of-this-content": "Avaa saavutettava näkymä tästä sisällöstä",
+  "link-text-open-accessibility-view-of-this-content": "Avaa saavutettava näkymä tästä sisällöstä",
   "loading": "Lataa",
   "map-disclaimer": "*Kartalla näet opiskelijamäärät maakohtaisesti. Muut opiskelijat näkevät vain kuinka paljon maastasi on opiskelijoita yhteensä.",
   "map-instruction": "Valitse asuinmaasi aloittaaksesi. Kun olet tehnyt valintasi kartta näyttää maat, joissa muut opiskelijat asuvat.",
