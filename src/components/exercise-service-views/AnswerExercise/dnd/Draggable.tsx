@@ -23,6 +23,10 @@ const Draggable: React.FC<DraggableProps> = (props) => {
       ref={setNodeRef}
       style={style}
       className={css`
+        background-color: #f3f5f7;
+        border: 2px solid #d9dadc;
+        border-radius: 3px;
+        color: #4c5868;
         cursor: grab;
         margin: 0.1rem;
         display: block;

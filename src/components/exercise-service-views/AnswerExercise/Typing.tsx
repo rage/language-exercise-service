@@ -3,8 +3,11 @@ import { ExerciseProps } from "."
 import { css } from "@emotion/css"
 import { UserAnswerTyping } from "@/protocolTypes/answer"
 import { ChangeEvent, useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import HorizontoallyResizingTextField from "@/components/HorizontallyResizingTextField"
 
 const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
+  const { t } = useTranslation()
   const { selected: answer, updateState: updateAnswer } =
     useUserAnswerOutputState<UserAnswerTyping>(
       (state) => state as UserAnswerTyping,
@@ -81,7 +84,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                   return (
                     <>
                       &nbsp;
-                      <input
+                      <HorizontoallyResizingTextField
                         className={css`
                           width: 3rem;
                           min-width: 3rem;
@@ -89,6 +92,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                         onChange={(e) => handleInputChange(e, item.id, nthSlot)}
                         type="text"
                         key={textPart.type + tn}
+                        aria-label={t("write-the-missing-word-here")}
                       />
                       &nbsp;
                     </>

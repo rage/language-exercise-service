@@ -321,9 +321,6 @@ function handleTypingGradingRequest(
         nthWasCorrect[answerIndex] = false
         continue
       }
-      console.log(
-        JSON.stringify({ correctAnswersBySlot, userAnswerBySlot }, null, 2),
-      )
       if (exerciseSpec.matchingIsCaseInsensitive) {
         if (
           correctAnswersBySlot.acceptedStrings.some(

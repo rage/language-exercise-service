@@ -22,5 +22,6 @@
   "accessible-mode": "Accessible mode",
   "exit-accessible-mode": "Exit accessible mode",
   "feedback-messages-for-item-n": "Feedback messages for the item ({{n}})",
-  "feedback-messages-for-everything-n": "Feedback messages for everything ({{n}})"
+  "feedback-messages-for-everything-n": "Feedback messages for everything ({{n}})",
+  "write-the-missing-word-here": "Write the missing word here"
 }

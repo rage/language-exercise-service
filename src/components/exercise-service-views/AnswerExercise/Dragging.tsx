@@ -116,13 +116,6 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
       nthPlaceholder: number,
       selectedOption: PublicSpecOption | null,
     ) => {
-      console.log(
-        JSON.stringify(
-          { itemId, nthPlaceholder, selectedOption },
-          undefined,
-          2,
-        ),
-      )
       answerChanged(itemId, nthPlaceholder, selectedOption)
     },
     [answerChanged],
