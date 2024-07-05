@@ -170,6 +170,7 @@ function handleDraggingGradingRequest(
     } else {
       correctness = "incorrect"
     }
+
     itemIdToGradingInfo[item.id] = {
       correctness,
       feedbackMessage: pickBestFeedbackForGrading(
@@ -180,10 +181,25 @@ function handleDraggingGradingRequest(
     }
   }
 
+  let overallCorrectness: GradingCorrectness = "partially-correct"
+  const allGradinginfos = Object.values(itemIdToGradingInfo)
+  if (allGradinginfos.every((gi) => gi.correctness === "correct")) {
+    overallCorrectness = "correct"
+  }
+  if (allGradinginfos.every((gi) => gi.correctness === "incorrect")) {
+    overallCorrectness = "incorrect"
+  }
+  const overallFeedbackMessage = pickBestFeedbackForGrading(
+    filterFeedback(exerciseSpec.feedbackMessages ?? []),
+    overallCorrectness,
+  )
+
   const feedbackJson: GradingDragging = {
     version: 1,
     exerciseType: "dragging",
     itemIdToGradingInfo,
+    overallCorrectness,
+    overallFeedbackMessage,
   }
   return {
     grading_progress: "FullyGraded",
@@ -353,10 +369,25 @@ function handleTypingGradingRequest(
     }
   }
 
+  let overallCorrectness: GradingCorrectness = "partially-correct"
+  const allGradinginfos = Object.values(itemIdToGradingInfo)
+  if (allGradinginfos.every((gi) => gi.correctness === "correct")) {
+    overallCorrectness = "correct"
+  }
+  if (allGradinginfos.every((gi) => gi.correctness === "incorrect")) {
+    overallCorrectness = "incorrect"
+  }
+  const overallFeedbackMessage = pickBestFeedbackForGrading(
+    filterFeedback(exerciseSpec.feedbackMessages ?? []),
+    overallCorrectness,
+  )
+
   const feedbackJson: GradingTyping = {
     version: 1,
     exerciseType: "typing",
     itemIdToGradingInfo,
+    overallCorrectness,
+    overallFeedbackMessage,
   }
 
   return {

@@ -18,6 +18,7 @@ export interface PrivateSpecDragging {
   fakeOptions: string[]
   /** Random, unguessable string that may not be shared to the students. Used to hash PublicSpecOption id:s so that they don't leak the correct answer. */
   secretKey: string
+  feedbackMessages?: FeedbackMessage[]
 }
 
 export interface PrivateSpecTyping {
@@ -25,6 +26,7 @@ export interface PrivateSpecTyping {
   exerciseType: "typing"
   items: PrivateSpecItem[]
   matchingIsCaseInsensitive: boolean
+  feedbackMessages?: FeedbackMessage[]
 }
 
 export interface PrivateSpecHighlighting {

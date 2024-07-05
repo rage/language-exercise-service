@@ -20,5 +20,7 @@
   "add-feedback-message": "Add feedback message",
   "select-an-option": "Select an option",
   "accessible-mode": "Accessible mode",
-  "exit-accessible-mode": "Exit accessible mode"
+  "exit-accessible-mode": "Exit accessible mode",
+  "feedback-messages-for-item-n": "Feedback messages for the item ({{n}})",
+  "feedback-messages-for-everything-n": "Feedback messages for everything ({{n}})"
 }

@@ -31,6 +31,14 @@
       "feedbackMessages": []
     }
   ],
-  "fakeOptions": [],
-  "secretKey": "6b21146743b6a7f039e5c36c27625d8af8522fbfa4c026d8d260da93d79ec09a"
+  "fakeOptions": ["fake option"],
+  "secretKey": "6b21146743b6a7f039e5c36c27625d8af8522fbfa4c026d8d260da93d79ec09a",
+  "feedbackMessages": [
+    {
+      "id": "4e143e0b-33be-49b6-a393-4764235c9924",
+      "text": "Global correct before model solution",
+      "visibility": "before-model-solution",
+      "correctness": "correct"
+    }
+  ]
 }

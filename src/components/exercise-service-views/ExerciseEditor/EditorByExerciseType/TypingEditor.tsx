@@ -74,6 +74,7 @@ const TypingEditor: React.FC = () => {
             <button onClick={() => removeItem(item.id)}>{t("remove")}</button>
           </div>
           <FeedbackMessageEditor
+            forEverything={false}
             feedbackMessages={item.feedbackMessages}
             setFeedbackMessages={(e) => {
               updateState((draft) => {
@@ -113,6 +114,18 @@ const TypingEditor: React.FC = () => {
           {t("matching-is-case-insensitive")}
         </label>
       </div>
+      <FeedbackMessageEditor
+        feedbackMessages={selected.feedbackMessages}
+        forEverything
+        setFeedbackMessages={(e) => {
+          updateState((draft) => {
+            if (!draft || draft.exerciseType !== "typing") {
+              return draft
+            }
+            draft.feedbackMessages = e
+          })
+        }}
+      />
     </div>
   )
 }

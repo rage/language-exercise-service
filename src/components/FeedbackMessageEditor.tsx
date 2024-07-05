@@ -12,11 +12,13 @@ import { useTranslation } from "react-i18next"
 interface FeedbackMessageEditorProps {
   feedbackMessages: FeedbackMessage[] | undefined
   setFeedbackMessages: (feedbackMessages: FeedbackMessage[]) => void
+  forEverything: boolean
 }
 
 const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
   feedbackMessages,
   setFeedbackMessages,
+  forEverything,
 }) => {
   const { t } = useTranslation()
   useEffect(() => {
@@ -28,13 +30,22 @@ const FeedbackMessageEditor: React.FC<FeedbackMessageEditorProps> = ({
   if (!feedbackMessages) {
     return null
   }
+
+  let title: string
+  if (forEverything) {
+    title = t("feedback-messages-for-everything-n", {
+      n: feedbackMessages.length,
+    })
+  } else {
+    title = t("feedback-messages-for-item-n", { n: feedbackMessages.length })
+  }
   return (
     <div
       className={css`
         margin: 1rem 0;
       `}
     >
-      <Collapsable title={`Feedback messages (${feedbackMessages.length})`}>
+      <Collapsable title={title}>
         {feedbackMessages.length > 0 && (
           <div>
             <div>

@@ -97,6 +97,7 @@ const DraggingEditor: React.FC = () => {
           </div>
           <FeedbackMessageEditor
             feedbackMessages={item.feedbackMessages}
+            forEverything={false}
             setFeedbackMessages={(e) => {
               updateState((draft) => {
                 if (!draft || draft.exerciseType !== "dragging") {
@@ -146,6 +147,18 @@ const DraggingEditor: React.FC = () => {
         ))}
       </div>
       <button onClick={addFakeOption}>{t("add-fake-option")}</button>
+      <FeedbackMessageEditor
+        feedbackMessages={selected.feedbackMessages}
+        forEverything
+        setFeedbackMessages={(e) => {
+          updateState((draft) => {
+            if (!draft || draft.exerciseType !== "dragging") {
+              return draft
+            }
+            draft.feedbackMessages = e
+          })
+        }}
+      />
     </div>
   )
 }

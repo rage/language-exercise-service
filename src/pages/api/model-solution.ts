@@ -86,11 +86,17 @@ export function makeDraggingModelSolutionSpec(
       ) ?? []
   }
 
+  const feedbackMessages =
+    privateSpec.feedbackMessages?.filter(
+      (fm) => fm.visibility === "model-solution",
+    ) ?? []
+
   return {
     version: 1,
     exerciseType: "dragging",
     itemIdTooptionsBySlot,
     itemIdToFeedbackMessages,
+    feedbackMessages,
   }
 }
 
@@ -163,9 +169,15 @@ export function makeTypingModelSolutionSpec(
     } satisfies ModelSolutionSpecItem
   })
 
+  const feedbackMessages =
+    privateSpec.feedbackMessages?.filter(
+      (fm) => fm.visibility === "model-solution",
+    ) ?? []
+
   return {
     version: 1,
     exerciseType: "typing",
     items: items,
+    feedbackMessages,
   }
 }

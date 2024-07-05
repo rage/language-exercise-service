@@ -6,12 +6,16 @@ export interface GradingDragging {
   version: 1
   exerciseType: "dragging"
   itemIdToGradingInfo: Record<string, GradingInfo>
+  overallCorrectness: GradingCorrectness
+  overallFeedbackMessage: FeedbackMessage | null
 }
 
 export interface GradingTyping {
   version: 1
   exerciseType: "typing"
   itemIdToGradingInfo: Record<string, GradingInfo>
+  overallCorrectness: GradingCorrectness
+  overallFeedbackMessage: FeedbackMessage | null
 }
 
 export interface GradingHighlighting {

@@ -23,6 +23,7 @@ const SelectExerciseType: React.FC = () => {
             items: [],
             fakeOptions: [],
             secretKey: uint8ArrayToHex(generateRandomKey(32)),
+            feedbackMessages: [],
           } satisfies PrivateSpec
         }
         if (exerciseType === "highlighting") {
@@ -40,6 +41,7 @@ const SelectExerciseType: React.FC = () => {
             exerciseType: "typing",
             items: [],
             matchingIsCaseInsensitive: false,
+            feedbackMessages: [],
           } satisfies PrivateSpec
         }
         throw new Error("Invalid exercise type")

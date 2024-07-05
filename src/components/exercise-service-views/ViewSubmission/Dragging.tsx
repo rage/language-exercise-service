@@ -23,18 +23,20 @@ const Dragging: React.FC<SubmissionProps> = ({
     return null
   }
 
+  let overallFeedbackMessage = gradingFeedback?.overallFeedbackMessage
+  if (
+    modelSolutionSpec?.feedbackMessages &&
+    gradingFeedback?.overallCorrectness
+  ) {
+    overallFeedbackMessage = pickBestFeedbackForGrading(
+      modelSolutionSpec.feedbackMessages,
+      gradingFeedback.overallCorrectness,
+    )
+  }
+
   return (
-    <div
-      className={css`
-        display: flex;
-        flex-gap: 1rem;
-      `}
-    >
-      <div
-        className={css`
-          flex-grow: 1;
-        `}
-      >
+    <div>
+      <div>
         {publicSpec.items.map((item, n) => {
           const itemAnswer = userAnswer.itemAnswers.find(
             (ia) => ia.itemId === item.id,
@@ -194,6 +196,15 @@ const Dragging: React.FC<SubmissionProps> = ({
           )
         })}
       </div>
+      {overallFeedbackMessage && (
+        <div
+          className={css`
+            margin-top: 1rem;
+          `}
+        >
+          <FeedbackMessageBox message={overallFeedbackMessage} />
+        </div>
+      )}
     </div>
   )
 }

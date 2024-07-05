@@ -37,5 +37,13 @@
       "feedbackMessages": []
     }
   ],
-  "matchingIsCaseInsensitive": false
+  "matchingIsCaseInsensitive": false,
+  "feedbackMessages": [
+    {
+      "id": "93b83c70-40dc-4e8b-99d5-b44334fcc09a",
+      "text": "Global model solution incorrect",
+      "visibility": "model-solution",
+      "correctness": "incorrect"
+    }
+  ]
 }

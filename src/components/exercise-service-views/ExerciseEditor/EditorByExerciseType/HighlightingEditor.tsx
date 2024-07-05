@@ -47,6 +47,7 @@ const HighlightingEditor: React.FC = () => {
         }}
       />
       <FeedbackMessageEditor
+        forEverything
         feedbackMessages={selected.feedbackMessages}
         setFeedbackMessages={(e) => {
           updateState((draft) => {
