@@ -102,12 +102,14 @@ const Typing: React.FC<SubmissionProps> = ({
                       modelSolutionSpecItem?.optionsBySlot[nthSlot]
                     if (modelSolutionsBySlot) {
                       answerWasCorrect =
-                        modelSolutionsBySlot.acceptedStrings.includes(
-                          answer.trim(),
+                        modelSolutionsBySlot.acceptedStrings.some(
+                          (s) => s.trim() === answer.trim(),
                         )
-                    } else {
-                      answerWasCorrect =
-                        gradingGradingInfo?.nthWasCorrect[nthSlot] === true
+                    }
+                    // Not using else here because if matching is case insensitive, we only see that the answer is correct from the grading
+                    // as we don't expose that boolean to the user
+                    if (gradingGradingInfo?.nthWasCorrect[nthSlot] === true) {
+                      answerWasCorrect = true
                     }
 
                     let highlightingStyles: {

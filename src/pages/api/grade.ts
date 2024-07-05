@@ -305,16 +305,26 @@ function handleTypingGradingRequest(
         nthWasCorrect[answerIndex] = false
         continue
       }
+      console.log(
+        JSON.stringify({ correctAnswersBySlot, userAnswerBySlot }, null, 2),
+      )
       if (exerciseSpec.matchingIsCaseInsensitive) {
         if (
-          correctAnswersBySlot.acceptedStrings
-            .map((s) => s.toLowerCase())
-            .includes(userAnswerBySlot.trim().toLowerCase())
+          correctAnswersBySlot.acceptedStrings.some(
+            (o) =>
+              o.trim().toLowerCase() === userAnswerBySlot.trim().toLowerCase(),
+          )
         ) {
           numCorrect += 1
+          nthWasCorrect[answerIndex] = true
+        } else {
+          numIncorrect += 1
+          nthWasCorrect[answerIndex] = false
         }
       } else if (
-        correctAnswersBySlot.acceptedStrings.includes(userAnswerBySlot.trim())
+        correctAnswersBySlot.acceptedStrings.some(
+          (o) => o.trim() === userAnswerBySlot.trim(),
+        )
       ) {
         numCorrect += 1
         nthWasCorrect[answerIndex] = true
