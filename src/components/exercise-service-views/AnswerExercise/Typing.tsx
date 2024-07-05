@@ -2,13 +2,20 @@ import useUserAnswerOutputState from "@/hooks/useUserAnswerOutputState"
 import { ExerciseProps } from "."
 import { css } from "@emotion/css"
 import { UserAnswerTyping } from "@/protocolTypes/answer"
-import { ChangeEvent } from "react"
+import { ChangeEvent, useMemo } from "react"
 
 const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
   const { selected: answer, updateState: updateAnswer } =
     useUserAnswerOutputState<UserAnswerTyping>(
       (state) => state as UserAnswerTyping,
     )
+
+  const showNumbers = useMemo(() => {
+    if (publicSpec.exerciseType !== "typing") {
+      return false
+    }
+    return publicSpec.items.length > 1
+  }, [publicSpec])
 
   if (publicSpec.exerciseType !== "typing" || !answer) {
     return null
@@ -60,7 +67,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                 margin-bottom: 1rem;
               `}
             >
-              <div>{n + 1}. </div>
+              {showNumbers && <div>{n + 1}. </div>}
               <div>
                 {item.textParts.map((textPart, tn) => {
                   if (textPart.type === "text") {

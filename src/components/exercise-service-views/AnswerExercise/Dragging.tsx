@@ -128,6 +128,13 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
     [answerChanged],
   )
 
+  const showNumbers = useMemo(() => {
+    if (publicSpec.exerciseType !== "dragging") {
+      return false
+    }
+    return publicSpec.items.length > 1
+  }, [publicSpec])
+
   if (publicSpec.exerciseType !== "dragging" || !answer) {
     return null
   }
@@ -209,16 +216,18 @@ const Dragging: React.FC<ExerciseProps> = ({ publicSpec }) => {
                     }
                   `}
                 >
-                  <div
-                    className={css`
-                      align-self: flex-start;
-                      position: relative;
-                      top: 4px;
-                      color: #333;
-                    `}
-                  >
-                    {n + 1}.{" "}
-                  </div>
+                  {showNumbers && (
+                    <div
+                      className={css`
+                        align-self: flex-start;
+                        position: relative;
+                        top: 4px;
+                        color: #333;
+                      `}
+                    >
+                      {n + 1}.{" "}
+                    </div>
+                  )}
                   <div>
                     {item.textParts.map((textPart, n) => {
                       if (textPart.type === "text") {
