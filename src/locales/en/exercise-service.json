@@ -27,5 +27,6 @@
   "correct-slot": "Correct slot",
   "incorrect-slot": "Incorrect slot",
   "unselected-word-that-would-ve-been-correct": "Unselected word that would've been correct.",
-  "feedback-message": "Feedback message"
+  "feedback-message": "Feedback message",
+  "correct-answer-was": "Correct answer was"
 }

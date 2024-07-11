@@ -5,6 +5,7 @@ import CorrectnessMarker from "@/components/CorrectnessMarker"
 import { FeedbackMessage } from "@/protocolTypes/privateSpec"
 import { pickBestFeedbackForGrading } from "@/util/feedback"
 import FeedbackMessageBox from "@/components/FeedbackMessageBox"
+import ScreenReaderOnly from "@/components/ScreenReaderOnly"
 
 const Typing: React.FC<SubmissionProps> = ({
   publicSpec,
@@ -170,6 +171,9 @@ const Typing: React.FC<SubmissionProps> = ({
                                 border: 2px solid #eaf5f0;
                               `}
                             >
+                              <ScreenReaderOnly>
+                                {t("correct-answer-was")}
+                              </ScreenReaderOnly>
                               {correctSolutionWhenAnsweredIncorrectly.trim()}
                             </span>
                             &nbsp;

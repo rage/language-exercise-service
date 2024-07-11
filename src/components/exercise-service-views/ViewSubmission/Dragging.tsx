@@ -5,6 +5,7 @@ import CorrectnessMarker from "@/components/CorrectnessMarker"
 import { pickBestFeedbackForGrading } from "@/util/feedback"
 import { FeedbackMessage } from "@/protocolTypes/privateSpec"
 import FeedbackMessageBox from "@/components/FeedbackMessageBox"
+import ScreenReaderOnly from "@/components/ScreenReaderOnly"
 
 const Dragging: React.FC<SubmissionProps> = ({
   publicSpec,
@@ -179,6 +180,9 @@ const Dragging: React.FC<SubmissionProps> = ({
                                 border: 2px solid #eaf5f0;
                               `}
                             >
+                              <ScreenReaderOnly>
+                                {t("correct-answer-was")}
+                              </ScreenReaderOnly>
                               {correctOptionWhenChosenIncorrectly.text}
                             </span>
                             &nbsp;

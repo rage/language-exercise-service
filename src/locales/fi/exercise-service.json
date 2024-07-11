@@ -25,5 +25,6 @@
   "feedback-messages-for-everything-n": "Palauteviestit kaikelle ({{n}})",
   "write-the-missing-word-here": "Kirjoita puuttuva sana tähän",
   "unselected-word-that-would-ve-been-correct": "Valitsematon sana, joka olisi ollut oikein.",
-  "feedback-message": "Palauteviesti"
+  "feedback-message": "Palauteviesti",
+  "correct-answer-was": "Oikea vastaus oli"
 }
