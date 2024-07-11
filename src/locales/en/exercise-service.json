@@ -25,5 +25,7 @@
   "feedback-messages-for-everything-n": "Feedback messages for everything ({{n}})",
   "write-the-missing-word-here": "Write the missing word here",
   "correct-slot": "Correct slot",
-  "incorrect-slot": "Incorrect slot"
+  "incorrect-slot": "Incorrect slot",
+  "unselected-word-that-would-ve-been-correct": "Unselected word that would've been correct.",
+  "feedback-message": "Feedback message"
 }

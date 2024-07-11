@@ -1,8 +1,11 @@
 import { FeedbackMessage } from "@/protocolTypes/privateSpec"
 import InfoIcon from "@/assets/info.svg"
 import { css } from "@emotion/css"
+import { useTranslation } from "react-i18next"
 
 const FeedbackMessageBox = ({ message }: { message: FeedbackMessage }) => {
+  const { t } = useTranslation()
+
   return (
     <div
       className={css`
@@ -19,7 +22,7 @@ const FeedbackMessageBox = ({ message }: { message: FeedbackMessage }) => {
         }
       `}
     >
-      <InfoIcon /> {message.text}
+      <InfoIcon role="img" aria-label={t("feedback-message")} /> {message.text}
     </div>
   )
 }

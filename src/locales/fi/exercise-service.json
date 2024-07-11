@@ -23,5 +23,7 @@
   "exit-accessible-mode": "Poistu saavutettavasta tilasta",
   "feedback-messages-for-item-n": "Palauteviestit kohteelle ({{n}})",
   "feedback-messages-for-everything-n": "Palauteviestit kaikelle ({{n}})",
-  "write-the-missing-word-here": "Kirjoita puuttuva sana tähän"
+  "write-the-missing-word-here": "Kirjoita puuttuva sana tähän",
+  "unselected-word-that-would-ve-been-correct": "Valitsematon sana, joka olisi ollut oikein.",
+  "feedback-message": "Palauteviesti"
 }

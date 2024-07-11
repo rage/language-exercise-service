@@ -3,6 +3,20 @@ import { SubmissionProps } from "."
 import { css } from "@emotion/css"
 import { pickBestFeedbackForGrading } from "@/util/feedback"
 import FeedbackMessageBox from "@/components/FeedbackMessageBox"
+import styled from "@emotion/styled"
+import { useTranslation } from "react-i18next"
+
+const ScreenReaderOnly = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`
 
 const Highlighting: React.FC<SubmissionProps> = ({
   publicSpec,
@@ -10,6 +24,7 @@ const Highlighting: React.FC<SubmissionProps> = ({
   modelSolutionSpec,
   gradingFeedback,
 }) => {
+  const { t } = useTranslation()
   if (
     publicSpec.exerciseType !== "highlighting" ||
     userAnswer.exerciseType !== "highlighting" ||
@@ -89,7 +104,9 @@ const Highlighting: React.FC<SubmissionProps> = ({
                     borderColor: selectedWordWasCorrect ? "#bedecd" : "#f3c7ca",
                   }
                 }
-                if (!wasSelected && modelSolutionSpecTellsThisIsCorrect) {
+                const shouldHaveSelectedButDidnt =
+                  !wasSelected && modelSolutionSpecTellsThisIsCorrect
+                if (shouldHaveSelectedButDidnt) {
                   highlightingStyles = {
                     backgroundColor: "#EAF5F0",
                     textColor: "#3D7150",
@@ -115,6 +132,11 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       <CorrectnessMarker
                         isCorrect={selectedWordWasCorrect ?? false}
                       />
+                    )}
+                    {shouldHaveSelectedButDidnt && (
+                      <ScreenReaderOnly>
+                        {t("unselected-word-that-would-ve-been-correct")}
+                      </ScreenReaderOnly>
                     )}
                     {part.text}
                   </span>

@@ -13,7 +13,11 @@ const CorrectnessMarker = ({ isCorrect }: { isCorrect: boolean }) => {
         margin-right: 0.15rem;
       `}
     >
-      {isCorrect ? <CorrectIcon role="img" aria-label={t("correct-slot")} /> : <IncorrectIcon role="img" aria-label={t("incorrect-slot")} />}
+      {isCorrect ? (
+        <CorrectIcon role="img" aria-label={t("correct-slot")} />
+      ) : (
+        <IncorrectIcon role="img" aria-label={t("incorrect-slot")} />
+      )}
     </span>
   )
 }
