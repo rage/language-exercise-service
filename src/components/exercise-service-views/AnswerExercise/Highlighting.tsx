@@ -67,7 +67,13 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
                       padding: 0 0.1rem;
                       cursor: pointer;
                       background-color: #f9f9f9;
-                      ${isSelected && `background-color: #c8d5f2    ;`}
+                      ${isSelected &&
+                      `
+                        background-color: #e3e8f2;
+                        box-shadow: 0 0 0 1px #b4c2dd,
+                        inset 0 0 0 1px #b4c2dd;
+                        border-radius: 0.1rem;
+                      `}
                       filter: brightness(1) contrast(1);
                       transition: filter 0.2s;
                       &:hover {
