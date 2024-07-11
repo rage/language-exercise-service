@@ -13,7 +13,6 @@ const NON_HIGHTLIGHTABLE_CHARACTERS = [
   "!",
   "?",
   '"',
-  "'",
   "“",
   "”",
   "‘",

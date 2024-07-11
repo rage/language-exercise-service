@@ -43,6 +43,7 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
   return (
     <div
       className={css`
+        padding: 3px;
         p {
           margin-bottom: 1rem;
           user-select: none;
@@ -59,8 +60,11 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
                 )
                 return (
                   <span
+                    role="button"
+                    aria-pressed={isSelected}
+                    tabIndex={0}
                     className={css`
-                      padding: 0.1rem;
+                      padding: 0 0.1rem;
                       cursor: pointer;
                       background-color: #f9f9f9;
                       ${isSelected && `background-color: #ecd9ff;`}
@@ -72,6 +76,11 @@ const Highlighting: React.FC<ExerciseProps> = ({ publicSpec }) => {
                     `}
                     key={part.id}
                     onClick={() => onClick(part)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        onClick(part)
+                      }
+                    }}
                   >
                     {part.text}
                   </span>
