@@ -81,6 +81,10 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                   placeHolderCounter += 1
                   const nthSlot = placeHolderCounter
 
+                  const valueForSlot = answer.itemAnswers.find(
+                    (ia) => ia.itemId === item.id,
+                  )?.answers[nthSlot]
+
                   return (
                     <>
                       &nbsp;
@@ -90,6 +94,7 @@ const Typing: React.FC<ExerciseProps> = ({ publicSpec }) => {
                           min-width: 3rem;
                         `}
                         onChange={(e) => handleInputChange(e, item.id, nthSlot)}
+                        value={valueForSlot ?? ""}
                         type="text"
                         key={textPart.type + tn}
                         aria-label={t("write-the-missing-word-here")}
