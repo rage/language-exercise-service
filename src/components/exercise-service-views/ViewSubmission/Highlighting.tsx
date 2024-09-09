@@ -109,6 +109,7 @@ const Highlighting: React.FC<SubmissionProps> = ({
                       ${highlightingStyles &&
                       `
                         padding: 0.3rem 0.2rem;
+                        white-space: nowrap;
                         background-color: ${highlightingStyles.backgroundColor};
                         color: ${highlightingStyles.textColor};
                         ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}

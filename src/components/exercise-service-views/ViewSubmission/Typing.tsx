@@ -146,6 +146,7 @@ const Typing: React.FC<SubmissionProps> = ({
                           className={css`
                             padding: 0.1rem;
                             border-radius: 6px;
+                            white-space: nowrap;
                             ${highlightingStyles &&
                             `
                       padding: 0.3rem 0.2rem;

@@ -158,6 +158,7 @@ const Dragging: React.FC<SubmissionProps> = ({
                               padding: 0.3rem 0.2rem;
                               background-color: ${highlightingStyles.backgroundColor};
                               color: ${highlightingStyles.textColor};
+                              white-space: nowrap;
                               ${highlightingStyles.borderColor && `border: 2px solid ${highlightingStyles.borderColor};`}
                             `}
                           `}
